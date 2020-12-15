@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch
+} from 'react-router-dom';
+import styled from 'styled-components';
+import GlobalStyle from './globalStyle';
+import Home from './components/Home/Home';
+import NotFound from './components/NotFound/NotFound';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <GlobalStyle></GlobalStyle>
+        <StyledWrapper>
+          <Switch>
+            <Route exact path='/'>
+              <Home></Home>
+            </Route>
+            <Route path='/404'>
+              <NotFound></NotFound>
+            </Route>
+            <Redirect to='/404' />
+          </Switch>
+        </StyledWrapper>
+      </Router>
+    </>
   );
-}
+};
+
+const StyledWrapper = styled.div`
+  // create different container widths here for responsiveness
+`;
 
 export default App;
