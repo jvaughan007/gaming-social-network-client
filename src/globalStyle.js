@@ -13,6 +13,10 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-size: 1.6rem;
   }
+
+  h1, h2, h3 {
+
+  }
 `;
 
 export default GlobalStyle;

@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import GlobalStyle from './globalStyle';
 import Home from './components/Home/Home';
 import NotFound from './components/NotFound/NotFound';
+import Signup from './components/Signup/Signup';
 
 const App = () => {
   return (
@@ -18,6 +19,9 @@ const App = () => {
           <Switch>
             <Route exact path='/'>
               <Home></Home>
+            </Route>
+            <Route exact path='/signup'>
+              <Signup></Signup>
             </Route>
             <Route path='/404'>
               <NotFound></NotFound>
