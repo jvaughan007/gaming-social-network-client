@@ -12,14 +12,22 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-size: 1.6rem;
+    font-family: 'Karla', sans-serif;
   }
 
   h1, h2, h3 {
+    font-family: 'Rubik', sans-serif;
     margin: 0;
   }
 
   p {
     margin: 0;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 `;
 
