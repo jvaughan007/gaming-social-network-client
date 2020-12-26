@@ -15,7 +15,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h1, h2, h3 {
+    margin: 0;
+  }
 
+  p {
+    margin: 0;
   }
 `;
 
