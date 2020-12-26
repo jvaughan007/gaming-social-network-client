@@ -20,7 +20,6 @@ const Home = () => {
           <div className='intro-video'>
             <iframe
               title='mock video'
-              width='420'
               height='320'
               src='https://www.youtube.com/embed/eW7Twd85m2g&ab_channel=StarWars'
             ></iframe>
@@ -35,15 +34,16 @@ const StyledMain = styled.main`
   background: url(${backImgMobile}) no-repeat;
   background-size: 100% 100%;
   height: 100vh;
+  width: 100vw;
+
+  iframe {
+    width: 100%;
+  }
 
   .title-motto {
     padding-top: 14rem;
     text-align: center;
     margin: auto;
-  }
-
-  iframe {
-    margin: 0 auto;
   }
 
   h1 {
@@ -59,6 +59,10 @@ const StyledMain = styled.main`
   @media all and (min-width: 700px) {
     background: url(${backImgDesktop}) no-repeat;
     background-size: 100% 100%;
+
+    iframe {
+      width: 42rem;
+    }
 
     .main-content {
       margin-top: 30rem;
