@@ -1,10 +1,6 @@
-<<<<<<< HEAD
+import { Link } from "react-router-dom";
 import React from "react";
 import styled from "styled-components";
-=======
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
->>>>>>> 122503f07092a3e4afdd0c150602d6b3e2c45d0f
 import {
     FaHome,
     FaSortDown,
@@ -16,7 +12,6 @@ import {
 import { slide as Menu } from "react-burger-menu";
 
 const VertNavBar = () => {
-<<<<<<< HEAD
     return (
         <StyledMain>
             <Menu width={"19rem"}>
@@ -94,33 +89,6 @@ const VertNavBar = () => {
             </Menu>
         </StyledMain>
     );
-=======
-  return (
-    <StyledMain>
-      <div>
-        <div className='side-bar'>
-          <ul>
-            <li>
-              <Link to='/'>Home</Link>
-            </li>
-            <li>
-              <Link to='/'>News</Link>
-            </li>
-            <li>
-              <Link to='/'>Contact</Link>
-            </li>
-            <li>
-              <Link to='/'>About</Link>
-            </li>
-            <li>
-              <Link to='/'>Donovan is cool</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </StyledMain>
-  );
->>>>>>> 122503f07092a3e4afdd0c150602d6b3e2c45d0f
 };
 
 const StyledMain = styled.main`
