@@ -1,3 +1,4 @@
+
 import React from "react";
 import styled from "styled-components";
 import {
@@ -11,6 +12,7 @@ import {
 import { slide as Menu } from "react-burger-menu";
 
 const VertNavBar = () => {
+
     return (
         <StyledMain>
             <Menu width={"19rem"}>

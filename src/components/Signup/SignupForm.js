@@ -1,26 +1,68 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SignupForm = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState(null);
+  // going to use the code below when I implement accepting terms/privacy for fun
+  // const [agreed, setAgreed] = useState(false);
+  let history = useHistory();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // validation here
+    if (
+      email.trim() === '' ||
+      username.trim() === '' ||
+      password.trim() === ''
+    ) {
+      return;
+    }
 
-    console.log('sign up form is working!');
+    try {
+      setErrors(null);
+      const res = await fetch('http://localhost:5000/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, email, password })
+      });
+
+      const data = await res.json();
+
+      if (!data.success) {
+        const errors = data.errors.map((err) => err.msg);
+        return setErrors(errors);
+      }
+
+      localStorage.setItem('jwt', data.token);
+      // need to push to dashboard when dashboard component is finished
+      return history.push('/');
+    } catch (err) {
+      return setErrors(['Something went wrong. Please try again.']);
+    }
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
-      <input type='text' placeholder='username' onChange={setUsername} />
-      <input type='email' placeholder='email' onChange={setEmail} />
-      <input type='password' placeholder='password' onChange={setPassword} />
-      <button type='submit'>Sign Up</button>
-    </StyledForm>
+    <>
+      {errors ? (
+        <StyledErrors>
+          {errors.map((msg, idx) => (
+            <p key={idx}>{msg}</p>
+          ))}
+        </StyledErrors>
+      ) : null}
+      <StyledForm onSubmit={handleSubmit}>
+        <input type='text' placeholder='username' onChange={setUsername} />
+        <input type='email' placeholder='email' onChange={setEmail} />
+        <input type='password' placeholder='password' onChange={setPassword} />
+        <button type='submit'>Sign Up</button>
+      </StyledForm>
+    </>
   );
 };
 
@@ -41,6 +83,19 @@ const StyledForm = styled.form`
     border-radius: 0.4rem;
     height: 4.8rem;
     cursor: pointer;
+  }
+`;
+
+const StyledErrors = styled.div`
+  p {
+    background: #e31c3d;
+    color: #fff;
+    border-radius: 0.4rem;
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+  p:last-child {
+    margin-bottom: 1.6rem;
   }
 `;
 
