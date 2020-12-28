@@ -1,35 +1,39 @@
 import styled from 'styled-components';
+import NavBar from '../Home/NavBar/NavBar';
 import SignupForm from './SignupForm';
 
 const Signup = () => {
   return (
-    <StyledMain>
-      <div>
-        <h1>Join the best gaming community in the world!</h1>
-        <ul>
-          <li>
-            <span>-</span>Create your own gamer profile
-          </li>
-          <li>
-            <span>-</span>Find and connect with gaming groups
-          </li>
-          <li>
-            <span>-</span>Connect with gamers that share your
-          </li>
-          <li>
-            <span>-</span>Share your gaming accomplishments with the world
-          </li>
-        </ul>
-      </div>
-      <SignupForm></SignupForm>
-    </StyledMain>
+    <>
+      <NavBar></NavBar>
+      <StyledMain>
+        <div>
+          <h1>Join the best gaming community in the world!</h1>
+          <ul>
+            <li>
+              <span>-</span>Create your own gamer profile
+            </li>
+            <li>
+              <span>-</span>Find and connect with gaming groups
+            </li>
+            <li>
+              <span>-</span>Connect with gamers that share your
+            </li>
+            <li>
+              <span>-</span>Share your gaming accomplishments with the world
+            </li>
+          </ul>
+        </div>
+        <SignupForm></SignupForm>
+      </StyledMain>
+    </>
   );
 };
 
 const StyledMain = styled.main`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  margin-top: 4.8rem;
+  margin-top: 8rem;
   grid-gap: 3.2rem;
 
   div {
