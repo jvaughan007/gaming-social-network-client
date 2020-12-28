@@ -1,11 +1,16 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavBar = () => {
   return (
     <StyledNav>
       <ul className='nav-links'>
-        <li>Login</li>
-        <li>Sign Up</li>
+        <li>
+          <Link to='/login'>Login</Link>
+        </li>
+        <li>
+          <Link to='/signup'>Sign Up</Link>
+        </li>
       </ul>
     </StyledNav>
   );
@@ -16,6 +21,7 @@ const StyledNav = styled.nav`
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  left: 0;
   padding-top: 3.2rem;
   padding-right: 1.6rem;
 
