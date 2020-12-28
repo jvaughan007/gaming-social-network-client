@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   FaHome,
@@ -14,71 +14,23 @@ const VertNavBar = () => {
     <StyledMain>
       <div>
         <div className='side-bar'>
-          <div className='logo'>
-            <span>Icon</span>
-            <span className='nav-title'>GSN</span>
-          </div>
-          <section className='search-field'>
-            <input type='text' placeholder='Search...'></input>
-          </section>
-          <div className='home-btn'>
-            <button>
-              <span>
-                <FaHome />
-              </span>
-              <span className='home'>Home</span>
-            </button>
-          </div>
-          <div className='dropdown'>
-            <span className='nav-category'>
-              <span>Connect</span>
-              <span className='carrot-down'>
-                <FaSortDown />
-              </span>
-            </span>
-            <div className='dropdown-content'>
-              <button>
-                <span>
-                  <FaUsers />
-                </span>
-                <span className='dd-label'>Groups</span>
-              </button>
-              <button>
-                <span>
-                  <FaSms />
-                </span>
-                <span className='dd-label'>Chat</span>
-              </button>
-              <button>
-                <span>
-                  <FaUserFriends />
-                </span>
-                <span className='dd-label'>Friends</span>
-              </button>
-              <button>
-                <span>
-                  <FaGamepad />
-                </span>
-                <span className='dd-label'>Games</span>
-              </button>
-            </div>
-          </div>
-          <div className='dropdown'>
-            <span className='nav-category'>
-              <span>Create</span>
-              <span className='carrot-down'>
-                <FaSortDown />
-              </span>
-            </span>
-            <div className='dropdown-content'>
-              <button>
-                <span>
-                  <FaUsers />
-                </span>
-                <span className='dd-label'>Create new Group</span>
-              </button>
-            </div>
-          </div>
+          <ul>
+            <li>
+              <Link to='/'>Home</Link>
+            </li>
+            <li>
+              <Link to='/'>News</Link>
+            </li>
+            <li>
+              <Link to='/'>Contact</Link>
+            </li>
+            <li>
+              <Link to='/'>About</Link>
+            </li>
+            <li>
+              <Link to='/'>Donovan is cool</Link>
+            </li>
+          </ul>
         </div>
       </div>
     </StyledMain>
