@@ -49,14 +49,14 @@ const SignupForm = () => {
 
   return (
     <>
-      {errors ? (
-        <StyledErrors>
-          {errors.map((msg, idx) => (
-            <p key={idx}>{msg}</p>
-          ))}
-        </StyledErrors>
-      ) : null}
       <StyledForm onSubmit={handleSubmit}>
+        {errors ? (
+          <StyledErrors>
+            {errors.map((msg, idx) => (
+              <p key={idx}>{msg}</p>
+            ))}
+          </StyledErrors>
+        ) : null}
         <input type='text' placeholder='username' onChange={setUsername} />
         <input type='email' placeholder='email' onChange={setEmail} />
         <input type='password' placeholder='password' onChange={setPassword} />
@@ -69,7 +69,6 @@ const SignupForm = () => {
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  background-color: #0d7377;
   width: 100%;
 
   input {
@@ -77,11 +76,15 @@ const StyledForm = styled.form`
     height: 4.8rem;
     padding-left: 0.8rem;
     border-radius: 0.4rem;
+    border: none;
   }
 
   button {
+    background: #0d7377;
     border-radius: 0.4rem;
     height: 4.8rem;
+    color: #fff;
+    border: none;
     cursor: pointer;
   }
 `;
@@ -94,6 +97,7 @@ const StyledErrors = styled.div`
     padding: 0.8rem;
     margin-bottom: 0.8rem;
   }
+
   p:last-child {
     margin-bottom: 1.6rem;
   }
