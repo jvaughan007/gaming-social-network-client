@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const VertNavBar = () => {
@@ -8,19 +8,19 @@ const VertNavBar = () => {
         <div className='side-bar'>
           <ul>
             <li>
-              <a>Home</a>
+              <Link to='/'>Home</Link>
             </li>
             <li>
-              <a>News</a>
+              <Link to='/'>News</Link>
             </li>
             <li>
-              <a>Contact</a>
+              <Link to='/'>Contact</Link>
             </li>
             <li>
-              <a>About</a>
+              <Link to='/'>About</Link>
             </li>
             <li>
-              <a>Donovan is cool</a>
+              <Link to='/'>Donovan is cool</Link>
             </li>
           </ul>
         </div>
