@@ -1,9 +1,12 @@
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBar from './NavBar/NavBar';
 import backImgMobile from './images/dimitris-unsplash.jpg';
 import backImgDesktop from './images/alex-haney-unsplash.jpg';
 
 const Home = () => {
+  let history = useHistory();
+
   return (
     <>
       <StyledDiv></StyledDiv>
@@ -13,7 +16,7 @@ const Home = () => {
           <div className='cta'>
             <h1>Gaming Social Network</h1>
             <p>Connecting Gamers since 2077</p>
-            <button>Sign Up</button>
+            <button onClick={() => history.push('/signup')}>Sign Up</button>
           </div>
           <div className='intro-video'>
             <iframe
