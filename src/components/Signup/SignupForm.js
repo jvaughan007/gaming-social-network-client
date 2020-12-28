@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,7 +9,12 @@ const SignupForm = () => {
   const [errors, setErrors] = useState(null);
   // going to use the code below when I implement accepting terms/privacy for fun
   // const [agreed, setAgreed] = useState(false);
+  const firstInput = useRef(null);
   let history = useHistory();
+
+  useEffect(() => {
+    firstInput.current.focus();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,7 +62,12 @@ const SignupForm = () => {
             ))}
           </StyledErrors>
         ) : null}
-        <input type='text' placeholder='username' onChange={setUsername} />
+        <input
+          type='text'
+          placeholder='username'
+          onChange={setUsername}
+          ref={firstInput}
+        />
         <input type='email' placeholder='email' onChange={setEmail} />
         <input type='password' placeholder='password' onChange={setPassword} />
         <button type='submit'>Sign Up</button>

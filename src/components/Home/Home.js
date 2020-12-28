@@ -59,17 +59,11 @@ const StyledMain = styled.main`
       padding-left: 1.6rem;
 
       h1 {
-        background: linear-gradient(
-          to right,
-          #212121,
-          #323232,
-          #0d7377,
-          #14ffec
-        );
+        background: linear-gradient(to right, #14ffec, #0d7377, white);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        animation: rainbow_animation 5s ease-in-out infinite;
+        animation: rainbow_animation 10s ease-in-out infinite;
         background-size: 400% 100%;
         font-size: 2.8rem;
       }
@@ -110,17 +104,11 @@ const StyledMain = styled.main`
 
         h1 {
           font-size: 5rem;
-          background: linear-gradient(
-            to right,
-            #212121,
-            #323232,
-            #0d7377,
-            #14ffec
-          );
+          background: linear-gradient(to right, #14ffec, #0d7377, white);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
-          animation: rainbow_animation 5s ease-in-out infinite;
+          animation: rainbow_animation 10s ease-in-out infinite;
           background-size: 400% 100%;
         }
 

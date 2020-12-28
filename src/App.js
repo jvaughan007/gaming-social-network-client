@@ -9,7 +9,6 @@ import GlobalStyle from './globalStyle';
 import Home from './components/Home/Home';
 import NotFound from './components/NotFound/NotFound';
 import Signup from './components/Signup/Signup';
-import VertNavBar from './components/VerticalNavBar/VertNavBar';
 import Chat from './components/Messages/Chat';
 
 const App = () => {

@@ -28,18 +28,17 @@ const Signup = () => {
 
 const StyledMain = styled.main`
   display: grid;
-  grid-gap: 4.8rem;
-  grid-template-columns: repeat(2, 1fr);
-  height: 100vh;
-  align-items: center;
-  justify-items: center;
+  grid-template-columns: repeat(1, 1fr);
+  margin-top: 4.8rem;
+  grid-gap: 3.2rem;
 
   div {
     width: 100%;
 
     h1 {
       color: #fff;
-      margin-bottom: 4.8rem;
+      margin-bottom: 2.4rem;
+      font-size: 2.4rem;
     }
 
     ul {
@@ -47,11 +46,26 @@ const StyledMain = styled.main`
 
       li {
         margin-bottom: 0.8rem;
-        font-size: 1.8rem;
 
         span {
           margin-right: 0.8rem;
+          border-radius: 100%;
         }
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+    height: 100vh;
+    align-items: center;
+    justify-items: center;
+    grid-gap: 4.8rem;
+
+    div {
+      h1 {
+        font-size: 3.2rem;
       }
     }
   }
