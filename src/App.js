@@ -16,6 +16,7 @@ const App = () => {
         <>
             <Router>
                 <GlobalStyle></GlobalStyle>
+                <VertNavBar />
                 <StyledWrapper>
                     <Switch>
                         <Route exact path='/'>
