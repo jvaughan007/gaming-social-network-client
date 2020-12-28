@@ -43,6 +43,7 @@ const StyledWrapper = styled.div`
     width: 28.8rem;
     margin: 0 auto;
 
+<<<<<<< HEAD
     @media (min-width: 576px) {
         width: 50rem;
     }
@@ -55,6 +56,23 @@ const StyledWrapper = styled.div`
     @media (min-width: 1200px) {
         width: 112rem;
     }
+=======
+  @media (min-width: 576px) {
+    width: 50rem;
+  }
+
+  @media (min-width: 768px) {
+    width: 70rem;
+  }
+
+  @media (min-width: 992px) {
+    width: 90rem;
+  }
+
+  @media (min-width: 1200px) {
+    width: 112rem;
+  }
+>>>>>>> 122503f07092a3e4afdd0c150602d6b3e2c45d0f
 `;
 
 export default App;

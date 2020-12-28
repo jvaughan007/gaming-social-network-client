@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import styled from "styled-components";
 import NavBar from "./NavBar/NavBar";
 import backImgMobile from "./images/dimitris-unsplash.jpg";
@@ -26,6 +27,39 @@ const Home = () => {
             </StyledMain>
         </>
     );
+=======
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import NavBar from './NavBar/NavBar';
+import backImgMobile from './images/dimitris-unsplash.jpg';
+import backImgDesktop from './images/alex-haney-unsplash.jpg';
+
+const Home = () => {
+  let history = useHistory();
+
+  return (
+    <>
+      <StyledDiv></StyledDiv>
+      <NavBar></NavBar>
+      <StyledMain>
+        <div className='main-content'>
+          <div className='cta'>
+            <h1>Gaming Social Network</h1>
+            <p>Connecting Gamers since 2077</p>
+            <button onClick={() => history.push('/signup')}>Sign Up</button>
+          </div>
+          <div className='intro-video'>
+            <iframe
+              title='mock video'
+              height='320'
+              src='https://www.youtube.com/embed/eW7Twd85m2g'
+            ></iframe>
+          </div>
+        </div>
+      </StyledMain>
+    </>
+  );
+>>>>>>> 122503f07092a3e4afdd0c150602d6b3e2c45d0f
 };
 
 const StyledDiv = styled.div`
