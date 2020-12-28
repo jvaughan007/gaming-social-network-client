@@ -1,18 +1,45 @@
-import styled from 'styled-components';
-import NavBar from './NavBar/NavBar';
+import VertNavBar from "../VerticalNavBar/VertNavBar";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const UserDashboard = () => {
-    return (
-      <>
-        <NavBar></NavBar>
-        <StyledDash>
+  return (
+    <>
+      <VertNavBar></VertNavBar>
+      <StyledWrapper>
+        <div className="dashboard-content">
+          <div className="activity-feed">
+            <h1>@Gamergame619</h1>
+            <p>Connecting Gamers since 2077</p>
+            <Link to="/create-post">
+              <button>Create Post</button>
+            </Link>
+          </div>
+        </div>
+      </StyledWrapper>
+    </>
+  );
+};
 
- const StyledDash = styled.dash`
-  background: url(${backImgMobile}) no-repeat;
-  background-size: 100% 100%;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+const StyledWrapper = styled.div`
+  width: 28.8rem;
+  margin: 0 auto;
+
+  @media (min-width: 576px) {
+    width: 50rem;
+  }
+
+  @media (min-width: 768px) {
+    width: 70rem;
+  }
+
+  @media (min-width: 992px) {
+    width: 90rem;
+  }
+
+  @media (min-width: 1200px) {
+    width: 112rem;
+  }
+`;
+
+export default UserDashboard;

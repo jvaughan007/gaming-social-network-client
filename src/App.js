@@ -9,7 +9,8 @@ import GlobalStyle from './globalStyle';
 import Home from './components/Home/Home';
 import NotFound from './components/NotFound/NotFound';
 import Signup from './components/Signup/Signup';
-import VertNavBar from './components/VerticalNavBar/VertNavBar';
+// import VertNavBar from './components/VerticalNavBar/VertNavBar';
+import UserDashboard from './components/UserDashboard/UserDashboard';
 
 const App = () => {
   return (
@@ -18,16 +19,19 @@ const App = () => {
         <GlobalStyle></GlobalStyle>
         <StyledWrapper>
           <Switch>
-            <Route exact path='/'>
+            <Route exact path="/">
               <Home></Home>
             </Route>
-            <Route exact path='/signup'>
+            <Route path="/dashboard">
+              <UserDashboard></UserDashboard>
+            </Route>
+            <Route exact path="/signup">
               <Signup></Signup>
             </Route>
-            <Route path='/404'>
+            <Route path="/404">
               <NotFound></NotFound>
             </Route>
-            <Redirect to='/404' />
+            <Redirect to="/404" />
           </Switch>
         </StyledWrapper>
       </Router>
