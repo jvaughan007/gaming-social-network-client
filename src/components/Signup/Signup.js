@@ -10,6 +10,9 @@ const Signup = () => {
   );
 };
 
-const StyledMain = styled.main``;
+const StyledMain = styled.main`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+`;
 
 export default Signup;
