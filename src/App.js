@@ -11,6 +11,9 @@ import NotFound from './components/NotFound/NotFound';
 import Signup from './components/Signup/Signup';
 import Chat from './components/Messages/Chat';
 import Login from './components/Login/Login';
+import Games from './components/Games/Games';
+import UserDashboard from './components/UserDashboard/UserDashboard';
+import Game from './components/Game/Game';
 
 const App = () => {
   return (
@@ -22,6 +25,9 @@ const App = () => {
             <Route exact path='/'>
               <Home></Home>
             </Route>
+            <Route exact path='/dashboard'>
+              <UserDashboard></UserDashboard>
+            </Route>
             <Route exact path='/signup'>
               <Signup></Signup>
             </Route>
@@ -30,6 +36,12 @@ const App = () => {
             </Route>
             <Route exact path='/messages'>
               <Chat />
+            </Route>
+            <Route exact path='/games'>
+              <Games></Games>
+            </Route>
+            <Route exact path='/game/:id'>
+              <Game></Game>
             </Route>
             <Route path='/404'>
               <NotFound></NotFound>
