@@ -5,9 +5,9 @@ class CreatePost extends Component {
     super(props);
     this.state = {
       content: "",
-      youtube_url: "",
-      image_url: "",
-      public: "",
+      // youtube_url: "",
+      // image_url: "",
+      // public: "",
     }
   }
 
