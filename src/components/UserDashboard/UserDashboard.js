@@ -5,21 +5,27 @@ import styled from "styled-components";
 const UserDashboard = () => {
   return (
     <>
-      <VertNavBar></VertNavBar>
       <StyledWrapper>
-        <div className="dashboard-content">
-          <div className="activity-feed">
-            <h1>@Gamergame619</h1>
-            <p>Connecting Gamers since 2077</p>
-            <Link to="/create-post">
-              <button>Create Post</button>
-            </Link>
-          </div>
-        </div>
+        <StyledFeed className="dashboard-content">
+            <FeedContent>
+              {/* feed posts mapped over didMount array of post with objects post*/}
+            </FeedContent>
+            <StyledFeed>
       </StyledWrapper>
     </>
   );
 };
+
+const StyledFeed = styled.div`
+  width:  80%;
+  background-color: aqua;
+  height: 202px;
+  border: 1px;
+  border-color: black;
+  `
+const FeedContent = styled.div`
+  color: blue;
+  `
 
 const StyledWrapper = styled.div`
   width: 28.8rem;
