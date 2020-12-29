@@ -85,7 +85,7 @@ const StyledMain = styled.main`
     justify-items: center;
     grid-gap: 4.8rem;
 
-    div {
+    div:first-child {
       h1 {
         font-size: 3.2rem;
       }
