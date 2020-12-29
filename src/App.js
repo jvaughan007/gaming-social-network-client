@@ -11,6 +11,7 @@ import NotFound from './components/NotFound/NotFound';
 import Signup from './components/Signup/Signup';
 import Chat from './components/Messages/Chat';
 import Login from './components/Login/Login';
+import Games from './components/Games/Games';
 
 const App = () => {
   return (
@@ -30,6 +31,9 @@ const App = () => {
             </Route>
             <Route exact path='/messages'>
               <Chat />
+            </Route>
+            <Route exact path='/games'>
+              <Games></Games>
             </Route>
             <Route path='/404'>
               <NotFound></NotFound>
