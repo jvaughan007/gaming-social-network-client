@@ -1,19 +1,48 @@
-import VertNavBar from "../VerticalNavBar/VertNavBar";
+// import VertNavBar from "../VerticalNavBar/VertNavBar";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import React, { Component } from 'react';
 
-const UserDashboard = () => {
-  return (
-    <>
-      <StyledWrapper>
-        <StyledFeed className="dashboard-content">
+class UserDashboard extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      posts: []
+    };
+  }
+
+  componentDidMount = () => {
+    fetch(`http://localhost:3000/posts`)
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      this.setState({
+        posts: res
+      })
+    })
+  }
+
+  render(){
+    return (
+      <>
+        <StyledWrapper>
+          <StyledFeed className="dashboard-content">
             <FeedContent>
-              {/* feed posts mapped over didMount array of post with objects post*/}
+              <ul>
+                {this.state.posts.map((post, index) => (
+                  <li key={post.user_id + index}>
+                    <h3>{post.image_url}</h3>
+                    <h4>{post.youtube_url}</h4>
+                    <p>{post.content}</p>
+                  </li>
+                ))}
+              </ul>
             </FeedContent>
-            <StyledFeed>
-      </StyledWrapper>
-    </>
-  );
+          </StyledFeed>
+        </StyledWrapper>
+      </>
+    );
+  }
 };
 
 const StyledFeed = styled.div`
