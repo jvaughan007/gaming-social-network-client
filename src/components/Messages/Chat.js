@@ -1,45 +1,39 @@
-import React from "react";
-import styled from "styled-components";
-import VertNavBar from "../VerticalNavBar/VertNavBar";
-import { FaExclamationCircle } from "react-icons/fa";
-import store from "./MockChat";
+import React from 'react';
+import styled from 'styled-components';
+import VertNavBar from '../VerticalNavBar/VertNavBar';
+import { FaExclamationCircle } from 'react-icons/fa';
+import store from './MockChat';
 
 const Chat = () => {
-    return (
-        <StyledMain>
-            <div>
-                <div className='chat-sect'></div>
-                <nav>
-                    <VertNavBar />
-                </nav>
-                <h1>Messages</h1>
-                <section className='chat-rooms'>
-                    {store.people.map((person, y) => {
-                        return (
-                            <div className='each-msg' key={y}>
-                                <div className='persons-img'>
-                                    <img src={person.image} alt='person' />
-                                </div>
+  return (
+    <StyledMain>
+      <div>
+        <div className='chat-sect'></div>
+        <nav>
+          <VertNavBar />
+        </nav>
+        <h1>Messages</h1>
+        <section className='chat-rooms'>
+          {store.people.map((person, y) => {
+            return (
+              <div className='each-msg' key={y}>
+                <div className='persons-img'>
+                  <img src={person.image} alt='person' />
+                </div>
 
-                                <div className='message'>
-                                    <span className='person-name'>
-                                        {person.name}
-                                    </span>
-                                    {person.read ? (
-                                        <FaExclamationCircle />
-                                    ) : null}
-                                    <p>{person.recentSentMessage}</p>
-                                    <span className='time-sent'>
-                                        {person.timeSent}
-                                    </span>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </section>
-            </div>
-        </StyledMain>
-    );
+                <div className='message'>
+                  <span className='person-name'>{person.name}</span>
+                  {person.read ? <FaExclamationCircle /> : null}
+                  <p>{person.recentSentMessage}</p>
+                  <span className='time-sent'>{person.timeSent}</span>
+                </div>
+              </div>
+            );
+          })}
+        </section>
+      </div>
+    </StyledMain>
+  );
 };
 
 const StyledMain = styled.main`

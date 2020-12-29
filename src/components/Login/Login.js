@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import SignupForm from './SignupForm';
+import LoginForm from './LoginForm';
 
-const Signup = () => {
+const Login = () => {
   return (
     <>
       <StyledMain>
         <div>
-          <h1>Join the best gaming community in the world!</h1>
+          <h1>Logging into the best gaming community in the world!</h1>
           <ul>
             <li>
               <span>-</span>Create your own gamer profile
@@ -24,9 +24,9 @@ const Signup = () => {
           </ul>
         </div>
         <div>
-          <SignupForm></SignupForm>
-          <Link to='/login'>
-            Already have an account? <span>Login here</span>
+          <LoginForm></LoginForm>
+          <Link to='/signup'>
+            Don't have an account? <span>Signup here</span>
           </Link>
         </div>
       </StyledMain>
@@ -93,4 +93,4 @@ const StyledMain = styled.main`
   }
 `;
 
-export default Signup;
+export default Login;

@@ -49,6 +49,7 @@ const StyledDiv = styled.div`
 `;
 
 const StyledMain = styled.main`
+<<<<<<< HEAD
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -86,6 +87,75 @@ const StyledMain = styled.main`
                 border-radius: 0.4rem;
                 cursor: pointer;
             }
+=======
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .main-content {
+    .cta {
+      padding-left: 1.6rem;
+
+      h1 {
+        background: linear-gradient(to right, #14ffec, #0d7377, white);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: rainbow_animation 10s ease-in-out infinite;
+        background-size: 400% 100%;
+        font-size: 2.8rem;
+      }
+
+      p {
+        color: #fff;
+        font-size: 2rem;
+      }
+
+      button {
+        margin-top: 3.2rem;
+        height: 4.8rem;
+        background: #0d7377;
+        border: none;
+        color: #fff;
+        width: 17rem;
+        border-radius: 0.4rem;
+        cursor: pointer;
+      }
+    }
+
+    .intro-video {
+      display: none;
+    }
+  }
+
+  @media all and (min-width: 700px) {
+    .main-content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 4.2rem;
+
+      .cta {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 0;
+
+        h1 {
+          font-size: 5rem;
+          background: linear-gradient(to right, #14ffec, #0d7377, white);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: rainbow_animation 10s ease-in-out infinite;
+          background-size: 400% 100%;
+        }
+
+        p {
+          color: #fff;
+          font-size: 2.8rem;
+>>>>>>> 6628bde7b335dfa943018dea2111bf2c85ed83af
         }
         .intro-video {
             display: none;

@@ -2,8 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-const SignupForm = () => {
-  const [username, setUsername] = useState('');
+const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState(null);
@@ -19,22 +18,18 @@ const SignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      email.trim() === '' ||
-      username.trim() === '' ||
-      password.trim() === ''
-    ) {
+    if (email.trim() === '' || password.trim() === '') {
       return;
     }
 
     try {
       setErrors(null);
-      const res = await fetch('http://localhost:5000/users', {
+      const res = await fetch('http://localhost:5000/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, email, password })
+        body: JSON.stringify({ email, password })
       });
 
       const data = await res.json();
@@ -63,22 +58,17 @@ const SignupForm = () => {
           </StyledErrors>
         ) : null}
         <input
-          type='text'
-          placeholder='username'
-          onChange={(e) => setUsername(e.target.value)}
-          ref={firstInput}
-        />
-        <input
           type='email'
           placeholder='email'
           onChange={(e) => setEmail(e.target.value)}
+          ref={firstInput}
         />
         <input
           type='password'
           placeholder='password'
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type='submit'>Sign Up</button>
+        <button type='submit'>Login</button>
       </StyledForm>
     </>
   );
@@ -121,4 +111,4 @@ const StyledErrors = styled.div`
   }
 `;
 
-export default SignupForm;
+export default LoginForm;

@@ -9,8 +9,8 @@ import GlobalStyle from './globalStyle';
 import Home from './components/Home/Home';
 import NotFound from './components/NotFound/NotFound';
 import Signup from './components/Signup/Signup';
-import VertNavBar from './components/VerticalNavBar/VertNavBar';
 import Chat from './components/Messages/Chat';
+import Login from './components/Login/Login';
 
 const App = () => {
   return (
@@ -24,6 +24,9 @@ const App = () => {
             </Route>
             <Route exact path='/signup'>
               <Signup></Signup>
+            </Route>
+            <Route exact path='/login'>
+              <Login></Login>
             </Route>
             <Route exact path='/messages'>
               <Chat />
