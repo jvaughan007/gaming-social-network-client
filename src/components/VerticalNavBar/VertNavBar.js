@@ -115,8 +115,8 @@ const StyledMain = styled.main`
         .bm-burger-button {
             width: 3.5rem;
             height: 3rem;
-            left: 4rem;
-            top: 2rem;
+            left: 2rem;
+            top: 1rem;
         }
     }
     .side-bar {
