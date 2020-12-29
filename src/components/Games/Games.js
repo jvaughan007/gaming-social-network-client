@@ -2,6 +2,7 @@ import { useState } from 'react';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
+import noImg from './images/no-image.png';
 
 const Games = () => {
   const [games, setGames] = useState(null);
@@ -54,7 +55,10 @@ const Games = () => {
     return games.map((game) => (
       <SearchResult key={game.id}>
         <div className='image-wrapper'>
-          <img src={game.background_image} alt={game.name} />
+          <img
+            src={game.background_image ? game.background_image : noImg}
+            alt={game.name}
+          />
         </div>
         <div className='game-info'>
           <h3>{game.name}</h3>
