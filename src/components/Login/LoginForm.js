@@ -60,10 +60,14 @@ const LoginForm = () => {
         <input
           type='email'
           placeholder='email'
-          onChange={setEmail}
+          onChange={(e) => setEmail(e.target.value)}
           ref={firstInput}
         />
-        <input type='password' placeholder='password' onChange={setPassword} />
+        <input
+          type='password'
+          placeholder='password'
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type='submit'>Login</button>
       </StyledForm>
     </>

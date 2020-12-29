@@ -65,11 +65,19 @@ const SignupForm = () => {
         <input
           type='text'
           placeholder='username'
-          onChange={setUsername}
+          onChange={(e) => setUsername(e.target.value)}
           ref={firstInput}
         />
-        <input type='email' placeholder='email' onChange={setEmail} />
-        <input type='password' placeholder='password' onChange={setPassword} />
+        <input
+          type='email'
+          placeholder='email'
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type='password'
+          placeholder='password'
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type='submit'>Sign Up</button>
       </StyledForm>
     </>
