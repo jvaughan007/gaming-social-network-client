@@ -12,6 +12,7 @@ import Signup from './components/Signup/Signup';
 import Chat from './components/Messages/Chat';
 import Login from './components/Login/Login';
 import Games from './components/Games/Games';
+import UserDashboard from './components/UserDashboard/UserDashboard';
 
 const App = () => {
   return (
@@ -22,6 +23,9 @@ const App = () => {
           <Switch>
             <Route exact path='/'>
               <Home></Home>
+            </Route>
+            <Route exact path='/dashboard'>
+              <UserDashboard></UserDashboard>
             </Route>
             <Route exact path='/signup'>
               <Signup></Signup>
