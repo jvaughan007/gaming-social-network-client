@@ -8,6 +8,9 @@ const NavBar = () => {
         <li>
           <Link to='/login'>Login</Link>
         </li>
+        <li>
+          <Link to='/signup'>Sign Up</Link>
+        </li>
       </ul>
     </StyledNav>
   );
@@ -31,10 +34,12 @@ const StyledNav = styled.nav`
       cursor: pointer;
       color: #fff;
       font-family: 'Rubik', sans-serif;
-      background-color: #fff;
-      color: #212121;
-      padding: 0.8rem 2.4rem;
-      border-radius: 0.4rem;
+
+      :last-child {
+        background-color: #0d7377;
+        padding: 0.8rem 2.4rem;
+        border-radius: 0.4rem;
+      }
     }
   }
 `;

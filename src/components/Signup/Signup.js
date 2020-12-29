@@ -1,11 +1,10 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import NavBar from '../Home/NavBar/NavBar';
 import SignupForm from './SignupForm';
 
 const Signup = () => {
   return (
     <>
-      <NavBar></NavBar>
       <StyledMain>
         <div>
           <h1>Join the best gaming community in the world!</h1>
@@ -24,7 +23,12 @@ const Signup = () => {
             </li>
           </ul>
         </div>
-        <SignupForm></SignupForm>
+        <div>
+          <SignupForm></SignupForm>
+          <Link to='/login'>
+            Already have an account? <span>Login here</span>
+          </Link>
+        </div>
       </StyledMain>
     </>
   );
@@ -36,9 +40,23 @@ const StyledMain = styled.main`
   margin-top: 8rem;
   grid-gap: 3.2rem;
 
+  a {
+    display: block;
+    margin-top: 3.2rem;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+
+    span {
+      color: #9453d3;
+    }
+  }
+
   div {
     width: 100%;
+  }
 
+  div:first-child {
     h1 {
       color: #fff;
       margin-bottom: 2.4rem;
