@@ -21,8 +21,8 @@ const StyledNav = styled.nav`
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  top: 1.6rem;
   left: 0;
-  padding-top: 3.2rem;
   padding-right: 1.6rem;
 
   ul {
