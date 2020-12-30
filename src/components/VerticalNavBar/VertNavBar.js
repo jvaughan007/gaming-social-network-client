@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 import React from "react";
 import styled from "styled-components";
 import {
@@ -12,7 +12,6 @@ import {
 import { slide as Menu } from "react-burger-menu";
 
 const VertNavBar = () => {
-
     return (
         <StyledMain>
             <Menu width={"19rem"}>
@@ -116,8 +115,8 @@ const StyledMain = styled.main`
         .bm-burger-button {
             width: 3.5rem;
             height: 3rem;
-            left: 4rem;
-            top: 2rem;
+            left: 2rem;
+            top: 1rem;
         }
     }
     .side-bar {

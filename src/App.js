@@ -58,6 +58,23 @@ const StyledWrapper = styled.div`
   width: 28.8rem;
   margin: 0 auto;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    @media (min-width: 576px) {
+        width: 50rem;
+    }
+    @media (min-width: 768px) {
+        width: 70rem;
+    }
+    @media (min-width: 992px) {
+        width: 90rem;
+    }
+    @media (min-width: 1200px) {
+        width: 112rem;
+    }
+=======
+=======
+>>>>>>> 30256d074a4873002ffc92943717e79131ee8af5
   @media (min-width: 576px) {
     width: 50rem;
   }
@@ -73,6 +90,10 @@ const StyledWrapper = styled.div`
   @media (min-width: 1200px) {
     width: 112rem;
   }
+<<<<<<< HEAD
+>>>>>>> 122503f07092a3e4afdd0c150602d6b3e2c45d0f
+=======
+>>>>>>> 30256d074a4873002ffc92943717e79131ee8af5
 `;
 
 export default App;
