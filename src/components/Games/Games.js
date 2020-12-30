@@ -1,13 +1,52 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 import noImg from './images/no-image.png';
+import { parse } from 'query-string';
 
 const Games = () => {
   const [games, setGames] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const searchInput = useRef(null);
+  let history = useHistory();
+  let location = useLocation();
+
+  useEffect(() => {
+    const { search } = parse(location.search);
+
+    if (!search) {
+      return;
+    }
+
+    setSearchQuery(search);
+
+    const getGames = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(
+          `https://api.rawg.io/api/games?key=2a91788799104cdabdd2ed6da39afffb&search=${search}`
+        );
+        const data = await res.json();
+        setGames(data.results);
+        return setLoading(false);
+      } catch (err) {
+        console.log(err);
+        // handle error here
+      }
+    };
+
+    getGames();
+  }, [location.search]);
+
+  const reset = () => {
+    setSearchQuery('');
+    setGames(null);
+    searchInput.current.value = '';
+    return history.push('/games');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,19 +55,7 @@ const Games = () => {
       return;
     }
 
-    try {
-      setLoading(true);
-      const res = await fetch(
-        `https://api.rawg.io/api/games?key=2a91788799104cdabdd2ed6da39afffb&search=${searchQuery}`
-      );
-      const data = await res.json();
-      console.log(data);
-      setGames(data.results);
-      return setLoading(false);
-    } catch (err) {
-      console.log(err);
-      // handle error here
-    }
+    return history.push(`/games?search=${searchQuery.trim()}`);
   };
 
   const renderSearchResults = () => {
@@ -49,11 +76,14 @@ const Games = () => {
     }
 
     if (games && !games.length) {
-      return <h2 class='no-results'>No results found 😞</h2>;
+      return <h2 className='no-results'>No results found 😞</h2>;
     }
 
     return games.map((game) => (
-      <SearchResult key={game.id}>
+      <SearchResult
+        key={game.id}
+        onClick={() => history.push(`/game/${game.id}`)}
+      >
         <div className='image-wrapper'>
           <img
             src={game.background_image ? game.background_image : noImg}
@@ -70,11 +100,21 @@ const Games = () => {
   return (
     <StyledMain>
       <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          placeholder='search for a game...'
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <div>
+          <input
+            type='text'
+            placeholder='search for a game...'
+            defaultValue={searchQuery}
+            ref={searchInput}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery.trim().length ? (
+            <button type='button' onClick={reset}>
+              X
+            </button>
+          ) : null}
+        </div>
+
         <button type='submit'>Search</button>
       </form>
       <SearchResults>{renderSearchResults()}</SearchResults>
@@ -167,12 +207,29 @@ const StyledMain = styled.main`
     height: 4.8rem;
     justify-content: space-between;
 
-    input {
-      padding-left: 0.8rem;
-      border: none;
+    div {
+      height: 100%;
       width: 74%;
-      border-radius: 0.4rem;
-      outline: none;
+      position: relative;
+
+      input {
+        padding-left: 0.8rem;
+        border: none;
+        border-radius: 0.4rem;
+        outline: none;
+        width: 100%;
+        height: 100%;
+      }
+
+      button {
+        position: absolute;
+        top: 1.1rem;
+        right: 1.6rem;
+        width: 2.4rem;
+        border-radius: 20rem;
+        height: 2.4rem;
+        background: gray;
+      }
     }
 
     button {
@@ -186,8 +243,12 @@ const StyledMain = styled.main`
     }
 
     @media (min-width: 576px) {
-      input {
+      div {
         width: 83%;
+
+        input {
+          width: 100%;
+        }
       }
 
       button {
@@ -196,7 +257,7 @@ const StyledMain = styled.main`
     }
 
     @media (min-width: 1200px) {
-      input {
+      div {
         width: 89.5%;
       }
 
