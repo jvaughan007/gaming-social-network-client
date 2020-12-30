@@ -35,14 +35,7 @@ export default function NavBarContents(props) {
                             </button>
                         </Link>
                     </div>
-                    <div className='home-btn'>
-                        <button>
-                            <span>
-                                <FaSignOutAlt />
-                            </span>
-                            <span className='home'>Log Out</span>
-                        </button>
-                    </div>
+
                     <div className='dropdown'>
                         <span className='nav-category'>
                             <span>Connect</span>
@@ -94,6 +87,14 @@ export default function NavBarContents(props) {
                                 </span>
                             </button>
                         </div>
+                    </div>
+                    <div className='home-btn'>
+                        <button>
+                            <span>
+                                <FaSignOutAlt />
+                            </span>
+                            <span className='home'>Log Out</span>
+                        </button>
                     </div>
                 </div>
             </div>
