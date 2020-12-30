@@ -1,7 +1,16 @@
-import styled from "styled-components";
-import VertNavBar from "../VerticalNavBar/VertNavBar";
+import styled from 'styled-components';
+import VertNavBar from '../VerticalNavBar/VertNavBar';
+import React, { useEffect } from 'react';
+import io from 'socket.io-client';
+
+const socket = io();
 
 const Chat = () => {
+    useEffect(() => {
+        socket.on('connect', () => {
+            console.log('Connected to the socket');
+        });
+    });
     return (
         <StyledMain>
             <div>
