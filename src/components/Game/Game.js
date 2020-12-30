@@ -56,7 +56,11 @@ const Game = () => {
     return game ? (
       <StyledMain className="gamePage_gameContainer">
         <div className="gamePage_title">
-          <h1>{game.name}</h1>
+          <h1>
+            <span className="titleText">
+              {game.name}
+            </span>
+          </h1>
         </div>
       
         <div className="gamePage_details">
@@ -98,6 +102,15 @@ const StyledMain = styled.main`
 
   div.gamePage_title {
     margin: 3rem 0 0 5rem;
+    
+  }
+
+  div.gamePage_title h1 .titleText {
+    border-style: inset;
+    border-radius: .4rem;
+    padding: 1rem;
+    color: white;
+    background-color: #252222;
   }
 
   div.gamePage_details {
@@ -105,6 +118,11 @@ const StyledMain = styled.main`
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1.6rem;
     margin-bottom: 3rem;
+    border-style: inset;
+    border-radius: .4rem;
+    margin: 3rem;
+    padding: 3rem;
+    background-color: black;
   }
 
   div.gamePage_image {
@@ -118,6 +136,8 @@ const StyledMain = styled.main`
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
+    margin-bottom: 2rem;
+    max-height: 40rem;
   }
   
 
