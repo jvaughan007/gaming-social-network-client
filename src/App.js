@@ -1,10 +1,15 @@
+import { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Redirect,
   Route,
   Switch
 } from 'react-router-dom';
+<<<<<<< HEAD
 import socketIOClient from 'socket.io-client';
+=======
+// import socketIOClient from 'socket.io-client';
+>>>>>>> socket
 import styled from 'styled-components';
 import GlobalStyle from './globalStyle';
 import Home from './components/Home/Home';
@@ -17,7 +22,23 @@ import UserDashboard from './components/UserDashboard/UserDashboard';
 import Game from './components/Game/Game';
 
 const App = () => {
-  const socket = socketIOClient('http://localhost:5000');
+  // useEffect(() => {
+  //   const socket = socketIOClient('ws://localhost:5000');
+  //   // socket.on('message', (data) => {
+  //   //   console.log(data);
+  //   // });
+  //   socket.emit('message', {
+  //     user_id: 1,
+  //     conv_id: 420,
+  //     msg: 'from react msg hi bye this working?'
+  //   });
+
+  //   socket.on('message', (msg) => {
+  //     console.log(msg);
+  //   });
+
+  //   return () => socket.disconnect();
+  // }, []);
 
   return (
     <>
