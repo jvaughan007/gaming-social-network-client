@@ -1,15 +1,10 @@
-import { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Redirect,
   Route,
   Switch
 } from 'react-router-dom';
-<<<<<<< HEAD
-import socketIOClient from 'socket.io-client';
-=======
-// import socketIOClient from 'socket.io-client';
->>>>>>> socket
+
 import styled from 'styled-components';
 import GlobalStyle from './globalStyle';
 import Home from './components/Home/Home';
@@ -47,7 +42,7 @@ const App = () => {
         <StyledWrapper>
           <Switch>
             <Route exact path='/'>
-              <Home socket={socket}></Home>
+              <Home></Home>
             </Route>
             <Route exact path='/dashboard'>
               <UserDashboard></UserDashboard>
