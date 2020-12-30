@@ -17,6 +17,7 @@ import UserDashboard from './components/UserDashboard/UserDashboard';
 import Game from './components/Game/Game';
 
 const App = () => {
+<<<<<<< HEAD
     // useEffect(() => {
     //   const socket = socketIOClient('ws://localhost:5000');
     //   // socket.on('message', (data) => {
@@ -27,6 +28,67 @@ const App = () => {
     //     conv_id: 420,
     //     msg: 'from react msg hi bye this working?'
     //   });
+=======
+  // useEffect(() => {
+  //   const socket = socketIOClient('ws://localhost:5000');
+  //   // socket.on('message', (data) => {
+  //   //   console.log(data);
+  //   // });
+  //   socket.emit('message', {
+  //     user_id: 1,
+  //     conv_id: 420,
+  //     msg: 'from react msg hi bye this working?'
+  //   });
+
+  //   socket.on('message', (msg) => {
+  //     console.log(msg);
+  //   });
+
+  //   return () => socket.disconnect();
+  // }, []);
+
+  return (
+    <>
+      <Router>
+        <GlobalStyle></GlobalStyle>
+        <StyledWrapper>
+          <Switch>
+            <Route exact path='/'>
+              <Home></Home>
+            </Route>
+            <Route exact path='/dashboard'>
+              <UserDashboard></UserDashboard>
+            </Route>
+            <Route exact path='/signup'>
+              <Signup></Signup>
+            </Route>
+            <Route exact path='/login'>
+              <Login></Login>
+            </Route>
+            <Route exact path='/messages'>
+              <Chat />
+            </Route>
+            <Route exact path='/games'>
+              <Games></Games>
+            </Route>
+            <Route exact path='/game/:id'>
+              <Game></Game>
+            </Route>
+            <Route path='/404'>
+              <NotFound></NotFound>
+            </Route>
+            <Redirect to='/404' />
+          </Switch>
+        </StyledWrapper>
+      </Router>
+    </>
+  );
+};
+
+const StyledWrapper = styled.div`
+  width: 28.8rem;
+  margin: 0 auto;
+>>>>>>> 25ad0d7ea000359f7911bdbdf13ce9a3d7906623
 
     //   socket.on('message', (msg) => {
     //     console.log(msg);
