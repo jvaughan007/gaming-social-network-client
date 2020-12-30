@@ -4,6 +4,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import socketIOClient from 'socket.io-client';
 import styled from 'styled-components';
 import GlobalStyle from './globalStyle';
 import Home from './components/Home/Home';
@@ -16,6 +17,8 @@ import UserDashboard from './components/UserDashboard/UserDashboard';
 import Game from './components/Game/Game';
 
 const App = () => {
+  const socket = socketIOClient('http://localhost:5000');
+
   return (
     <>
       <Router>
@@ -23,7 +26,7 @@ const App = () => {
         <StyledWrapper>
           <Switch>
             <Route exact path='/'>
-              <Home></Home>
+              <Home socket={socket}></Home>
             </Route>
             <Route exact path='/dashboard'>
               <UserDashboard></UserDashboard>
