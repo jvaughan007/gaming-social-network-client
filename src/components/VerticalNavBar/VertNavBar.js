@@ -1,97 +1,31 @@
-import { Link } from "react-router-dom";
 import React from "react";
 import styled from "styled-components";
-import {
-    FaHome,
-    FaSortDown,
-    FaUsers,
-    FaSms,
-    FaUserFriends,
-    FaGamepad,
-} from "react-icons/fa";
+import NavContent from "./NavBarContents";
+
 import { slide as Menu } from "react-burger-menu";
 
 const VertNavBar = () => {
     return (
         <StyledMain>
-            <Menu width={"19rem"}>
-                <div>
-                    <div className='side-bar'>
-                        <div className='logo'>
-                            <span>Icon</span>
-                            <span className='nav-title'>GSN</span>
-                        </div>
-                        <section className='search-field'>
-                            <input type='text' placeholder='Search...'></input>
-                        </section>
-                        <div className='home-btn'>
-                            <button>
-                                <span>
-                                    <FaHome />
-                                </span>
-                                <span className='home'>Home</span>
-                            </button>
-                        </div>
-                        <div className='dropdown'>
-                            <span className='nav-category'>
-                                <span>Connect</span>
-                                <span className='carrot-down'>
-                                    <FaSortDown />
-                                </span>
-                            </span>
-                            <div className='dropdown-content'>
-                                <button>
-                                    <span>
-                                        <FaUsers />
-                                    </span>
-                                    <span className='dd-label'>Groups</span>
-                                </button>
-                                <button>
-                                    <span>
-                                        <FaSms />
-                                    </span>
-                                    <span className='dd-label'>Chat</span>
-                                </button>
-                                <button>
-                                    <span>
-                                        <FaUserFriends />
-                                    </span>
-                                    <span className='dd-label'>Friends</span>
-                                </button>
-                                <button>
-                                    <span>
-                                        <FaGamepad />
-                                    </span>
-                                    <span className='dd-label'>Games</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div className='dropdown'>
-                            <span className='nav-category'>
-                                <span>Create</span>
-                                <span className='carrot-down'>
-                                    <FaSortDown />
-                                </span>
-                            </span>
-                            <div className='dropdown-content'>
-                                <button>
-                                    <span>
-                                        <FaUsers />
-                                    </span>
-                                    <span className='dd-label'>
-                                        Create new Group
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Menu>
+            <div className='mobile-view'>
+                <Menu width={"20rem"}>
+                    <NavContent />
+                </Menu>
+            </div>
+            <div className='desktop-view'>
+                <NavContent />
+            </div>
         </StyledMain>
     );
 };
 
 const StyledMain = styled.main`
+    .desktop-view {
+        display: none;
+    }
+    .mobile-view {
+        display: block;
+    }
     .bm-burger-button {
         position: fixed;
         width: 2.5rem;
@@ -111,19 +45,11 @@ const StyledMain = styled.main`
     .bm-cross {
         background: white;
     }
-    @media all and (min-width: 700px) {
-        .bm-burger-button {
-            width: 3.5rem;
-            height: 3rem;
-            left: 2rem;
-            top: 1rem;
-        }
-    }
+
     .side-bar {
-        width: 19rem;
+        width: 20rem;
         height: 100%;
         position: fixed;
-        overflow: auto;
         background-color: #323232;
 
         .logo {
@@ -201,6 +127,22 @@ const StyledMain = styled.main`
             .dd-label {
                 margin-left: 1rem;
             }
+        }
+    }
+    @media all and (min-width: 700px) {
+        .bm-burger-button {
+            width: 3.5rem;
+            height: 3rem;
+            left: 2rem;
+            top: 1rem;
+        }
+
+        .mobile-view {
+            display: none;
+        }
+
+        .desktop-view {
+            display: block;
         }
     }
 `;
