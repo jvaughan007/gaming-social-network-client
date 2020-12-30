@@ -35,7 +35,7 @@ const App = () => {
                         <Route exact path='/login'>
                             <Login></Login>
                         </Route>
-                        <Route exact path='/messages'>
+                        <Route exact path='/chat'>
                             <Chat />
                         </Route>
                         <Route exact path='/games'>

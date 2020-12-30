@@ -1,8 +1,19 @@
 import styled from 'styled-components';
 import VertNavBar from '../VerticalNavBar/VertNavBar';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
 const Chat = () => {
+    const [text, setText] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!text.trim().length) {
+            return;
+        }
+        console.log(text);
+    };
+
     return (
         <StyledMain>
             <div>
@@ -11,6 +22,13 @@ const Chat = () => {
                     <VertNavBar />
                 </nav>
                 <h1>Messages</h1>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type='text'
+                        onChange={(e) => setText(e.target.value)}
+                    />
+                    <button type='submit'>Submit</button>
+                </form>
             </div>
         </StyledMain>
     );
