@@ -39,19 +39,19 @@ const StyledMain = styled.main`
     margin: 0 auto;
 
     @media (min-width: 576px) {
-    width: 50rem;
+        width: 50rem;
     }
 
     @media (min-width: 768px) {
-    width: 70rem;
+        width: 70rem;
     }
 
     @media (min-width: 992px) {
-    width: 90rem;
+        width: 90rem;
     }
 
     @media (min-width: 1200px) {
-    width: 112rem;
+        width: 112rem;
     }
     .chat-sect {
         background-color: #212121;
@@ -60,7 +60,7 @@ const StyledMain = styled.main`
         height: 100vh;
         position: absolute;
         left: 0;
-        z-index: -1000;s
+        z-index: -1000;
     }
 
     nav {
@@ -68,14 +68,12 @@ const StyledMain = styled.main`
         left: 0;
     }
 
-    h1{
+    h1 {
         color: white;
         padding-top: 1rem;
         margin-bottom: 2rem;
         text-align: center;
-
     }
-
 `;
 
 export default Chat;

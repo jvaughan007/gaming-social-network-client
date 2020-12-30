@@ -14,6 +14,7 @@ import Login from './components/Login/Login';
 import Games from './components/Games/Games';
 import UserDashboard from './components/UserDashboard/UserDashboard';
 import Game from './components/Game/Game';
+import UserProfile from './components/UserProfile/UserProfile';
 import { SocketProvider } from './SocketProvider';
 
 const App = () => {
@@ -43,6 +44,9 @@ const App = () => {
                         </Route>
                         <Route exact path='/game/:id'>
                             <Game></Game>
+                        </Route>
+                        <Route exact path='/:username'>
+                            <UserProfile />
                         </Route>
                         <Route path='/404'>
                             <NotFound></NotFound>
