@@ -3,7 +3,7 @@ import socketIOClient from 'socket.io-client';
 import styled from 'styled-components';
 import VertNavBar from '../VerticalNavBar/VertNavBar';
 
-const socket = socketIOClient('ws://gaming-social-network.herokuapp.com');
+const socket = socketIOClient('https://gaming-social-network.herokuapp.com');
 
 const Chat = () => {
   const [text, setText] = useState('');
