@@ -10,7 +10,7 @@ import GlobalStyle from './globalStyle';
 import Home from './components/Home/Home';
 import NotFound from './components/NotFound/NotFound';
 import Signup from './components/Signup/Signup';
-import Chat from './components/Messages/Chat';
+import Chat from './components/Chat/Chat';
 import Login from './components/Login/Login';
 import Games from './components/Games/Games';
 import UserDashboard from './components/UserDashboard/UserDashboard';
@@ -53,7 +53,7 @@ const App = () => {
             <Route exact path='/login'>
               <Login></Login>
             </Route>
-            <Route exact path='/messages'>
+            <Route exact path='/chats'>
               <Chat />
             </Route>
             <Route exact path='/games'>
