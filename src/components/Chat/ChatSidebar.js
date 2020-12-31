@@ -8,7 +8,7 @@ const ChatSidebar = () => {
       <button>
         <img src={addIcon} alt='Add Icon' /> New Conversation
       </button>
-
+      {/* 131B21 - 1F2731 - 192229 - */}
       <ul>
         <li>
           <img src={avatar} alt='Avatar' />
@@ -48,7 +48,6 @@ const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 8rem);
 
   button {
     margin-top: 2.4rem;
@@ -57,7 +56,7 @@ const StyledDiv = styled.div`
     border-radius: 0.4rem;
     border: none;
     background: #9453d3;
-    color: #fff;
+    color: ${({ theme }) => theme.colors.white};
     display: flex;
     justify-content: center;
     align-items: center;

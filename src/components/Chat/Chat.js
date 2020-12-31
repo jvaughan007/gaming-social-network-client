@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import socketIOClient from 'socket.io-client';
 import styled from 'styled-components';
-import VertNavBar from '../VerticalNavBar/VertNavBar';
 import ChatHeader from './ChatHeader';
 import ChatSidebar from './ChatSidebar';
 import ChatWindow from './ChatWindow';
@@ -42,20 +41,16 @@ const Chat = () => {
 
   return (
     <StyledMain>
-      <ChatHeader></ChatHeader>
-      <div className='bottom-row'>
-        <ChatSidebar></ChatSidebar>
-        <ChatWindow></ChatWindow>
-      </div>
+      <ChatSidebar></ChatSidebar>
+      <ChatWindow></ChatWindow>
     </StyledMain>
   );
 };
 
 const StyledMain = styled.main`
-  .bottom-row {
-    display: grid;
-    grid-template-columns: 30% 70%;
-  }
+  display: grid;
+  grid-template-columns: 30% 70%;
+  height: 100vh;
 `;
 
 const StyledMessages = styled.div`
