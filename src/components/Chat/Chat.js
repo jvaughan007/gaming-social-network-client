@@ -25,20 +25,20 @@ const Chat = () => {
     // return () => socket.disconnect();
   }, [messages]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    if (!text.trim().length) {
-      return;
-    }
+  //   if (!text.trim().length) {
+  //     return;
+  //   }
 
-    socket.emit('message', {
-      token: localStorage.getItem('jwt'),
-      text
-    });
-    messageInput.current.value = '';
-    return setText('');
-  };
+  //   socket.emit('message', {
+  //     token: localStorage.getItem('jwt'),
+  //     text
+  //   });
+  //   messageInput.current.value = '';
+  //   return setText('');
+  // };
 
   return (
     <StyledMain>
