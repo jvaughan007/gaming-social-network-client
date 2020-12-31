@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import socketIOClient from 'socket.io-client';
 import styled from 'styled-components';
-import ChatHeader from './ChatHeader';
+// import ChatHeader from './ChatHeader';
 import ChatSidebar from './ChatSidebar';
 import ChatWindow from './ChatWindow';
+import { API_URL } from '../../config';
 
-const socket = socketIOClient('http://localhost:5000');
+const socket = socketIOClient(API_URL);
 
 const Chat = () => {
   const [text, setText] = useState('');
