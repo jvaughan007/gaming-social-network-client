@@ -87,7 +87,7 @@ const App = () => {
 };
 
 const StyledWrapper = styled.div`
-  width: 28.8rem;
+  /* width: 28.8rem;
   margin: 0 auto;
 
   @media (min-width: 576px) {
@@ -104,7 +104,7 @@ const StyledWrapper = styled.div`
 
   @media (min-width: 1200px) {
     width: 112rem;
-  }
+  } */
 `;
 
 export default App;
