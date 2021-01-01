@@ -17,18 +17,6 @@ import UserDashboard from './components/UserDashboard/UserDashboard';
 import Game from './components/Game/Game';
 
 const App = () => {
-<<<<<<< HEAD
-    // useEffect(() => {
-    //   const socket = socketIOClient('ws://localhost:5000');
-    //   // socket.on('message', (data) => {
-    //   //   console.log(data);
-    //   // });
-    //   socket.emit('message', {
-    //     user_id: 1,
-    //     conv_id: 420,
-    //     msg: 'from react msg hi bye this working?'
-    //   });
-=======
   // useEffect(() => {
   //   const socket = socketIOClient('ws://localhost:5000');
   //   // socket.on('message', (data) => {
@@ -88,7 +76,6 @@ const App = () => {
 const StyledWrapper = styled.div`
   width: 28.8rem;
   margin: 0 auto;
->>>>>>> 25ad0d7ea000359f7911bdbdf13ce9a3d7906623
 
     //   socket.on('message', (msg) => {
     //     console.log(msg);
