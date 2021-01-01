@@ -1,14 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import NavContent from "./NavBarContents";
+import React from 'react';
+import styled from 'styled-components';
+import NavContent from './NavBarContents';
 
-import { slide as Menu } from "react-burger-menu";
+import { slide as Menu } from 'react-burger-menu';
 
 const VertNavBar = () => {
     return (
         <StyledMain>
             <div className='mobile-view'>
-                <Menu width={"20rem"}>
+                <Menu width={'20rem'}>
                     <NavContent />
                 </Menu>
             </div>
@@ -39,6 +39,7 @@ const StyledMain = styled.main`
     .bm-cross-button {
         height: 24px;
         width: 24px;
+        z-index: 1000;
     }
 
     /* Color/shape of close button cross */

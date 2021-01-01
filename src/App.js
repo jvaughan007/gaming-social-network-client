@@ -15,6 +15,7 @@ import Login from './components/Login/Login';
 import Games from './components/Games/Games';
 import UserDashboard from './components/UserDashboard/UserDashboard';
 import Game from './components/Game/Game';
+import UserProfile from './components/UserProfile/UserProfile';
 
 const App = () => {
     // useEffect(() => {
@@ -58,6 +59,9 @@ const App = () => {
                         </Route>
                         <Route exact path='/games'>
                             <Games></Games>
+                        </Route>
+                        <Route exact path='/:username'>
+                            <UserProfile />
                         </Route>
                         <Route exact path='/game/:id'>
                             <Game></Game>
