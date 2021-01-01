@@ -4,7 +4,6 @@ const ChatHeader = () => {
   return (
     <StyledHeader>
       <h1>Chat</h1>
-      <button>New Chat</button>
     </StyledHeader>
   );
 };

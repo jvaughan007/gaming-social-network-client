@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import socketIOClient from 'socket.io-client';
 import styled from 'styled-components';
-import VertNavBar from '../VerticalNavBar/VertNavBar';
-import ChatHeader from './ChatHeader';
+// import ChatHeader from './ChatHeader';
 import ChatSidebar from './ChatSidebar';
 import ChatWindow from './ChatWindow';
+import { API_URL } from '../../config';
 
-const socket = socketIOClient('http://localhost:5000');
+const socket = socketIOClient(API_URL);
 
 const Chat = () => {
   const [text, setText] = useState('');
@@ -25,37 +25,33 @@ const Chat = () => {
     // return () => socket.disconnect();
   }, [messages]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    if (!text.trim().length) {
-      return;
-    }
+  //   if (!text.trim().length) {
+  //     return;
+  //   }
 
-    socket.emit('message', {
-      token: localStorage.getItem('jwt'),
-      text
-    });
-    messageInput.current.value = '';
-    return setText('');
-  };
+  //   socket.emit('message', {
+  //     token: localStorage.getItem('jwt'),
+  //     text
+  //   });
+  //   messageInput.current.value = '';
+  //   return setText('');
+  // };
 
   return (
     <StyledMain>
-      <ChatHeader></ChatHeader>
-      <div className='bottom-row'>
-        <ChatSidebar></ChatSidebar>
-        <ChatWindow></ChatWindow>
-      </div>
+      <ChatSidebar></ChatSidebar>
+      <ChatWindow></ChatWindow>
     </StyledMain>
   );
 };
 
 const StyledMain = styled.main`
-  .bottom-row {
-    display: grid;
-    grid-template-columns: 30% 70%;
-  }
+  display: grid;
+  grid-template-columns: 30% 70%;
+  height: 100vh;
 `;
 
 const StyledMessages = styled.div`
