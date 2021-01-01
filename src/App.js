@@ -15,6 +15,7 @@ import Games from './components/Games/Games';
 import UserDashboard from './components/UserDashboard/UserDashboard';
 import UserProfile from './components/UserProfile/UserProfile';
 import Game from './components/Game/Game';
+import UserProfile from './components/UserProfile/UserProfile';
 
 const App = () => {
     // useEffect(() => {
