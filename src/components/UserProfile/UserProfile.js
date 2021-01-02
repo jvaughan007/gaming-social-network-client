@@ -182,81 +182,81 @@ const StyledMain = styled.main`
     }
 
     @media all and (min-width: 750px) {
-        .user-profile {
-            width: 70%;
-            height: 100%;
-            position: fixed;
-            left: 20rem;
+        //     .user-profile {
+        //         width: 70%;
+        //         height: 100%;
+        //         position: fixed;
+        //         left: 20rem;
 
-            .header {
-                position: fixed;
-                top: 0;
-                width: 70%;
-                height: 25rem;
+        //         .header {
+        //             position: fixed;
+        //             top: 0;
+        //             width: 70%;
+        //             height: 25rem;
 
-                .banner-img {
-                    width: 100%;
-                    height: 100%;
-                    opacity: 0.6;
-                }
+        //             .banner-img {
+        //                 width: 100%;
+        //                 height: 100%;
+        //                 opacity: 0.6;
+        //             }
 
-                .user-tags-img {
-                    position: absolute;
-                    bottom: 7rem;
-                    display: flex;
-                    img {
-                        width: 8rem;
-                        height: 8rem;
-                        margin-left: 5rem;
-                        border-radius: 10rem;
-                        margin-right: 2rem;
-                    }
-                    .user-tags {
-                        color: white;
-                        display: flex;
-                        flex-direction: column;
-                        font-size: 3.5rem;
+        //             .user-tags-img {
+        //                 position: absolute;
+        //                 bottom: 7rem;
+        //                 display: flex;
+        //                 img {
+        //                     width: 8rem;
+        //                     height: 8rem;
+        //                     margin-left: 5rem;
+        //                     border-radius: 10rem;
+        //                     margin-right: 2rem;
+        //                 }
+        //                 .user-tags {
+        //                     color: white;
+        //                     display: flex;
+        //                     flex-direction: column;
+        //                     font-size: 3.5rem;
 
-                        .user-gamertag {
-                            font-size: 2.4rem;
-                        }
-                    }
-                }
-                .edit-profile-btn {
-                    font-size: 1.7rem;
-                    bottom: 0;
-                    top: 19rem;
+        //                     .user-gamertag {
+        //                         font-size: 2.4rem;
+        //                     }
+        //                 }
+        //             }
+        //             .edit-profile-btn {
+        //                 font-size: 1.7rem;
+        //                 bottom: 0;
+        //                 top: 19rem;
 
-                    button {
-                        padding: 0.75rem 1rem 0.75rem 1rem;
-                        border: none;
-                    }
-                }
-                .control-center {
-                    position: absolute;
-                    bottom: 1rem;
-                    display: flex;
-                    height: 5rem;
-                    padding-left: 5rem;
+        //                 button {
+        //                     padding: 0.75rem 1rem 0.75rem 1rem;
+        //                     border: none;
+        //                 }
+        //             }
+        //             .control-center {
+        //                 position: absolute;
+        //                 bottom: 1rem;
+        //                 display: flex;
+        //                 height: 5rem;
+        //                 padding-left: 5rem;
 
-                    button {
-                        margin-right: 2rem;
-                        color: white;
-                        border: none;
-                        background-color: transparent;
-                        padding: 2rem;
-                    }
-                    button:focus {
-                        border-bottom: solid 1px white;
-                        outline: none;
-                    }
-                }
-            }
-            .user-body {
-                position: relative;
-                top: 26rem;
-            }
-        }
+        //                 button {
+        //                     margin-right: 2rem;
+        //                     color: white;
+        //                     border: none;
+        //                     background-color: transparent;
+        //                     padding: 2rem;
+        //                 }
+        //                 button:focus {
+        //                     border-bottom: solid 1px white;
+        //                     outline: none;
+        //                 }
+        //             }
+        //         }
+        //         .user-body {
+        //             position: relative;
+        //             top: 26rem;
+        //         }
+        //     }
     }
 `;
 
