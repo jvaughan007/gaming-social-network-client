@@ -1,6 +1,9 @@
 import React, { Component, useState, useEffect } from 'react';
 import VertNavBar from '../VerticalNavBar/VertNavBar';
 import { Route, Switch, Link } from 'react-router-dom';
+import UserAbout from './UserAbout/UserAbout';
+import UserGames from './UserGames/UserGames';
+import UserImages from './UserImages/UserImages';
 
 import styled from 'styled-components';
 
@@ -45,11 +48,13 @@ const UserProfile = () => {
                             className='banner-img'
                         ></img>
                         <div className='user-tags-img'>
-                            <img
-                                src={profile.profile_url}
-                                alt='users default'
-                                className='user-image'
-                            ></img>
+                            <a href={`/${username}`}>
+                                <img
+                                    src={profile.profile_url}
+                                    alt='users default'
+                                    className='user-image'
+                                ></img>
+                            </a>
                             <div className='user-tags'>
                                 <span>{username}</span>
                                 <span className='user-gamertag'>
@@ -81,12 +86,17 @@ const UserProfile = () => {
                         </div>
                     </div>
                     <div className='user-body'>
-                        <h1>stuff here</h1>
                         <Switch>
                             <Route exact path='/editProfile'></Route>
-                            <Route exact path='/userAbout'></Route>
-                            <Route exact path='/userGames'></Route>
-                            <Route exact path='/userImages'></Route>
+                            <Route exact path='/userAbout'>
+                                <UserAbout />
+                            </Route>
+                            <Route exact path='/userGames'>
+                                <UserGames />
+                            </Route>
+                            <Route exact path='/userImages'>
+                                <UserImages />
+                            </Route>
                         </Switch>
                     </div>
                 </div>
@@ -177,86 +187,88 @@ const StyledMain = styled.main`
         }
         .user-body {
             position: relative;
-            top: 26rem;
+            height: 100%;
+            top: 20rem;
+            background-color: #9453d3;
         }
     }
 
     @media all and (min-width: 750px) {
-        //     .user-profile {
-        //         width: 70%;
-        //         height: 100%;
-        //         position: fixed;
-        //         left: 20rem;
+        .user-profile {
+            width: 70%;
+            height: 100%;
+            position: fixed;
+            left: 20rem;
 
-        //         .header {
-        //             position: fixed;
-        //             top: 0;
-        //             width: 70%;
-        //             height: 25rem;
+            .header {
+                position: fixed;
+                top: 0;
+                width: 70%;
+                height: 25rem;
 
-        //             .banner-img {
-        //                 width: 100%;
-        //                 height: 100%;
-        //                 opacity: 0.6;
-        //             }
+                .banner-img {
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0.6;
+                }
 
-        //             .user-tags-img {
-        //                 position: absolute;
-        //                 bottom: 7rem;
-        //                 display: flex;
-        //                 img {
-        //                     width: 8rem;
-        //                     height: 8rem;
-        //                     margin-left: 5rem;
-        //                     border-radius: 10rem;
-        //                     margin-right: 2rem;
-        //                 }
-        //                 .user-tags {
-        //                     color: white;
-        //                     display: flex;
-        //                     flex-direction: column;
-        //                     font-size: 3.5rem;
+                .user-tags-img {
+                    position: absolute;
+                    bottom: 7rem;
+                    display: flex;
+                    img {
+                        width: 8rem;
+                        height: 8rem;
+                        margin-left: 5rem;
+                        border-radius: 10rem;
+                        margin-right: 2rem;
+                    }
+                    .user-tags {
+                        color: white;
+                        display: flex;
+                        flex-direction: column;
+                        font-size: 3.5rem;
 
-        //                     .user-gamertag {
-        //                         font-size: 2.4rem;
-        //                     }
-        //                 }
-        //             }
-        //             .edit-profile-btn {
-        //                 font-size: 1.7rem;
-        //                 bottom: 0;
-        //                 top: 19rem;
+                        .user-gamertag {
+                            font-size: 2.4rem;
+                        }
+                    }
+                }
+                .edit-profile-btn {
+                    font-size: 1.7rem;
+                    bottom: 0;
+                    top: 19rem;
 
-        //                 button {
-        //                     padding: 0.75rem 1rem 0.75rem 1rem;
-        //                     border: none;
-        //                 }
-        //             }
-        //             .control-center {
-        //                 position: absolute;
-        //                 bottom: 1rem;
-        //                 display: flex;
-        //                 height: 5rem;
-        //                 padding-left: 5rem;
+                    button {
+                        padding: 0.75rem 1rem 0.75rem 1rem;
+                        border: none;
+                    }
+                }
+                .control-center {
+                    position: absolute;
+                    bottom: 1rem;
+                    display: flex;
+                    height: 5rem;
+                    padding-left: 5rem;
 
-        //                 button {
-        //                     margin-right: 2rem;
-        //                     color: white;
-        //                     border: none;
-        //                     background-color: transparent;
-        //                     padding: 2rem;
-        //                 }
-        //                 button:focus {
-        //                     border-bottom: solid 1px white;
-        //                     outline: none;
-        //                 }
-        //             }
-        //         }
-        //         .user-body {
-        //             position: relative;
-        //             top: 26rem;
-        //         }
-        //     }
+                    button {
+                        margin-right: 2rem;
+                        color: white;
+                        border: none;
+                        background-color: transparent;
+                        padding: 2rem;
+                    }
+                    button:focus {
+                        border-bottom: solid 1px white;
+                        outline: none;
+                    }
+                }
+            }
+            .user-body {
+                position: relative;
+                top: 26rem;
+            }
+        }
     }
 `;
 
