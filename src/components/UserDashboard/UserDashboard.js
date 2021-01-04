@@ -27,6 +27,7 @@ class UserDashboard extends Component {
       });
       const data = await res.json();
       console.log(data);
+      this.setState({posts: data.posts})
       // do something with the data here
     } catch(err) {
       console.log(err);
@@ -38,14 +39,22 @@ class UserDashboard extends Component {
     e.preventDefault();
   };
 
+  addPost = (post) => {
+    console.log(post);
+    this.setState(prevState => ({ 
+      posts: [...prevState.posts, post]
+    }))
+    //update state to include post
+  }
+
   render() {
     return this.state.posts ? (
       <StyledMain>
         <StyledFeed className="dashboard-content">
-          <CreatePost />
+          <CreatePost addPost={this.addPost}/>
           <FeedContent>
             {this.state.posts.map((post) => (
-              <li key={post.user_id}>
+              <li key={post.entity_id}>
                 <img src={ellipseIcon} alt="More Options" className="ellipse" />
                 <div className="post-user-info">
                   <img

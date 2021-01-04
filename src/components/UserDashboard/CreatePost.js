@@ -27,7 +27,7 @@ class CreatePost extends Component {
         body: JSON.stringify({text: post_text})  
       });
       const data = await res.json();
-      console.log(data);
+      this.props.addPost(data.post);
       // do something with the data here
     } catch(err) {
       console.log(err);
