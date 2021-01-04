@@ -68,8 +68,7 @@ const StyledMain = styled.main`
                 color: white;
                 margin: 1.2rem 0 1.2rem 0.4rem;
                 border: none;
-                font-size: 4rem;
-                transition: 0.5s;
+                font-size: 4.5rem;
             }
         }
 
@@ -135,9 +134,18 @@ const StyledMain = styled.main`
                 margin-left: 1rem;
             }
         }
+
+        .settings-btn {
+            position: fixed;
+            bottom: 6rem;
+        }
         .log-out {
             position: fixed;
             bottom: 1.5rem;
+
+            span {
+                color: red;
+            }
         }
     }
     @media all and (min-width: 700px) {

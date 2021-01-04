@@ -7,6 +7,7 @@ import {
     FaGamepad,
     FaSignOutAlt,
     FaIdBadge,
+    FaCog,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -84,6 +85,7 @@ export default function NavBarContents(props) {
                             </button>
                         </div>
                     </div>
+
                     <div className='dropdown'>
                         <span className='nav-category'>
                             <span className='category'>Create</span>
@@ -99,6 +101,16 @@ export default function NavBarContents(props) {
                             </button>
                         </div>
                     </div>
+
+                    <div className='home-btn settings-btn'>
+                        <button>
+                            <span>
+                                <FaCog />
+                            </span>
+                            <span className='home'>Settings</span>
+                        </button>
+                    </div>
+
                     <div className='home-btn log-out'>
                         <button>
                             <span>
