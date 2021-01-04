@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     FaHome,
     FaSortDown,
@@ -7,8 +7,9 @@ import {
     FaUserFriends,
     FaGamepad,
     FaSignOutAlt,
-} from "react-icons/fa";
-import { Link } from "react-router-dom";
+    FaIdBadge,
+} from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function NavBarContents(props) {
     return (
@@ -31,17 +32,28 @@ export default function NavBarContents(props) {
                                 <span>
                                     <FaHome />
                                 </span>
-                                <span className='home'>Home</span>
+                                <span className='home'>Dashboard</span>
+                            </button>
+                        </Link>
+                    </div>
+
+                    <div className='home-btn'>
+                        <Link
+                            to='/:username'
+                            onClick={(event) => event.preventDefault()}
+                        >
+                            <button>
+                                <span>
+                                    <FaIdBadge />
+                                </span>
+                                <span className='home'>Profile</span>
                             </button>
                         </Link>
                     </div>
 
                     <div className='dropdown'>
                         <span className='nav-category'>
-                            <span>Connect</span>
-                            <span className='carrot-down'>
-                                <FaSortDown />
-                            </span>
+                            <span className='category'>Connect</span>
                         </span>
                         <div className='dropdown-content'>
                             <button>
@@ -72,10 +84,7 @@ export default function NavBarContents(props) {
                     </div>
                     <div className='dropdown'>
                         <span className='nav-category'>
-                            <span>Create</span>
-                            <span className='carrot-down'>
-                                <FaSortDown />
-                            </span>
+                            <span className='category'>Create</span>
                         </span>
                         <div className='dropdown-content'>
                             <button>

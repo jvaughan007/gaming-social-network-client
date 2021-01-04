@@ -1,9 +1,10 @@
-import React, { Component, useState, useEffect } from 'react';
-import VertNavBar from '../VerticalNavBar/VertNavBar';
+import React, { Component, useState, useEffect, useHistory } from 'react';
+import VertNavBar from '../SideBar/SideBar';
 import { Route, Switch, Link } from 'react-router-dom';
 import UserAbout from './UserAbout/UserAbout';
 import UserGames from './UserGames/UserGames';
 import UserImages from './UserImages/UserImages';
+import { API_URL } from '../../config';
 
 import styled from 'styled-components';
 
@@ -11,29 +12,14 @@ const username = 'donotle98'; //this is just for a mockup
 
 const UserProfile = () => {
     const [profile, setProfile] = useState({});
-    // useEffect(() => {
-    //     //Fetch the user profile using the username
-
-    //     return fetch(
-    //         `https://gaming-social-network.herokuapp.com/users/${username}`
-    //     )
-    //         .then((res) => res.json())
-    //         .then((user) => setProfile(user.profile));
-    // }, []);
-
     useEffect(() => {
-        setProfile({
-            profile_url:
-                'https://gaming-social-network.s3-us-west-2.amazonaws.com/avatar_placeholder.png',
-            banner_url:
-                ' https://gaming-social-network.s3-us-west-2.amazonaws.com/banner.jpg',
-            user_location: 'Bentonville',
-            external_usernames: '@dr0wzie',
-            preferred_hardware: 'pc',
-            gamer_type: true,
-        });
-    }, []);
+        //Fetch the user profile using the username
 
+        return fetch(`${API_URL}/users/${username}`)
+            .then((res) => res.json())
+            .then((user) => setProfile(user.profile));
+    }, []);
+    console.log(profile);
     return (
         <StyledMain>
             <div className='user-container'>
@@ -48,13 +34,13 @@ const UserProfile = () => {
                             className='banner-img'
                         ></img>
                         <div className='user-tags-img'>
-                            <a href={`/${username}`}>
+                            <Link to={`/${username}`}>
                                 <img
                                     src={profile.profile_url}
                                     alt='users default'
                                     className='user-image'
                                 ></img>
-                            </a>
+                            </Link>
                             <div className='user-tags'>
                                 <span>{username}</span>
                                 <span className='user-gamertag'>
@@ -89,13 +75,13 @@ const UserProfile = () => {
                         <Switch>
                             <Route exact path='/editProfile'></Route>
                             <Route exact path='/userAbout'>
-                                <UserAbout />
+                                <UserAbout profile={profile} />
                             </Route>
                             <Route exact path='/userGames'>
-                                <UserGames />
+                                <UserGames profile={profile} />
                             </Route>
                             <Route exact path='/userImages'>
-                                <UserImages />
+                                <UserImages profile={profile} />
                             </Route>
                         </Switch>
                     </div>
@@ -180,7 +166,7 @@ const StyledMain = styled.main`
                     padding: 2rem;
                 }
                 button:focus {
-                    border-bottom: solid 1px white;
+                    border-bottom: solid 3.5px white;
                     outline: none;
                 }
             }
@@ -189,7 +175,6 @@ const StyledMain = styled.main`
             position: relative;
             height: 100%;
             top: 20rem;
-            background-color: #9453d3;
         }
     }
 

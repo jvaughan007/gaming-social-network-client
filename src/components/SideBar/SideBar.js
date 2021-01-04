@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import NavContent from './NavBarContents';
+import NavContent from './SideBarContents';
 
 import { slide as Menu } from 'react-burger-menu';
 
@@ -78,6 +78,7 @@ const StyledMain = styled.main`
             input {
                 width: 16rem;
                 margin: auto;
+                margin-bottom: 2rem;
             }
         }
 
@@ -99,13 +100,17 @@ const StyledMain = styled.main`
         }
 
         .home-btn {
-            margin-top: 2rem;
+            margin-top: 1rem;
             margin-left: 1rem;
         }
 
         .home {
             font-size: 2.2rem;
             margin-left: 1rem;
+        }
+        .category {
+            padding-right: 3rem;
+            border-bottom: solid 3px white;
         }
 
         .dropdown {
