@@ -5,6 +5,7 @@ import imageIcon from './images/image.svg';
 import ellipseIcon from './images/more-horizontal.svg';
 import commentIcon from './images/message-square.svg';
 import likeIcon from './images/thumbs-up.svg';
+import CreatePost from './CreatePost';
 
 class UserDashboard extends Component {
   constructor(props) {
@@ -48,20 +49,7 @@ class UserDashboard extends Component {
       <StyledMain>
       
         <StyledFeed className='dashboard-content'>
-          <form onSubmit={this.handleSubmit}>
-            <textarea type='text' placeholder={`What's new?`} />
-            <div>
-              <ul>
-                <li>
-                  <img src={youtubeIcon} alt='Youtube' />
-                </li>
-                <li>
-                  <img src={imageIcon} alt='Upload' />
-                </li>
-              </ul>
-              <button type='submit'>Post</button>
-            </div>
-          </form>
+         <CreatePost />
           <FeedContent>
             {this.state.posts.map((post) => (
               <li key={post.user_id}>
