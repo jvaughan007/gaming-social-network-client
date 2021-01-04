@@ -1,94 +1,72 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Component } from 'react';
-import youtubeIcon from './images/youtube.svg';
-import imageIcon from './images/image.svg';
 import ellipseIcon from './images/more-horizontal.svg';
 import commentIcon from './images/message-square.svg';
 import likeIcon from './images/thumbs-up.svg';
+import CreatePost from './CreatePost';
+import { API_URL, API_JWT_TOKEN } from '../../config';
 
-class UserDashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts: [
-        {
-          user_id: 1,
-          username: '@devilishgamer',
-          userAvatar: 'avatar.png',
-          content: 'I am the best gamer ever!'
-        },
-        {
-          user_id: 2,
-          username: '@kickassgamer',
-          userAvatar: 'avatar2.png',
-          content:
-            'I am the best gamer no one in the world is better than me. I’m bronze 4 but I know I could be Apex Predator if I had better teams.'
-        }
-      ]
+const UserDashboard = () => {
+  const [posts, setPosts] = useState(null);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const res = await fetch(`${API_URL}/posts`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${API_JWT_TOKEN}`
+          }
+        });
+        const data = await res.json();
+        console.log(data);
+        return setPosts(data.posts);
+      } catch (err) {
+        console.log(err);
+        // set it to an empty array for now in case server isn't on
+        this.setPosts([]);
+      }
     };
-  }
+    getPosts();
+  }, []);
 
-  // componentDidMount = () => {
-  //   fetch(`http://localhost:5000/posts`)
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     console.log(res);
-  //     this.setState({
-  //       posts: res.posts
-  //     })
-  //   })
-  // }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
+  const addPost = (post) => {
+    return setPosts([post, ...posts]);
   };
 
-  render() {
-    return this.state.posts ? (
-      <StyledMain>
-        <nav className='top-nav'></nav>
-        <nav className='left-side-nav'></nav>
-        <nav className='right-side-nav'></nav>
-        <StyledFeed className='dashboard-content'>
-          <form onSubmit={this.handleSubmit}>
-            <textarea type='text' placeholder={`What's new?`} />
-            <div>
-              <ul>
-                <li>
-                  <img src={youtubeIcon} alt='Youtube' />
-                </li>
-                <li>
-                  <img src={imageIcon} alt='Upload' />
-                </li>
-              </ul>
-              <button type='submit'>Post</button>
-            </div>
-          </form>
-          <FeedContent>
-            {this.state.posts.map((post) => (
-              <li key={post.user_id}>
-                <img src={ellipseIcon} alt='More Options' className='ellipse' />
-                <div className='post-user-info'>
-                  <img src={post.userAvatar} alt='Avatar' class='avatar'></img>
-                  <h3>{post.username}</h3>
+  return posts ? (
+    <StyledMain>
+      <StyledFeed className='dashboard-content'>
+        <CreatePost addPost={addPost} />
+        <FeedContent>
+          {posts.map((post) => (
+            <li key={post.entity_id}>
+              <img src={ellipseIcon} alt='More Options' className='ellipse' />
+              <div className='post-user-info'>
+                <img
+                  src='https://gaming-social-network.s3-us-west-2.amazonaws.com/avatar_placeholder.png'
+                  alt='Avatar'
+                  className='avatar'
+                ></img>
+                <h3>{post.username}</h3>
+              </div>
+              <div className='post-content'>
+                <p>{post.post_text}</p>
+              </div>
+              <div className='user-interactions'>
+                <div>
+                  <img src={likeIcon} alt='Like' />
+                  <img src={commentIcon} alt='Comment' />
                 </div>
-                <div className='post-content'>
-                  <p>{post.content}</p>
-                </div>
-                <div className='user-interactions'>
-                  <div>
-                    <img src={likeIcon} alt='Like' />
-                    <img src={commentIcon} alt='Comment' />
-                  </div>
-                </div>
-              </li>
-            ))}
-          </FeedContent>
-        </StyledFeed>
-      </StyledMain>
-    ) : null;
-  }
-}
+              </div>
+            </li>
+          ))}
+        </FeedContent>
+      </StyledFeed>
+    </StyledMain>
+  ) : null;
+};
 
 const StyledFeed = styled.div`
   padding-top: 2.4rem;
@@ -167,10 +145,7 @@ const FeedContent = styled.ul`
 
     .post-user-info {
       display: flex;
-<<<<<<< HEAD
       align-items: center;
-=======
->>>>>>> master
 
       h3 {
         color: #203758;
@@ -210,39 +185,6 @@ const FeedContent = styled.ul`
 // 1rem = 10px
 
 const StyledMain = styled.main`
-  display: grid;
-  grid-template-areas:
-    'topNav topNav topNav'
-    'leftSideNav activityFeed rightSideNav'
-    'leftSideNav activityFeed rightSideNav';
-
-  .top-nav {
-    grid-area: topNav;
-    height: 8rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
-    z-index: 1000;
-    background-color: #212121;
-  }
-
-  .dashboard-content {
-    grid-area: activityFeed;
-    width: calc(100vw - 48rem);
-  }
-
-  .left-side-nav {
-    background-color: #323232;
-    width: 24rem;
-    height: calc(100vh - 8rem);
-    grid-area: leftSideNav;
-  }
-
-  .right-side-nav {
-    background: red;
-    width: 24rem;
-    height: calc(100vh - 8rem);
-    grid-area: rightSideNav;
-    background-color: #323232;
-  }
   /* width: 28.8rem;
   margin: 0 auto; */
 

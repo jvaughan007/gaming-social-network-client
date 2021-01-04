@@ -1,64 +1,59 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
+import youtubeIcon from './images/youtube.svg';
+import imageIcon from './images/image.svg';
+import { API_JWT_TOKEN, API_URL } from '../../config';
 
-class CreatePost extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      content: "",
-      // youtube_url: "",
-      // image_url: "",
-      // public: "",
-    }
-  }
+const CreatePost = ({ addPost }) => {
+  const [text, setText] = useState('');
 
-  handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const {
-      content,
-      youtube_url,
-      image_url,
-      public,
-    } = e.target;
-    this.setState({ error: null });
-    PostsApiService.postArticle({
-      content: content.value,
-      youtube_url: youtube_url.value,
-      image_url: image_url.value,
-      public: public.value,
-    })
-    .then((user) => {
-      content.value = "";
-      youtube_url.value = "";
-      image_url.value = "";
-      public.value = "";
-      TokenService.saveAuthToken(user.authToken);
-      this.props.history.push("/userdashboard");
-    })
-    .catch((res) => {
-      this.setState({ error: res.error });
-    });
-  }
 
-  handleChange = (evt) => {
-    evt.preventDefault();
-  }
+    try {
+      if (!text.trim().length) {
+        return;
+      }
 
-    render() {
-        return (
-          <div>
-            <form onSubmit={this.handleSubmit}>
-              <textarea
-              type="text"
-              placeholder="Write post here"
-              name="activity-feed-post"
-              onChange={this.handleChange}
-              rows="8"
-              cols="50"></textarea>
-            
-            </form>
-          </div>
-        );
+      const res = await fetch(`${API_URL}/posts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${API_JWT_TOKEN}`
+        },
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+      addPost(data.post);
+      return setText('');
+    } catch (err) {
+      console.log(err);
+      // handle error here
     }
-}
+  };
 
-export default CreatePost
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <textarea
+          type='text'
+          placeholder={`What's new?`}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <div>
+          <ul>
+            <li>
+              <img src={youtubeIcon} alt='Youtube' />
+            </li>
+            <li>
+              <img src={imageIcon} alt='Upload' />
+            </li>
+          </ul>
+          <button type='submit'>Post</button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default CreatePost;

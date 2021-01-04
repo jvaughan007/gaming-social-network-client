@@ -80,7 +80,7 @@ const VertNavBar = () => {
         </Menu>
       </StyledMobileNav>
       <StyledNav>
-        <div class='nav-content'>
+        <div className='nav-content'>
           <div className='side-bar'>
             <div className='logo'>
               <span className='nav-title'>GSN</span>
@@ -407,26 +407,7 @@ const StyledMobileNav = styled.main`
         margin-left: 1rem;
       }
     }
-<<<<<<< HEAD
   }
-=======
-    @media all and (min-width: 700px) {
-        .bm-burger-button {
-            width: 3.5rem;
-            height: 3rem;
-            left: 2rem;
-            top: 1rem;
-        }
-
-        .mobile-view {
-            display: none;
-        }
-
-        .desktop-view {
-            display: block;
-        }
-    }
->>>>>>> master
 `;
 
 export default VertNavBar;
