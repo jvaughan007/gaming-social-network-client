@@ -167,7 +167,10 @@ const FeedContent = styled.ul`
 
     .post-user-info {
       display: flex;
+<<<<<<< HEAD
       align-items: center;
+=======
+>>>>>>> master
 
       h3 {
         color: #203758;
