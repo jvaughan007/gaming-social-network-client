@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     FaHome,
-    FaSortDown,
     FaUsers,
     FaSms,
     FaUserFriends,
@@ -10,6 +9,9 @@ import {
     FaIdBadge,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+
+//Dashboard and profile will need access to local storage to in order to make get requests to retrieve data
+//Logout button will delete local storage and will link back to landing page on a clean slate
 
 export default function NavBarContents(props) {
     return (
@@ -97,7 +99,7 @@ export default function NavBarContents(props) {
                             </button>
                         </div>
                     </div>
-                    <div className='home-btn'>
+                    <div className='home-btn log-out'>
                         <button>
                             <span>
                                 <FaSignOutAlt />

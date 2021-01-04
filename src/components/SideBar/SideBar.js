@@ -48,6 +48,7 @@ const StyledMain = styled.main`
     }
 
     .side-bar {
+        overflow: hidden;
         width: 20rem;
         height: 100%;
         position: fixed;
@@ -110,7 +111,7 @@ const StyledMain = styled.main`
         }
         .category {
             padding-right: 3rem;
-            border-bottom: solid 3px white;
+            border-bottom: solid 1px white;
         }
 
         .dropdown {
@@ -133,6 +134,10 @@ const StyledMain = styled.main`
             .dd-label {
                 margin-left: 1rem;
             }
+        }
+        .log-out {
+            position: fixed;
+            bottom: 1.5rem;
         }
     }
     @media all and (min-width: 700px) {

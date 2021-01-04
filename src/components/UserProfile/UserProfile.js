@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useHistory } from 'react';
+import React, { useState, useEffect } from 'react';
 import VertNavBar from '../SideBar/SideBar';
 import { Route, Switch, Link } from 'react-router-dom';
 import UserAbout from './UserAbout/UserAbout';
@@ -13,13 +13,11 @@ const username = 'donotle98'; //this is just for a mockup
 const UserProfile = () => {
     const [profile, setProfile] = useState({});
     useEffect(() => {
-        //Fetch the user profile using the username
-
+        //Fetch the user profile using the username, username will be accessed from local storage
         return fetch(`${API_URL}/users/${username}`)
             .then((res) => res.json())
             .then((user) => setProfile(user.profile));
     }, []);
-    console.log(profile);
     return (
         <StyledMain>
             <div className='user-container'>
@@ -191,12 +189,6 @@ const StyledMain = styled.main`
                 width: 70%;
                 height: 25rem;
 
-                .banner-img {
-                    width: 100%;
-                    height: 100%;
-                    opacity: 0.6;
-                }
-
                 .user-tags-img {
                     position: absolute;
                     bottom: 7rem;
@@ -209,9 +201,6 @@ const StyledMain = styled.main`
                         margin-right: 2rem;
                     }
                     .user-tags {
-                        color: white;
-                        display: flex;
-                        flex-direction: column;
                         font-size: 3.5rem;
 
                         .user-gamertag {
@@ -223,34 +212,12 @@ const StyledMain = styled.main`
                     font-size: 1.7rem;
                     bottom: 0;
                     top: 19rem;
-
-                    button {
-                        padding: 0.75rem 1rem 0.75rem 1rem;
-                        border: none;
-                    }
                 }
                 .control-center {
-                    position: absolute;
-                    bottom: 1rem;
-                    display: flex;
-                    height: 5rem;
                     padding-left: 5rem;
-
-                    button {
-                        margin-right: 2rem;
-                        color: white;
-                        border: none;
-                        background-color: transparent;
-                        padding: 2rem;
-                    }
-                    button:focus {
-                        border-bottom: solid 1px white;
-                        outline: none;
-                    }
                 }
             }
             .user-body {
-                position: relative;
                 top: 26rem;
             }
         }
