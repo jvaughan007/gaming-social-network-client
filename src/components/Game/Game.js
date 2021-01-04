@@ -110,7 +110,7 @@ const StyledMain = styled.main`
     border-radius: .4rem;
     padding: 1rem;
     color: white;
-    background-color: #252222;
+    
   }
 
   div.gamePage_details {
