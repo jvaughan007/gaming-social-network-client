@@ -16,7 +16,7 @@ class CreatePost extends Component {
     const { post_text } = this.state;
     console.log(post_text);
     this.setState({ error: null });
-    // @POST
+
     try {
       const res = await fetch(`${API_URL}/posts`, {
         method: 'POST',
@@ -33,17 +33,6 @@ class CreatePost extends Component {
       console.log(err);
       // handle error here
     }
-      // .then((user) => {
-      //   content.value = "";
-      //   youtube_url.value = "";
-      //   image_url.value = "";
-      //   public.value = "";
-      //   TokenService.saveAuthToken(user.authToken);
-      //   this.props.history.push("/userdashboard");
-      // })
-      // .catch((res) => {
-      //   this.setState({ error: res.error });
-      // });
   };
 
   handleChange = (evt) => {

@@ -44,7 +44,7 @@ class UserDashboard extends Component {
     this.setState(prevState => ({ 
       posts: [...prevState.posts, post]
     }))
-    //update state to include post
+   
   }
 
   render() {
