@@ -13,9 +13,8 @@ import Chat from './components/Chat/Chat';
 import Login from './components/Login/Login';
 import Games from './components/Games/Games';
 import UserDashboard from './components/UserDashboard/UserDashboard';
-import Game from './components/Game/Game';
 import UserProfile from './components/UserProfile/UserProfile';
-import Group from './components/Group/Group';
+import Game from './components/Game/Game';
 
 const App = () => {
   // useEffect(() => {
@@ -90,5 +89,22 @@ const App = () => {
     </>
   );
 };
+
+const StyledWrapper = styled.div`
+  width: 28.8rem;
+  margin: 0 auto;
+  @media (min-width: 576px) {
+    width: 50rem;
+  }
+  @media (min-width: 768px) {
+    width: 70rem;
+  }
+  @media (min-width: 992px) {
+    width: 90rem;
+  }
+  @media (min-width: 1200px) {
+    width: 112rem;
+  }
+`;
 
 export default App;

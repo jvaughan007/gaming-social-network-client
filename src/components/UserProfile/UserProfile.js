@@ -1,6 +1,10 @@
-import React, { Component, useState, useEffect } from 'react';
-import VertNavBar from '../VerticalNavBar/VertNavBar';
+import React, { useState, useEffect } from 'react';
+import VertNavBar from '../SideBar/SideBar';
 import { Route, Switch, Link } from 'react-router-dom';
+import UserAbout from './UserAbout/UserAbout';
+import UserGames from './UserGames/UserGames';
+import UserImages from './UserImages/UserImages';
+import { API_URL } from '../../config';
 
 import styled from 'styled-components';
 
@@ -8,29 +12,12 @@ const username = 'donotle98'; //this is just for a mockup
 
 const UserProfile = () => {
     const [profile, setProfile] = useState({});
-    // useEffect(() => {
-    //     //Fetch the user profile using the username
-
-    //     return fetch(
-    //         `https://gaming-social-network.herokuapp.com/users/${username}`
-    //     )
-    //         .then((res) => res.json())
-    //         .then((user) => setProfile(user.profile));
-    // }, []);
-
     useEffect(() => {
-        setProfile({
-            profile_url:
-                'https://gaming-social-network.s3-us-west-2.amazonaws.com/avatar_placeholder.png',
-            banner_url:
-                ' https://gaming-social-network.s3-us-west-2.amazonaws.com/banner.jpg',
-            user_location: 'Bentonville',
-            external_usernames: '@dr0wzie',
-            preferred_hardware: 'pc',
-            gamer_type: true,
-        });
+        //Fetch the user profile using the username, username will be accessed from local storage
+        return fetch(`${API_URL}/users/${username}`)
+            .then((res) => res.json())
+            .then((user) => setProfile(user.profile));
     }, []);
-
     return (
         <StyledMain>
             <div className='user-container'>
@@ -45,11 +32,13 @@ const UserProfile = () => {
                             className='banner-img'
                         ></img>
                         <div className='user-tags-img'>
-                            <img
-                                src={profile.profile_url}
-                                alt='users default'
-                                className='user-image'
-                            ></img>
+                            <Link to={`/${username}`}>
+                                <img
+                                    src={profile.profile_url}
+                                    alt='users default'
+                                    className='user-image'
+                                ></img>
+                            </Link>
                             <div className='user-tags'>
                                 <span>{username}</span>
                                 <span className='user-gamertag'>
@@ -81,12 +70,17 @@ const UserProfile = () => {
                         </div>
                     </div>
                     <div className='user-body'>
-                        <h1>stuff here</h1>
                         <Switch>
                             <Route exact path='/editProfile'></Route>
-                            <Route exact path='/userAbout'></Route>
-                            <Route exact path='/userGames'></Route>
-                            <Route exact path='/userImages'></Route>
+                            <Route exact path='/userAbout'>
+                                <UserAbout profile={profile} />
+                            </Route>
+                            <Route exact path='/userGames'>
+                                <UserGames profile={profile} />
+                            </Route>
+                            <Route exact path='/userImages'>
+                                <UserImages profile={profile} />
+                            </Route>
                         </Switch>
                     </div>
                 </div>
@@ -170,14 +164,15 @@ const StyledMain = styled.main`
                     padding: 2rem;
                 }
                 button:focus {
-                    border-bottom: solid 1px white;
+                    border-bottom: solid 3.5px white;
                     outline: none;
                 }
             }
         }
         .user-body {
             position: relative;
-            top: 26rem;
+            height: 100%;
+            top: 20rem;
         }
     }
 
@@ -194,12 +189,6 @@ const StyledMain = styled.main`
                 width: 70%;
                 height: 25rem;
 
-                .banner-img {
-                    width: 100%;
-                    height: 100%;
-                    opacity: 0.6;
-                }
-
                 .user-tags-img {
                     position: absolute;
                     bottom: 7rem;
@@ -212,9 +201,6 @@ const StyledMain = styled.main`
                         margin-right: 2rem;
                     }
                     .user-tags {
-                        color: white;
-                        display: flex;
-                        flex-direction: column;
                         font-size: 3.5rem;
 
                         .user-gamertag {
@@ -226,34 +212,12 @@ const StyledMain = styled.main`
                     font-size: 1.7rem;
                     bottom: 0;
                     top: 19rem;
-
-                    button {
-                        padding: 0.75rem 1rem 0.75rem 1rem;
-                        border: none;
-                    }
                 }
                 .control-center {
-                    position: absolute;
-                    bottom: 1rem;
-                    display: flex;
-                    height: 5rem;
                     padding-left: 5rem;
-
-                    button {
-                        margin-right: 2rem;
-                        color: white;
-                        border: none;
-                        background-color: transparent;
-                        padding: 2rem;
-                    }
-                    button:focus {
-                        border-bottom: solid 1px white;
-                        outline: none;
-                    }
                 }
             }
             .user-body {
-                position: relative;
                 top: 26rem;
             }
         }
