@@ -1,27 +1,27 @@
 // import VertNavBar from "../VerticalNavBar/VertNavBar";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import React, { Component } from 'react';
 
-class UserDashboard extends Component{
-  constructor(props){
-    super(props)
+class UserDashboard extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       posts: [
         {
           user_id: 1,
-          username: "@devilishgamer",
-          userAvatar: "avatar.png",
-          content: "I am the best gamer ever!",
+          username: '@devilishgamer',
+          userAvatar: 'avatar.png',
+          content: 'I am the best gamer ever!'
         },
         {
           user_id: 2,
-          username: "@kickassgamer",
-          userAvatar: "avatar2.png",
+          username: '@kickassgamer',
+          userAvatar: 'avatar2.png',
           content:
-            "I am the best gamer no one in the world is better than me. I’m bronze 4 but I know I could be Apex Predator if I had better teams.",
-        },
-      ],
+            'I am the best gamer no one in the world is better than me. I’m bronze 4 but I know I could be Apex Predator if I had better teams.'
+        }
+      ]
     };
   }
 
@@ -36,26 +36,26 @@ class UserDashboard extends Component{
   //   })
   // }
 
-  render(){
+  render() {
     return this.state.posts ? (
       <>
         <StyledWrapper>
-          <StyledFeed className="dashboard-content">
+          <StyledFeed className='dashboard-content'>
             <FeedContent>
               {this.state.posts.map((post) => (
                 <li key={post.user_id}>
-                  <div className="post-user-info">
+                  <div className='post-user-info'>
                     <img
                       src={post.userAvatar}
-                      alt="Avatar"
-                      class="avatar"
+                      alt='Avatar'
+                      class='avatar'
                     ></img>
                     <h3>{post.username}</h3>
                   </div>
-                  <div className="post-content">
+                  <div className='post-content'>
                     <p>{post.content}</p>
                   </div>
-                  <div className="user-interactions">
+                  <div className='user-interactions'>
                     {/* icons to flex-right */}
                   </div>
                 </li>
@@ -66,8 +66,7 @@ class UserDashboard extends Component{
       </>
     ) : null;
   }
-};
-
+}
 
 const StyledFeed = styled.div`
   display: flex;
@@ -90,7 +89,7 @@ const FeedContent = styled.ul`
 
     .post-user-info {
       display: flex;
-      
+
       h3 {
         color: #203758, 100%;
         font-family: Montserrat, sans-serif;
@@ -109,7 +108,7 @@ const FeedContent = styled.ul`
         vertical-align: middle;
       }
     }
-    
+
     .post-content {
       p {
         color: #203758, 100%;
