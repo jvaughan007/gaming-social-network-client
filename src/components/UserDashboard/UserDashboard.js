@@ -1,86 +1,72 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Component } from 'react';
-import youtubeIcon from './images/youtube.svg';
-import imageIcon from './images/image.svg';
 import ellipseIcon from './images/more-horizontal.svg';
 import commentIcon from './images/message-square.svg';
 import likeIcon from './images/thumbs-up.svg';
 import CreatePost from './CreatePost';
-import { API_URL, API_JWT_TOKEN } from "../../config";
+import { API_URL, API_JWT_TOKEN } from '../../config';
 
-class UserDashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts: []
-    };
-  }
+const UserDashboard = () => {
+  const [posts, setPosts] = useState(null);
 
-  componentDidMount = async () => {
+  useEffect(() => {
+    const getPosts = async () => {
       try {
-      const res = await fetch(`${API_URL}/posts`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${API_JWT_TOKEN}`
-        },
-      });
-      const data = await res.json();
-      console.log(data);
-      this.setState({posts: data.posts})
-      // do something with the data here
-    } catch(err) {
-      console.log(err);
-      // handle error here
+        const res = await fetch(`${API_URL}/posts`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${API_JWT_TOKEN}`
+          }
+        });
+        const data = await res.json();
+        console.log(data);
+        return setPosts(data.posts);
+      } catch (err) {
+        console.log(err);
+        // set it to an empty array for now in case server isn't on
+        this.setPosts([]);
       }
-    }
+    };
+    getPosts();
+  }, []);
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  const addPost = (post) => {
+    return setPosts([post, ...posts]);
   };
 
-  addPost = (post) => {
-    console.log(post);
-    this.setState(prevState => ({ 
-      posts: [...prevState.posts, post]
-    }))
-   
-  }
-
-  render() {
-    return this.state.posts ? (
-      <StyledMain>
-        <StyledFeed className="dashboard-content">
-          <CreatePost addPost={this.addPost}/>
-          <FeedContent>
-            {this.state.posts.map((post) => (
-              <li key={post.entity_id}>
-                <img src={ellipseIcon} alt="More Options" className="ellipse" />
-                <div className="post-user-info">
-                  <img
-                    src="https://gaming-social-network.s3-us-west-2.amazonaws.com/avatar_placeholder.png"
-                    alt="Avatar"
-                    class="avatar"
-                  ></img>
-                  <h3>{post.username}</h3>
+  return posts ? (
+    <StyledMain>
+      <StyledFeed className='dashboard-content'>
+        <CreatePost addPost={addPost} />
+        <FeedContent>
+          {posts.map((post) => (
+            <li key={post.entity_id}>
+              <img src={ellipseIcon} alt='More Options' className='ellipse' />
+              <div className='post-user-info'>
+                <img
+                  src='https://gaming-social-network.s3-us-west-2.amazonaws.com/avatar_placeholder.png'
+                  alt='Avatar'
+                  className='avatar'
+                ></img>
+                <h3>{post.username}</h3>
+              </div>
+              <div className='post-content'>
+                <p>{post.post_text}</p>
+              </div>
+              <div className='user-interactions'>
+                <div>
+                  <img src={likeIcon} alt='Like' />
+                  <img src={commentIcon} alt='Comment' />
                 </div>
-                <div className="post-content">
-                  <p>{post.post_text}</p>
-                </div>
-                <div className="user-interactions">
-                  <div>
-                    <img src={likeIcon} alt="Like" />
-                    <img src={commentIcon} alt="Comment" />
-                  </div>
-                </div>
-              </li>
-            ))}
-          </FeedContent>
-        </StyledFeed>
-      </StyledMain>
-    ) : null;
-  }
-}
+              </div>
+            </li>
+          ))}
+        </FeedContent>
+      </StyledFeed>
+    </StyledMain>
+  ) : null;
+};
 
 const StyledFeed = styled.div`
   padding-top: 2.4rem;
@@ -199,7 +185,6 @@ const FeedContent = styled.ul`
 // 1rem = 10px
 
 const StyledMain = styled.main`
-  
   /* width: 28.8rem;
   margin: 0 auto; */
 
