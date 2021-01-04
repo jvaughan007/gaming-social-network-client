@@ -46,9 +46,7 @@ class UserDashboard extends Component {
   render() {
     return this.state.posts ? (
       <StyledMain>
-        <nav className='top-nav'></nav>
-        <nav className='left-side-nav'></nav>
-        <nav className='right-side-nav'></nav>
+      
         <StyledFeed className='dashboard-content'>
           <form onSubmit={this.handleSubmit}>
             <textarea type='text' placeholder={`What's new?`} />
@@ -167,10 +165,7 @@ const FeedContent = styled.ul`
 
     .post-user-info {
       display: flex;
-<<<<<<< HEAD
       align-items: center;
-=======
->>>>>>> master
 
       h3 {
         color: #203758;
@@ -210,39 +205,7 @@ const FeedContent = styled.ul`
 // 1rem = 10px
 
 const StyledMain = styled.main`
-  display: grid;
-  grid-template-areas:
-    'topNav topNav topNav'
-    'leftSideNav activityFeed rightSideNav'
-    'leftSideNav activityFeed rightSideNav';
-
-  .top-nav {
-    grid-area: topNav;
-    height: 8rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
-    z-index: 1000;
-    background-color: #212121;
-  }
-
-  .dashboard-content {
-    grid-area: activityFeed;
-    width: calc(100vw - 48rem);
-  }
-
-  .left-side-nav {
-    background-color: #323232;
-    width: 24rem;
-    height: calc(100vh - 8rem);
-    grid-area: leftSideNav;
-  }
-
-  .right-side-nav {
-    background: red;
-    width: 24rem;
-    height: calc(100vh - 8rem);
-    grid-area: rightSideNav;
-    background-color: #323232;
-  }
+  
   /* width: 28.8rem;
   margin: 0 auto; */
 
