@@ -1,54 +1,61 @@
 import React, { Component } from 'react';
 import youtubeIcon from "./images/youtube.svg";
 import imageIcon from "./images/image.svg";
+import { API_JWT_TOKEN, API_URL } from '../../config'
 
 class CreatePost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: "",
-      // youtube_url: "",
-      // image_url: "",
-      // public: "",
+      post_text: "",
     };
   }
 
-  // handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const { content, youtube_url, image_url, public } = e.target;
-  //   this.setState({ error: null });
-  //   PostsApiService.postArticle({
-  //     content: content.value,
-  //     youtube_url: youtube_url.value,
-  //     image_url: image_url.value,
-  // 
-  //   })
-  //     .then((user) => {
-  //       content.value = "";
-  //       youtube_url.value = "";
-  //       image_url.value = "";
-  //       public.value = "";
-  //       TokenService.saveAuthToken(user.authToken);
-  //       this.props.history.push("/userdashboard");
-  //     })
-  //     .catch((res) => {
-  //       this.setState({ error: res.error });
-  //     });
-  // };
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    const { post_text } = this.state;
+    console.log(post_text);
+    this.setState({ error: null });
+    // @POST
+    try {
+      const res = await fetch(`${API_URL}/posts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${API_JWT_TOKEN}`
+        },
+        body: JSON.stringify({text: post_text})  
+      });
+      const data = await res.json();
+      console.log(data);
+      // do something with the data here
+    } catch(err) {
+      console.log(err);
+      // handle error here
+    }
+      // .then((user) => {
+      //   content.value = "";
+      //   youtube_url.value = "";
+      //   image_url.value = "";
+      //   public.value = "";
+      //   TokenService.saveAuthToken(user.authToken);
+      //   this.props.history.push("/userdashboard");
+      // })
+      // .catch((res) => {
+      //   this.setState({ error: res.error });
+      // });
+  };
 
   handleChange = (evt) => {
     evt.preventDefault();
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <textarea type="text" placeholder={`What's new?`} />
+          <textarea type="text" placeholder={`What's new?`} onChange={e => this.setState({post_text: e.target.value})} />
           <div>
             <ul>
               <li>
