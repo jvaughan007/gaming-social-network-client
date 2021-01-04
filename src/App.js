@@ -15,6 +15,7 @@ import Games from './components/Games/Games';
 import UserDashboard from './components/UserDashboard/UserDashboard';
 import UserProfile from './components/UserProfile/UserProfile';
 import Game from './components/Game/Game';
+import Group from './components/Group/Group';
 
 const App = () => {
   // useEffect(() => {
@@ -74,6 +75,9 @@ const App = () => {
               </Route>
               <Route exact path='/:username'>
                 <UserProfile />
+              </Route>
+              <Route exact path='/group/:id'>
+                <Group></Group>
               </Route>
               <Route exact path='/game/:id'>
                 <Game></Game>
