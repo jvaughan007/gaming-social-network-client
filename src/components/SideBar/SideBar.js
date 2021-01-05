@@ -53,6 +53,7 @@ const StyledMain = styled.main`
         height: 100%;
         position: fixed;
         background-color: #323232;
+        overflow: auto;
 
         .logo {
             display: flex;
@@ -136,13 +137,9 @@ const StyledMain = styled.main`
         }
 
         .settings-btn {
-            position: fixed;
-            bottom: 6rem;
+            margin-top: 10rem;
         }
         .log-out {
-            position: fixed;
-            bottom: 1.5rem;
-
             span {
                 color: red;
             }
