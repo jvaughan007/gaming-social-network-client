@@ -2,19 +2,19 @@ import styled from 'styled-components';
 import ActivityFeed from '../ActivityFeed/ActivityFeed';
 
 const UserDashboard = () => {
-  return (
-    <StyledMain>
-      <h1>Dashboard</h1>
-     <ActivityFeed></ActivityFeed>
-    </StyledMain>
-  );
+    return (
+        <StyledMain>
+            <h1>Dashboard</h1>
+            <ActivityFeed></ActivityFeed>
+        </StyledMain>
+    );
 };
 
 const StyledMain = styled.main`
-  /* width: 28.8rem;
+    /* width: 28.8rem;
   margin: 0 auto; */
 
-  /* @media (min-width: 576px) {
+    /* @media (min-width: 576px) {
     width: 50rem;
   }
 
