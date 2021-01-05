@@ -4,7 +4,8 @@ import ActivityFeed from '../ActivityFeed/ActivityFeed';
 const UserDashboard = () => {
   return (
     <StyledMain>
-      <ActivityFeed></ActivityFeed>
+      <h1>Dashboard</h1>
+     <ActivityFeed></ActivityFeed>
     </StyledMain>
   );
 };

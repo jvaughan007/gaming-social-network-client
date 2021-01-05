@@ -1,5 +1,14 @@
-{
-  /* <li key={post.entity_id}>
+import React, { Component } from 'react';
+import ellipseIcon from './images/more-horizontal.svg';
+import commentIcon from './images/message-square.svg';
+import likeIcon from './images/thumbs-up.svg';
+
+const post = {entity_id:1, username:'test username', post_text:'test post'}
+class ActivityFeedPost extends Component {
+  
+  render () {
+  return (
+  <li key={post.entity_id}>
   <img src={ellipseIcon} alt='More Options' className='ellipse' />
   <div className='post-user-info'>
     <img
@@ -18,5 +27,8 @@
       <img src={commentIcon} alt='Comment' />
     </div>
   </div>
-</li>; */
+</li>);
+};
 }
+
+export default ActivityFeedPost;

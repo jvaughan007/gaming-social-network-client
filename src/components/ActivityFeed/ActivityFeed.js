@@ -5,6 +5,7 @@ import commentIcon from './images/message-square.svg';
 import likeIcon from './images/thumbs-up.svg';
 import CreatePost from './CreatePost';
 import { API_URL, API_JWT_TOKEN } from '../../config';
+import ActivityFeedPost from './ActivityFeedPost';
 
 const ActivityFeed = () => {
   const [posts, setPosts] = useState(null);
@@ -25,7 +26,6 @@ const ActivityFeed = () => {
       } catch (err) {
         console.log(err);
         // set it to an empty array for now in case server isn't on
-        this.setPosts([]);
       }
     };
     getPosts();
@@ -35,15 +35,18 @@ const ActivityFeed = () => {
     return setPosts([post, ...posts]);
   };
 
-  return posts ? (
+  return (
     <StyledFeed className='dashboard-content'>
-      <CreatePost addPost={addPost} />
+      {/* <CreatePost addPost={addPost} />
       <FeedContent>
         {posts.map((post) => (
-          <ActivityFeedPost></ActivityFeedPost>
+          <ActivityFeedPost post={post}> 
+            
+          </ActivityFeedPost>
         ))}
-      </FeedContent>{' '}
-      <li key={post.entity_id}>
+      </FeedContent>{' '} */}
+      <ul>
+      <li key={posts.entity_id}>
         <img src={ellipseIcon} alt='More Options' className='ellipse' />
         <div className='post-user-info'>
           <img
@@ -51,10 +54,10 @@ const ActivityFeed = () => {
             alt='Avatar'
             className='avatar'
           ></img>
-          <h3>{post.username}</h3>
+          <h3>{posts.username}</h3>
         </div>
         <div className='post-content'>
-          <p>{post.post_text}</p>
+          <p>{posts.post_text}</p>
         </div>
         <div className='user-interactions'>
           <div>
@@ -63,8 +66,9 @@ const ActivityFeed = () => {
           </div>
         </div>
       </li>
+      </ul>
     </StyledFeed>
-  ) : null;
+  ); 
 };
 
 const StyledFeed = styled.div`
