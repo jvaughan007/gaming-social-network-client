@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import youtubeIcon from './images/youtube.svg';
 import imageIcon from './images/image.svg';
-import { API_JWT_TOKEN, API_URL } from '../../config';
+import { API_URL } from '../../config';
 
 const CreatePost = ({ addPost }) => {
   const [text, setText] = useState('');
@@ -13,14 +13,14 @@ const CreatePost = ({ addPost }) => {
       if (!text.trim().length) {
         return;
       }
-
+      const token = localStorage.getItem('jwt');
       const res = await fetch(`${API_URL}/posts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          authorization: `Bearer ${API_JWT_TOKEN}`
+          authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ text })
+        body: JSON.stringify({ post_text: text })
       });
       const data = await res.json();
       addPost(data.post);
