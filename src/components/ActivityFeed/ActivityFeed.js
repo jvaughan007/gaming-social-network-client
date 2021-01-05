@@ -45,6 +45,7 @@ const ActivityFeed = () => {
     ) : null;
 };
 
+
 const StyledFeed = styled.div`
     padding-top: 2.4rem;
     display: flex;
