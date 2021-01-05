@@ -1,23 +1,21 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import ellipseIcon from './images/more-horizontal.svg';
-import commentIcon from './images/message-square.svg';
-import likeIcon from './images/thumbs-up.svg';
-import CreatePost from './CreatePost';
-import { API_URL, API_JWT_TOKEN } from '../../config';
+import { API_URL } from '../../config';
 import ActivityFeedPost from './ActivityFeedPost';
+import CreatePost from './CreatePost';
 
 const ActivityFeed = () => {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
 
     useEffect(() => {
         const getPosts = async () => {
             try {
+                const token = localStorage.getItem('jwt');
                 const res = await fetch(`${API_URL}/posts`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        authorization: `Bearer ${API_JWT_TOKEN}`,
+                        authorization: `Bearer ${token}`,
                     },
                 });
                 const data = await res.json();
@@ -25,7 +23,7 @@ const ActivityFeed = () => {
                 return setPosts(data.posts);
             } catch (err) {
                 console.log(err);
-                // set it to an empty array for now in case server isn't on
+                setPosts([]);
             }
         };
         getPosts();
@@ -35,42 +33,16 @@ const ActivityFeed = () => {
         return setPosts([post, ...posts]);
     };
 
-    return (
+    return posts ? (
         <StyledFeed className='dashboard-content'>
             <CreatePost addPost={addPost} />
             <FeedContent>
-                {posts.map((post) => {
-                    <ActivityFeedPost post={post}></ActivityFeedPost>;
-                })}
-            </FeedContent>{' '}
-            <ul>
-                <li key={posts.entity_id}>
-                    <img
-                        src={ellipseIcon}
-                        alt='More Options'
-                        className='ellipse'
-                    />
-                    <div className='post-user-info'>
-                        <img
-                            src='https://gaming-social-network.s3-us-west-2.amazonaws.com/avatar_placeholder.png'
-                            alt='Avatar'
-                            className='avatar'
-                        ></img>
-                        <h3>{posts.username}</h3>
-                    </div>
-                    <div className='post-content'>
-                        <p>{posts.post_text}</p>
-                    </div>
-                    <div className='user-interactions'>
-                        <div>
-                            <img src={likeIcon} alt='Like' />
-                            <img src={commentIcon} alt='Comment' />
-                        </div>
-                    </div>
-                </li>
-            </ul>
+                {posts.map((post) => (
+                    <ActivityFeedPost post={post}></ActivityFeedPost>
+                ))}
+            </FeedContent>
         </StyledFeed>
-    );
+    ) : null;
 };
 
 const StyledFeed = styled.div`
