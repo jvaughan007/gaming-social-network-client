@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
+import { API_URL } from '../../config';
 
 const Game = () => {
   const [game, setGame] = useState(null);
@@ -42,36 +43,24 @@ const Game = () => {
 
   const favoriteGame = async (id, userId, (req, res) => {
     console.log('This is the game ID: ', id);
-    let favoredGame = '';
-    /*first fetch the game data and assign it as an object added in the array that 
-    is a variable previously defined (favoredGame)
-    */
+    
     try {
-      const res = await fetch(URL, {
+      const token = localStorage.getItem('jwt');
+      const res = await fetch(`${API_URL}/favorites`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token here}`
+          Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(data)  
+        body: JSON.stringify(game)  
       });
       const data = await res.json();
+      console.log(data);
       // do something with the data here
     } catch(err) {
       console.log(err);
       // handle error here
     }
-    
-    /*next, fetch the user from the server and append the object containing he game (data) 
-    to the array of favorites on the server.
-    */
-    
-    /*once you receive the 200/201, add a key/value to the state of the component that is a boolean value. 
-      If true, the game is favorited.
-      A delete/unfavorite function will be created later to change this value to false upon deletion 
-      from the server
-    */
-
 
   })
 
@@ -111,7 +100,7 @@ const Game = () => {
 
 
           <div className="favorite">
-            <button>Favorite</button>
+            <button onClick={favoriteGame}>Favorite</button>
           </div>
         </div>
       </StyledMain>
