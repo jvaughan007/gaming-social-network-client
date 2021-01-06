@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaPlus } from 'react-icons/fa';
 import { Mention, MentionsInput } from 'react-mentions';
+import { API_URL } from '../../config';
 
 const users = [
     {
@@ -19,26 +20,26 @@ const AddComment = ({ entity_id }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // try {
-        //   if (!comment.trim().length) {
-        //     return;
-        //   }
-        //   const token = localStorage.getItem("jwt");
-        //   const res = await fetch(`${API_URL}/posts`, {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //       authorization: `Bearer ${token}`,
-        //     },
-        //     body: JSON.stringify({ post_text: text }),
-        //   });
-        //   const data = await res.json();
-        //   addPost(data.post);
-        //   return setText("");
-        // } catch (err) {
-        //   console.log(err);
-        //   // handle error here
-        // }
+        try {
+            if (!comment.trim().length) {
+                return;
+            }
+            const token = localStorage.getItem('jwt');
+            const res = await fetch(`${API_URL}/comments/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ comment_text: comment, entity_id }),
+            });
+            const data = await res.json();
+            console.log(data);
+            return setComment('');
+        } catch (err) {
+            console.log(err);
+            // handle error here
+        }
     };
 
     return (

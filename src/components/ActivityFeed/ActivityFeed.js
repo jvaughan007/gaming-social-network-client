@@ -7,25 +7,26 @@ import CreatePost from './CreatePost';
 const ActivityFeed = () => {
     const [posts, setPosts] = useState(null);
 
+    const getPosts = async () => {
+        try {
+            const token = localStorage.getItem('jwt');
+            const res = await fetch(`${API_URL}/posts`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await res.json();
+            console.log(data);
+            return setPosts(data.posts);
+        } catch (err) {
+            console.log(err);
+            setPosts([]);
+        }
+    };
+
     useEffect(() => {
-        const getPosts = async () => {
-            try {
-                const token = localStorage.getItem('jwt');
-                const res = await fetch(`${API_URL}/posts`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        authorization: `Bearer ${token}`,
-                    },
-                });
-                const data = await res.json();
-                console.log(data);
-                return setPosts(data.posts);
-            } catch (err) {
-                console.log(err);
-                setPosts([]);
-            }
-        };
         getPosts();
     }, []);
 
@@ -33,21 +34,23 @@ const ActivityFeed = () => {
         return setPosts([post, ...posts]);
     };
 
-    return posts ? (
+    return (
         <StyledWrapper>
             <div className='activity-feed-wrapper'>
                 <CreatePost addPost={addPost} />
                 <ul>
-                    {posts.map((post, y) => (
-                        <ActivityFeedPost
-                            post={post}
-                            key={y}
-                        ></ActivityFeedPost>
-                    ))}
+                    {posts
+                        ? posts.map((post, y) => (
+                              <ActivityFeedPost
+                                  post={post}
+                                  key={y}
+                              ></ActivityFeedPost>
+                          ))
+                        : null}
                 </ul>
             </div>
         </StyledWrapper>
-    ) : null;
+    );
 };
 
 const StyledWrapper = styled.main`

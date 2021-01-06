@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import CommentFeed from './CommentFeed';
 import styled from 'styled-components';
 
-const ActivityFeedPost = ({ post }, comments = false) => {
-    const count = 0;
-    const [showComments, setShowComments] = useState(comments);
+const ActivityFeedPost = ({ post }, showcomments = false) => {
+    const [showComments, setShowComments] = useState(showcomments);
     const [likes, setLikes] = useState(0);
+
     return (
         <div>
             <StyledWrapper>

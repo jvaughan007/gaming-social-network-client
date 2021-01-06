@@ -19,6 +19,7 @@ const comment = {
 
 const CommentFeed = ({ entity_id }, reply = false) => {
     const [replying, setReplying] = useState(reply);
+    const [comments, setComments] = useState([]);
 
     const replyToComment = () => {
         return replying === true ? <AddComment /> : null;
@@ -40,10 +41,14 @@ const CommentFeed = ({ entity_id }, reply = false) => {
         }
     };
 
+    const addComment = (comment) => {
+        setComments([comment, ...comments]);
+    };
+
     return (
         <StyledWrapper>
             <div className='comment-sect'>
-                <AddComment entity_id={entity_id} />
+                <AddComment entity_id={entity_id} addComment={addComment} />
                 {/* add comment will be static, however there will be many different comments */}
                 <div className='comment-feed-sect'>
                     <div className='each-comment'>
@@ -119,8 +124,7 @@ const StyledWrapper = styled.main`
 
                 .comment-reply-feed {
                     width: 80%;
-                    margin-left: 6rem;
-                    margin-top: 2rem;
+                    margin: 2rem 0rem 1rem 6rem;
                     .replies-info {
                         display: flex;
 

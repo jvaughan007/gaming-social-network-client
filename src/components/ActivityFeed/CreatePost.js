@@ -9,7 +9,6 @@ const CreatePost = ({ addPost }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
             if (!text.trim().length) {
                 return;
@@ -25,6 +24,7 @@ const CreatePost = ({ addPost }) => {
             });
             const data = await res.json();
             addPost(data.post);
+            console.log(data);
             return setText('');
         } catch (err) {
             console.log(err);
