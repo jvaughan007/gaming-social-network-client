@@ -26,7 +26,6 @@ const Game = () => {
         }
 
         const data = await res.json();
-        
 
         if (!data) {
           return setError('Could not find that game');
@@ -41,9 +40,9 @@ const Game = () => {
     getGame();
   }, [id]);
 
-  const favoriteGame = async (id, userId, (req, res) => {
+  const favoriteGame = async () => {
     console.log('This is the game ID: ', id);
-    
+
     try {
       const token = localStorage.getItem('jwt');
       const res = await fetch(`${API_URL}/favorites`, {
@@ -52,17 +51,16 @@ const Game = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(game)  
+        body: JSON.stringify({ game })
       });
       const data = await res.json();
       console.log(data);
       // do something with the data here
-    } catch(err) {
+    } catch (err) {
       console.log(err);
       // handle error here
     }
-
-  })
+  };
 
   const renderGame = () => {
     if (loading) {
@@ -78,28 +76,23 @@ const Game = () => {
     }
 
     return game ? (
-      <StyledMain className="gamePage_gameContainer">
-        <div className="gamePage_title">
+      <StyledMain className='gamePage_gameContainer'>
+        <div className='gamePage_title'>
           <h1>
-            <span className="titleText">
-              {game.name}
-            </span>
+            <span className='titleText'>{game.name}</span>
           </h1>
         </div>
-      
-        <div className="gamePage_details">
 
-          <div className="gamePage_image">
+        <div className='gamePage_details'>
+          <div className='gamePage_image'>
             <img src={game.background_image} alt={game.name} />
           </div>
-        
 
-          <div className="gamePage_desc">
+          <div className='gamePage_desc'>
             <p>{game.description_raw}</p>
           </div>
 
-
-          <div className="favorite">
+          <div className='favorite'>
             <button onClick={favoriteGame}>Favorite</button>
           </div>
         </div>
