@@ -12,7 +12,7 @@ const ActivityFeedPost = ({ post }) => {
           alt='Avatar'
           className='avatar'
         ></img>
-        {/* <h3>{post.username}</h3> */}
+        <h3>{post.username}</h3>
       </div>
       <div className='post-content'>
         <p>{post.post_text}</p>
