@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 import CommentFeed from './CommentFeed';
 import styled from 'styled-components';
 
-const ActivityFeedPost = ({ post }, showcomments = false) => {
-    const [showComments, setShowComments] = useState(showcomments);
+const ActivityFeedPost = ({ post }, showCommentsBool = false) => {
+    const [showComments, setShowComments] = useState(showCommentsBool);
     const [likes, setLikes] = useState(0);
 
     return (
@@ -24,7 +24,10 @@ const ActivityFeedPost = ({ post }, showcomments = false) => {
                             alt='Avatar'
                             className='avatar'
                         ></img>
-                        <h3>{post.username}</h3>
+                        <h3>{localStorage.getItem('username')}</h3>
+                        <span className='created-at'>
+                            created at {post.created_at}
+                        </span>
                     </div>
                     <div className='post-content'>
                         <p>{post.post_text}</p>
@@ -81,6 +84,9 @@ const StyledWrapper = styled.main`
                 height: 3.8rem;
                 margin-right: 0.8rem;
                 width: 3.8rem;
+            }
+            .created-at {
+                margin-left: 2rem;
             }
         }
         .post-content {
