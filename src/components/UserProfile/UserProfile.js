@@ -100,6 +100,7 @@ const StyledMain = styled.main`
         width: 100%;
         height: 100%;
         position: fixed;
+        overflow: auto;
         left: 0rem;
 
         .header {

@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import CommentFeed from './CommentFeed';
 import styled from 'styled-components';
 
+
 const ActivityFeedPost = ({ post }, showCommentsBool = false) => {
     const [showComments, setShowComments] = useState(showCommentsBool);
     const [likes, setLikes] = useState(0);
@@ -40,22 +41,22 @@ const ActivityFeedPost = ({ post }, showCommentsBool = false) => {
                                 alt='Like'
                                 onClick={() => setLikes((likes) => likes + 1)}
                             />
-
-                            <span onClick={() => setShowComments((c) => !c)}>
-                                <img src={commentIcon} alt='Comment' />
-                            </span>
-                        </div>
-                    </div>
-                </li>
-            </StyledWrapper>
-            {showComments === true ? (
-                <CommentFeed entity_id={post.entity_id} />
-            ) : null}
-        </div>
-    );
+              <span onClick={() => setShowComments((c) => !c)}>
+                <img src={commentIcon} alt='Comment' />
+              </span>
+            </div>
+          </div>
+        </li>
+      </StyledWrapper>
+      {showComments === true ? (
+        <CommentFeed entity_id={post.entity_id} />
+      ) : null}
+    </div>
+  );
 };
 
 const StyledWrapper = styled.main`
+
     li {
         position: relative;
         background-color: white;
@@ -108,7 +109,7 @@ const StyledWrapper = styled.main`
                 cursor: pointer;
             }
         }
-    }
+  }
 `;
 
 export default ActivityFeedPost;
