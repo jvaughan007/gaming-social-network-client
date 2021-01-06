@@ -95,6 +95,7 @@ const StyledMain = styled.main`
         left: 0;
         z-index: 1000;
     }
+
     .user-profile {
         width: 100%;
         height: 100%;
