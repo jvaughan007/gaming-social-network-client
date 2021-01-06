@@ -38,7 +38,6 @@ const AddComment = ({ entity_id, addComment }) => {
             return setComment('');
         } catch (err) {
             console.log(err);
-            // handle error here
         }
     };
 
