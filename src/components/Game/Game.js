@@ -110,37 +110,34 @@ const StyledMain = styled.main`
   background: #009688;
   margin-top: 5rem;
   border-style: inset;
-  border-radius: .4rem;
+  border-radius: 0.4rem;
 
   div:first-child {
     img {
       width: 80%;
       border-style: inset;
-      border-radius: .4rem;
+      border-radius: 0.4rem;
     }
-    
   }
 
   div.gamePage_title {
     margin: 3rem 0 0 5rem;
-    
   }
 
   div.gamePage_title h1 .titleText {
     border-style: inset;
-    border-radius: .4rem;
+    border-radius: 0.4rem;
     padding: 1rem;
     color: white;
-    
   }
 
   div.gamePage_details {
-    display:grid;
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1.6rem;
     margin-bottom: 3rem;
     border-style: inset;
-    border-radius: .4rem;
+    border-radius: 0.4rem;
     margin: 3rem;
     padding: 3rem;
     background-color: black;
@@ -160,24 +157,17 @@ const StyledMain = styled.main`
     margin-bottom: 2rem;
     max-height: 40rem;
   }
-  
 
   div.gamePage_desc p {
     background: aliceblue;
     border-style: inset;
-    border-radius: .4rem;
+    border-radius: 0.4rem;
     width: 80%;
     height: 80%;
     overflow-y: scroll;
     margin-bottom: 2rem;
     padding: 1.3rem;
-
-
   }
-
-  }
-
-  
 `;
 
 export default Game;
