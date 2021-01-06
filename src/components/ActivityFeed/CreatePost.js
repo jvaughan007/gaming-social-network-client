@@ -66,7 +66,7 @@ const StyledWrapper = styled.main`
         display: flex;
         flex-direction: column;
         textarea {
-            height: 12rem;
+            height: 7rem;
             padding: 0.8rem;
             border-radius: 0.4rem 0.4rem 0 0;
             resize: none;

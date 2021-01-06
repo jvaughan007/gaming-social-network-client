@@ -53,6 +53,16 @@ const ActivityFeed = () => {
 const StyledWrapper = styled.main`
     .activity-feed-wrapper {
         width: 100%;
+        position: absolute;
+        left: 0rem;
+        padding: 1rem;
+    }
+
+    @media all and (min-width: 700px) {
+        .activity-feed-wrapper {
+            width: 70%;
+            left: 15%;
+        }
     }
 `;
 

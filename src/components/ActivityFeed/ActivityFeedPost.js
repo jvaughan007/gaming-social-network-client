@@ -6,7 +6,9 @@ import CommentFeed from './CommentFeed';
 import styled from 'styled-components';
 
 const ActivityFeedPost = ({ post }, comments = false) => {
+    const count = 0;
     const [showComments, setShowComments] = useState(comments);
+    const [likes, setLikes] = useState(0);
     return (
         <div>
             <StyledWrapper>
@@ -29,7 +31,13 @@ const ActivityFeedPost = ({ post }, comments = false) => {
                     </div>
                     <div className='user-interactions'>
                         <div>
-                            <img src={likeIcon} alt='Like' />
+                            <span>{likes !== 0 ? likes : null}</span>
+                            <img
+                                src={likeIcon}
+                                alt='Like'
+                                onClick={() => setLikes((likes) => likes + 1)}
+                            />
+
                             <span onClick={() => setShowComments((c) => !c)}>
                                 <img src={commentIcon} alt='Comment' />
                             </span>
@@ -51,8 +59,7 @@ const StyledWrapper = styled.main`
         border-radius: 0.4rem;
         display: flex;
         flex-direction: column;
-        height: 15rem;
-        padding: 3.2rem;
+        padding: 2.4rem;
         margin-top: 3rem;
         .ellipse {
             position: absolute;
@@ -79,6 +86,8 @@ const StyledWrapper = styled.main`
         .post-content {
             p {
                 margin-top: 1.6rem;
+                padding-left: 5rem;
+                width: 100%;
                 color: #203758, 100%;
                 line-height: 2rem;
                 size: 1.4rem;
