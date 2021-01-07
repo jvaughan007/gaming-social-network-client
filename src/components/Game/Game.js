@@ -9,8 +9,10 @@ const Game = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [favorited, setFavorited] = useState(false);
   let history = useHistory();
   let { id } = useParams();
+
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -144,9 +146,7 @@ const Game = () => {
             <p>{game.description_raw}</p>
           </div>
 
-          <div className='favorite'>
-            <button onClick={favoriteGame}>Favorite</button>
-          </div>
+          {!favorited ? <div className='favorite'><button onClick={favoriteGame}>Favorite</button></div> : <div className='unfavorite'><button onClick={unfavoriteGame}>Unfavorite</button></div>}
         </div>
       </StyledMain>
     ) : null;
