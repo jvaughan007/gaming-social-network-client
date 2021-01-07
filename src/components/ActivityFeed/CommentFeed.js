@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import AddComment from './AddComment';
 import styled from 'styled-components';
 import { API_URL } from '../../config';
+import { Mention, MentionsInput } from 'react-mentions';
+
 
 const CommentFeed = ({ entity_id }, reply = false) => {
     const [replying, setReplying] = useState(reply);
@@ -47,13 +49,16 @@ const CommentFeed = ({ entity_id }, reply = false) => {
                     </h1>
                 </div>
                 <p className='comment-text'>{comment.comment_text}</p>
-                {/* <p
+                {
+                <div>
+                     <p
                     className='comment-reply'
                     onClick={() => setReplying((r) => !r)}
                 >
                     Reply
                 </p>
-                <div className='reply-input'>{replyToComment()}</div> */}
+                <div className='reply-input'>{replyToComment()}</div> 
+            </div>}
             </div>
         );
     };
@@ -68,6 +73,25 @@ const CommentFeed = ({ entity_id }, reply = false) => {
                         ? comments.map((comment, y) => showComment(comment, y))
                         : null}
                 </div>
+                {/* <div>
+                    <form onSubmit={(e) => handleSubmit(e)}>
+                    <div className='users-input'>
+                        <MentionsInput
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            className='mentions'
+                        >
+                            <Mention
+                                data={users}
+                                className='mentions__mention'
+                            />
+                        </MentionsInput>
+                        <button type='submit'>
+                            <FaPlus />
+                        </button>
+                    </div>
+                </form>
+                </div> */}
             </div>
         </StyledWrapper>
     );
