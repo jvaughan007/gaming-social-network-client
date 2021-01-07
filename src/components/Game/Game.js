@@ -9,9 +9,9 @@ const Game = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [favorited, setFavorited] = useState(false);
+  const [favorited, setFavorited] = useState(null);
   let history = useHistory();
-  let { id } = useParams();
+  let params = useParams();
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -20,60 +20,13 @@ const Game = () => {
       return history.push('/404');
     }
 
-    const getUserDetails = async () => {
-      try {
-        const res = await fetch(`${API_URL}/auth/verifyJWT`, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        const data = await res.json();
-
-        if (!data) {
-          return setError('Could not get User Details');
-        }
-
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUserDetails();
-
-    const isFavorited = async () => {
-      try {
-        const res = await fetch(`${API_URL}/auth/verifyJWT`, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        const data = await res.json();
-
-        if (!data) {
-          return setError('Could not get User Details');
-        }
-
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    const getGame = async () => {
+    (async () => {
       try {
         setLoading(true);
         setError(null);
 
         const res = await fetch(
-          `https://api.rawg.io/api/games/${id}?key=2a91788799104cdabdd2ed6da39afffb`
+          `https://api.rawg.io/api/games/${params.id}?key=2a91788799104cdabdd2ed6da39afffb`
         );
 
         if (!res.ok) {
@@ -86,19 +39,67 @@ const Game = () => {
           return setError('Could not find that game');
         }
 
-        console.log(game);
+        console.log(data);
         setGame(data);
         return setLoading(false);
       } catch (err) {
         return setError('Could not find that game');
       }
+    })();
+    // getGame();
+
+    const isFavorited = async () => {
+      try {
+        const res = await fetch(`${API_URL}/favorites/${game.id})}`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const data = await res.json();
+
+        if (!data) {
+          return setError('Could not get User Details');
+        }
+
+        console.log('asdfasdf', data);
+      } catch (err) {
+        console.log(err);
+      }
     };
-    getGame();
-  }, [id, history, game]);
+
+    isFavorited();
+  }, []);
+
+  // const getUserDetails = async () => {
+  //   try {
+  //     const res = await fetch(`${API_URL}/auth/verifyJWT`, {
+  //       method: 'GET',
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+
+  //     const data = await res.json();
+
+  //     if (!data) {
+  //       return setError('Could not get User Details');
+  //     }
+
+  //     console.log(data);
+  //     return setUser(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // getUserDetails();
 
   const favoriteGame = async () => {
-    console.log('This is the game ID: ', id);
-
     try {
       const token = localStorage.getItem('jwt');
       const res = await fetch(`${API_URL}/favorites`, {
@@ -121,20 +122,24 @@ const Game = () => {
   const unfavoriteGame = async () => {
     try {
       const token = localStorage.getItem('jwt');
-      const res = await fetch(`${API_URL}/favorites/${game.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ game })
-      });
+      const res = await fetch(
+        `${API_URL}/favorites/${JSON.stringify(game.id)}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
       const data = await res.json();
-      console.log(data);
-      // do someting with the data here
+
+      if (data.success) {
+        return setFavorited(false);
+      }
     } catch (err) {
       console.log(err);
-      // handle error here
     }
   };
 
@@ -151,7 +156,7 @@ const Game = () => {
       );
     }
 
-    return game ? (
+    return game && !loading ? (
       <StyledMain className='gamePage_gameContainer'>
         <div className='gamePage_title'>
           <h1>
