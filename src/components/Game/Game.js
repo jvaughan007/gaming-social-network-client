@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
@@ -9,9 +9,42 @@ const Game = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [favorited, setFavorited] = useState(false);
+  let history = useHistory();
   let { id } = useParams();
 
+
   useEffect(() => {
+    const token = localStorage.getItem('jwt');
+
+    if (!token) {
+      return history.push('/404');
+    }
+
+    const getUserDetails = async () => {
+      try {
+        const res = await fetch(`${API_URL}/auth/verifyJWT`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const data = await res.json();
+
+        if (!data) {
+          return setError('Could not get User Details');
+        }
+
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUserDetails();
+
     const getGame = async () => {
       try {
         setLoading(true);
@@ -31,6 +64,7 @@ const Game = () => {
           return setError('Could not find that game');
         }
 
+        console.log(game);
         setGame(data);
         return setLoading(false);
       } catch (err) {
@@ -38,7 +72,7 @@ const Game = () => {
       }
     };
     getGame();
-  }, [id]);
+  }, [id, history]);
 
   const favoriteGame = async () => {
     console.log('This is the game ID: ', id);
@@ -55,7 +89,27 @@ const Game = () => {
       });
       const data = await res.json();
       console.log(data);
-      // do something with the data here
+      // do someting with the data here
+    } catch (err) {
+      console.log(err);
+      // handle error here
+    }
+  };
+
+  const unfavoriteGame = async () => {
+    try {
+      const token = localStorage.getItem('jwt');
+      const res = await fetch(`${API_URL}/favorites/${game.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ game })
+      });
+      const data = await res.json();
+      console.log(data);
+      // do someting with the data here
     } catch (err) {
       console.log(err);
       // handle error here
@@ -92,9 +146,7 @@ const Game = () => {
             <p>{game.description_raw}</p>
           </div>
 
-          <div className='favorite'>
-            <button onClick={favoriteGame}>Favorite</button>
-          </div>
+          {!favorited ? <div className='favorite'><button onClick={favoriteGame}>Favorite</button></div> : <div className='unfavorite'><button onClick={unfavoriteGame}>Unfavorite</button></div>}
         </div>
       </StyledMain>
     ) : null;
