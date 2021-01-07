@@ -20,6 +20,34 @@ const Game = () => {
       return history.push('/404');
     }
 
+    const isFavorited = async (gameId) => {
+      try {
+        const res = await fetch(
+          `${API_URL}/favorites/${JSON.stringify(gameId)}`,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        const data = await res.json();
+
+        if (!data.success) {
+          setFavorited(false);
+          return setLoading(false);
+        }
+
+        setFavorited(true);
+        return setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     (async () => {
       try {
         setLoading(true);
@@ -38,66 +66,14 @@ const Game = () => {
         if (!data) {
           return setError('Could not find that game');
         }
-
-        console.log(data);
         setGame(data);
-        return setLoading(false);
+
+        return await isFavorited(data.id);
       } catch (err) {
         return setError('Could not find that game');
       }
     })();
-    // getGame();
-
-    const isFavorited = async () => {
-      try {
-        const res = await fetch(`${API_URL}/favorites/${game.id})}`, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        const data = await res.json();
-
-        if (!data) {
-          return setError('Could not get User Details');
-        }
-
-        console.log('asdfasdf', data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    isFavorited();
-  }, []);
-
-  // const getUserDetails = async () => {
-  //   try {
-  //     const res = await fetch(`${API_URL}/auth/verifyJWT`, {
-  //       method: 'GET',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     });
-
-  //     const data = await res.json();
-
-  //     if (!data) {
-  //       return setError('Could not get User Details');
-  //     }
-
-  //     console.log(data);
-  //     return setUser(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // getUserDetails();
+  }, [params.id, history]);
 
   const favoriteGame = async () => {
     try {
@@ -111,11 +87,12 @@ const Game = () => {
         body: JSON.stringify({ game, game_id: JSON.stringify(game.id) })
       });
       const data = await res.json();
-      console.log(data);
-      // do someting with the data here
+      if (!data.success) {
+        return;
+      }
+      return setFavorited(true);
     } catch (err) {
       console.log(err);
-      // handle error here
     }
   };
 
