@@ -15,7 +15,7 @@ const users = [
     },
 ];
 
-const AddComment = ({ entity_id }) => {
+const AddComment = ({ entity_id, addComment }) => {
     const [comment, setComment] = useState('');
 
     const handleSubmit = async (e) => {
@@ -25,7 +25,7 @@ const AddComment = ({ entity_id }) => {
                 return;
             }
             const token = localStorage.getItem('jwt');
-            const res = await fetch(`${API_URL}/comments/`, {
+            const res = await fetch(`${API_URL}/comments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,11 +34,10 @@ const AddComment = ({ entity_id }) => {
                 body: JSON.stringify({ comment_text: comment, entity_id }),
             });
             const data = await res.json();
-            console.log(data);
+            addComment(data.comment);
             return setComment('');
         } catch (err) {
             console.log(err);
-            // handle error here
         }
     };
 
