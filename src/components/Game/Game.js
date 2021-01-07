@@ -94,6 +94,26 @@ const Game = () => {
     }
   };
 
+  const unfavoriteGame = async () => {
+    try {
+      const token = localStorage.getItem('jwt');
+      const res = await fetch(`${API_URL}/favorites/${game.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ game })
+      });
+      const data = await res.json();
+      console.log(data);
+      // do someting with the data here
+    } catch (err) {
+      console.log(err);
+      // handle error here
+    }
+  };
+
   const renderGame = () => {
     if (loading) {
       return (
