@@ -94,7 +94,7 @@ const Game = () => {
       }
     };
     getGame();
-  }, [id, history]);
+  }, [id, history, game]);
 
   const favoriteGame = async () => {
     console.log('This is the game ID: ', id);
@@ -107,7 +107,7 @@ const Game = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ game })
+        body: JSON.stringify({ game, game_id: JSON.stringify(game.id) })
       });
       const data = await res.json();
       console.log(data);
