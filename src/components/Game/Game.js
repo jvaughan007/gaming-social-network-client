@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
@@ -9,9 +9,41 @@ const Game = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  let history = useHistory();
   let { id } = useParams();
 
   useEffect(() => {
+    const token = localStorage.getItem('jwt');
+
+    if (!token) {
+      return history.push('/404');
+    }
+
+    const getUserDetails = async () => {
+      try {
+        const res = await fetch(`${API_URL}/auth/verifyJWT`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const data = await res.json();
+
+        if (!data) {
+          return setError('Could not get User Details');
+        }
+
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUserDetails();
+
     const getGame = async () => {
       try {
         setLoading(true);
@@ -38,7 +70,7 @@ const Game = () => {
       }
     };
     getGame();
-  }, [id]);
+  }, [id, history]);
 
   const favoriteGame = async () => {
     console.log('This is the game ID: ', id);
@@ -55,7 +87,7 @@ const Game = () => {
       });
       const data = await res.json();
       console.log(data);
-      // do something with the data here
+      // do someting with the data here
     } catch (err) {
       console.log(err);
       // handle error here
