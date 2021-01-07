@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import AddComment from './AddComment';
 import styled from 'styled-components';
 import { API_URL } from '../../config';
+import Layout from '../common/Layout';
+import { MentionsInput, Mention } from "react-mentions";
+
 
 const CommentFeed = ({ entity_id }, reply = false) => {
     const [replying, setReplying] = useState(reply);
@@ -58,18 +61,41 @@ const CommentFeed = ({ entity_id }, reply = false) => {
         );
     };
 
+    // handleChange = () => {
+
+    // }
+
+    // renderUserSuggestion = () => {
+
+    // }
+    
+
     return (
+      <Layout>
         <StyledWrapper>
-            <div className='comment-sect'>
-                <AddComment entity_id={entity_id} addComment={addComment} />
-                {/* add comment will be static, however there will be many different comments */}
-                <div className='comment-feed-sect'>
-                    {comments
-                        ? comments.map((comment, y) => showComment(comment, y))
-                        : null}
-                </div>
+          <div className="comment-sect">
+            <AddComment entity_id={entity_id} addComment={addComment} />
+            {/* add comment will be static, however there will be many different comments */}
+            <div className="comment-feed-sect">
+              {comments
+                ? comments.map((comment, y) => showComment(comment, y))
+                : null}
+              <div>
+                {/* <MentionsInput
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                >
+                  <Mention
+                    trigger="@"
+                    data={this.props.users_id}
+                    renderSuggestion={this.renderUserSuggestion}
+                  />
+                </MentionsInput> */}
+              </div>
             </div>
+          </div>
         </StyledWrapper>
+      </Layout>
     );
 };
 
