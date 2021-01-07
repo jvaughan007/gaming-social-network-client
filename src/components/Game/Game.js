@@ -41,7 +41,6 @@ const Game = () => {
         console.log(err);
       }
     };
-
     getUserDetails();
 
     const getGame = async () => {
@@ -63,6 +62,7 @@ const Game = () => {
           return setError('Could not find that game');
         }
 
+        console.log(game);
         setGame(data);
         return setLoading(false);
       } catch (err) {
