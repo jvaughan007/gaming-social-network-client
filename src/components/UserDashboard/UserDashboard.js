@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import ActivityFeed from '../ActivityFeed/ActivityFeed';
+import SideBar from '../SideBar/SideBar';
 
 const UserDashboard = () => {
     return (
         <StyledMain>
             <h1>User's Dashboard</h1>
+            {/* <nav>
+                <SideBar />
+            </nav> */}
             <ActivityFeed></ActivityFeed>
         </StyledMain>
     );
@@ -18,6 +22,12 @@ const StyledMain = styled.main`
     width: 100%;
     height: 100%;
     background-color: #0d7377;
+
+    // nav {
+    //     position: fixed;
+    //     left: 0;
+    //     z-index: 1000;
+    // }
 
     h1 {
         color: white;
