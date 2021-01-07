@@ -13,7 +13,6 @@ const Game = () => {
   let history = useHistory();
   let { id } = useParams();
 
-
   useEffect(() => {
     const token = localStorage.getItem('jwt');
 
@@ -44,6 +43,29 @@ const Game = () => {
       }
     };
     getUserDetails();
+
+    const isFavorited = async () => {
+      try {
+        const res = await fetch(`${API_URL}/auth/verifyJWT`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const data = await res.json();
+
+        if (!data) {
+          return setError('Could not get User Details');
+        }
+
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
     const getGame = async () => {
       try {
@@ -146,7 +168,15 @@ const Game = () => {
             <p>{game.description_raw}</p>
           </div>
 
-          {!favorited ? <div className='favorite'><button onClick={favoriteGame}>Favorite</button></div> : <div className='unfavorite'><button onClick={unfavoriteGame}>Unfavorite</button></div>}
+          {!favorited ? (
+            <div className='favorite'>
+              <button onClick={favoriteGame}>Favorite</button>
+            </div>
+          ) : (
+            <div className='unfavorite'>
+              <button onClick={unfavoriteGame}>Unfavorite</button>
+            </div>
+          )}
         </div>
       </StyledMain>
     ) : null;
