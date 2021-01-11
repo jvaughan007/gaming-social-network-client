@@ -1,21 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddComment from './AddComment';
 import styled from 'styled-components';
-
-const comment = {
-    comment_text: 'Great point dude! You are awesome!',
-    entity_id: 1,
-    comment_id: 1,
-    user_id: 1,
-    comments_user: 'Comments user',
-    replies: {
-        reply_text: 'Great comment dude! This comment is awesome!',
-        entity_id: 1,
-        user_id: 2,
-        replying_to: 1,
-        replies_user: 'The replier',
-    },
-};
+import { API_URL } from '../../config';
 
 const CommentFeed = ({ entity_id }, reply = false) => {
     const [replying, setReplying] = useState(reply);
@@ -25,24 +11,51 @@ const CommentFeed = ({ entity_id }, reply = false) => {
         return replying === true ? <AddComment /> : null;
     };
 
-    const getNestedComments = () => {
-        if (comment.replies) {
-            return (
-                <div className='comment-reply-feed'>
-                    <div className='replies-info'>
-                        <span></span>
-                        <h2>{comment.replies.replies_user}</h2>
-                    </div>
-                    <p className='comment-reply-text'>
-                        {comment.replies.reply_text}
-                    </p>
-                </div>
-            );
+    const getComments = async () => {
+        try {
+            const token = localStorage.getItem('jwt');
+            const res = await fetch(`${API_URL}/posts/comments/${entity_id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await res.json();
+            return setComments(data.comments);
+        } catch (err) {
+            console.log(err);
+            setComments([]);
         }
     };
 
+    useEffect(() => {
+        getComments();
+    }, []);
+
     const addComment = (comment) => {
         setComments([comment, ...comments]);
+    };
+
+    const showComment = (comment, y) => {
+        return (
+            <div className='each-comment' key={y}>
+                <div className='comments-poster'>
+                    <span></span>
+                    <h1>
+                        {comment.username} on post {entity_id}
+                    </h1>
+                </div>
+                <p className='comment-text'>{comment.comment_text}</p>
+                {/* <p
+                    className='comment-reply'
+                    onClick={() => setReplying((r) => !r)}
+                >
+                    Reply
+                </p>
+                <div className='reply-input'>{replyToComment()}</div> */}
+            </div>
+        );
     };
 
     return (
@@ -51,23 +64,9 @@ const CommentFeed = ({ entity_id }, reply = false) => {
                 <AddComment entity_id={entity_id} addComment={addComment} />
                 {/* add comment will be static, however there will be many different comments */}
                 <div className='comment-feed-sect'>
-                    <div className='each-comment'>
-                        <div className='comments-poster'>
-                            <span></span>
-                            <h1>
-                                {comment.comments_user} on post {entity_id}
-                            </h1>
-                        </div>
-                        <p className='comment-text'>{comment.comment_text}</p>
-                        <p
-                            className='comment-reply'
-                            onClick={() => setReplying((r) => !r)}
-                        >
-                            Reply
-                        </p>
-                        <div className='reply-input'> {replyToComment()}</div>
-                        {getNestedComments()}
-                    </div>
+                    {comments
+                        ? comments.map((comment, y) => showComment(comment, y))
+                        : null}
                 </div>
             </div>
         </StyledWrapper>

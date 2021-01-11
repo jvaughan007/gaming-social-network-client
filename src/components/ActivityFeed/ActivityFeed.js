@@ -18,7 +18,7 @@ const ActivityFeed = () => {
                 },
             });
             const data = await res.json();
-            console.log(data);
+            localStorage.setItem('username', data.posts[0].username);
             return setPosts(data.posts);
         } catch (err) {
             console.log(err);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
@@ -9,16 +9,52 @@ const Game = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  let { id } = useParams();
+  const [favorited, setFavorited] = useState(null);
+  let history = useHistory();
+  let params = useParams();
 
   useEffect(() => {
-    const getGame = async () => {
+    const token = localStorage.getItem('jwt');
+
+    if (!token) {
+      return history.push('/404');
+    }
+
+    const isFavorited = async (gameId) => {
+      try {
+        const res = await fetch(
+          `${API_URL}/favorites/${JSON.stringify(gameId)}`,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        const data = await res.json();
+
+        if (!data.success) {
+          setFavorited(false);
+          return setLoading(false);
+        }
+
+        setFavorited(true);
+        return setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    (async () => {
       try {
         setLoading(true);
         setError(null);
 
         const res = await fetch(
-          `https://api.rawg.io/api/games/${id}?key=2a91788799104cdabdd2ed6da39afffb`
+          `https://api.rawg.io/api/games/${params.id}?key=2a91788799104cdabdd2ed6da39afffb`
         );
 
         if (!res.ok) {
@@ -30,19 +66,16 @@ const Game = () => {
         if (!data) {
           return setError('Could not find that game');
         }
-
         setGame(data);
-        return setLoading(false);
+
+        return await isFavorited(data.id);
       } catch (err) {
         return setError('Could not find that game');
       }
-    };
-    getGame();
-  }, [id]);
+    })();
+  }, [params.id, history]);
 
   const favoriteGame = async () => {
-    console.log('This is the game ID: ', id);
-
     try {
       const token = localStorage.getItem('jwt');
       const res = await fetch(`${API_URL}/favorites`, {
@@ -51,14 +84,39 @@ const Game = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ game })
+        body: JSON.stringify({ game, game_id: JSON.stringify(game.id) })
       });
       const data = await res.json();
-      console.log(data);
-      // do something with the data here
+      if (!data.success) {
+        return;
+      }
+      return setFavorited(true);
     } catch (err) {
       console.log(err);
-      // handle error here
+    }
+  };
+
+  const unfavoriteGame = async () => {
+    try {
+      const token = localStorage.getItem('jwt');
+      const res = await fetch(
+        `${API_URL}/favorites/${JSON.stringify(game.id)}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        return setFavorited(false);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -75,7 +133,7 @@ const Game = () => {
       );
     }
 
-    return game ? (
+    return game && !loading ? (
       <StyledMain className='gamePage_gameContainer'>
         <div className='gamePage_title'>
           <h1>
@@ -92,9 +150,15 @@ const Game = () => {
             <p>{game.description_raw}</p>
           </div>
 
-          <div className='favorite'>
-            <button onClick={favoriteGame}>Favorite</button>
-          </div>
+          {!favorited ? (
+            <div className='favorite'>
+              <button onClick={favoriteGame}>Favorite</button>
+            </div>
+          ) : (
+            <div className='unfavorite'>
+              <button onClick={unfavoriteGame}>Unfavorite</button>
+            </div>
+          )}
         </div>
       </StyledMain>
     ) : null;
