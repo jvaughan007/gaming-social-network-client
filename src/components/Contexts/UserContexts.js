@@ -16,7 +16,6 @@ export const UserProvider = ({ ...props }) => {
 
     useEffect(() => {
         if (TokenService.checkForToken()) {
-            console.log('user is good');
             return user;
         } else {
             window.localStorage.removeItem('jwt');

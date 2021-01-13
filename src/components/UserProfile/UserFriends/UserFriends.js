@@ -1,194 +1,145 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-//mock store for now
-const newFriend = [
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-    { user_id: 1, username: 'new guy', external_username: '@TheNewGuy' },
-];
-
 const UserFriends = () => {
-    const [friendInput, setFriendInput] = useState(''); //users search parameter
-    const [listOfSearched, setListOfSearched] = useState([]); //list of users found from users search parameter
+    const [search, setSearch] = useState(null);
+    const [friends, setFriends] = useState([]);
+    const [requests, setRequests] = useState([]);
+    const [selected, setSelected] = useState('');
 
-    const eachPerson = (person, y) => {
-        return (
-            <div className='each-result' key={y}>
-                <span className='persons-icon'></span>
-                <div className='persons-info'>
-                    <h2>{person.username}</h2>
-                    <span>{person.external_username}</span>
-                </div>
-                <button>Add+</button>
-            </div>
-        );
+    const handleSearch = (e) => {
+        setSearch(e.target.value);
     };
 
-    const searchForFriend = (e) => {
-        e.preventDefault();
+    const getAllFriends = async () => {
+        try {
+            const token = localStorage.getItem('jwt');
+            const res = await fetch(`http://localhost:5000/friends/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await res.json();
+            setFriends(data.returnAllCurrentFriends);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-        //search list of users for the person current user is searching for
-        //set the list of users sent back to listOfSearched
+    const getAllRequests = async () => {
+        try {
+            const token = localStorage.getItem('jwt');
+            const res = await fetch(`http://localhost:5000/friends/requests`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await res.json();
+            console.log(data);
+            setRequests(data.returnAllPendingFriends);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        getAllFriends();
+        getAllRequests();
+    }, []);
+
+    const handleDisplayFriends = () => {
+        if (friends.length > 0) {
+            return (
+                <div>
+                    {friends.map((friend) => {
+                        console.log(friend);
+                    })}
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <span>You have no friends</span>
+                </div>
+            );
+        }
+    };
+
+    const handleRequestsList = () => {
+        if (requests.length > 0) {
+            return (
+                <div>
+                    {requests.map((request) => {
+                        console.log(request);
+                    })}
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <span>You have no requests</span>
+                </div>
+            );
+        }
+    };
+
+    const handleDisplay = () => {
+        switch (selected) {
+            case 'friends':
+                return (
+                    <div className='friends-list'>{handleDisplayFriends()}</div>
+                );
+            case 'requests':
+                return (
+                    <div className='requests-list'>{handleRequestsList()}</div>
+                );
+            default:
+                return (
+                    <div className='friends-list'>{handleDisplayFriends()}</div>
+                );
+        }
+    };
+
+    const handleFriendsBodyDisplay = () => {
+        if (!search) {
+            return <div>{handleDisplay()}</div>;
+        } else {
+            return <span>Searching...</span>;
+        }
     };
 
     return (
-        <StyledWrapper>
-            <div className='friends-body'>
-                <div>
-                    <form onSubmit={(e) => searchForFriend(e)}>
-                        <label htmlFor='search'>Search for new friends: </label>
-                        <input
-                            className='friend-search-input'
-                            name='search'
-                            placeholder='Type their username...'
-                            type='text'
-                            onChange={(e) =>
-                                setFriendInput(e.currentTarget.value)
-                            }
-                        ></input>
-                        <button type='submit'>Search</button>
-                    </form>
-                </div>
-                {/*instead of newFriend use listOfSearched to map through the array sent back from database*/}
-                <div className='list-of-results'>
-                    {newFriend.map((person, y) => eachPerson(person, y))}
-                </div>
-            </div>
-        </StyledWrapper>
+        <StyledButtons>
+            <header>
+                <input
+                    placeholder='search for a friend...'
+                    onChange={(e) => handleSearch(e)}
+                ></input>
+                <select onChange={(e) => setSelected(e.target.value)}>
+                    <option value='friends'>All Friends</option>
+                    <option value='requests'>Friend requests</option>
+                </select>
+            </header>
+            <div className='friend-body'>{handleFriendsBodyDisplay()}</div>
+        </StyledButtons>
     );
 };
 
-const StyledWrapper = styled.main`
-    .friends-body {
-        width: 100%;
-        text-align: center;
-
-        form {
-            padding: 2rem;
-            margin-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-
-            label {
-                color: white;
-                font-size: 1.9rem;
-            }
-
-            .friend-search-input {
-                width: 23rem;
-                margin: auto;
-                margin-top: 1rem;
-            }
-
-            button {
-                width: 13rem;
-                margin: auto;
-                margin-top: 1rem;
-            }
-        }
-
-        h1 {
-            margin-top: 1rem;
-            text-align: left;
-            color: white;
-        }
-        .list-of-results {
-            .each-result {
-                display: flex;
-                width: 35rem;
-                margin: auto;
-                margin-top: 3rem;
-                padding-bottom: 1rem;
-                text-align: center;
-                background-color: white;
-                border-radius: 5rem;
-
-                .persons-icon {
-                    width: 4rem;
-                    height: 4rem;
-                    border: solid 2px black;
-                    margin: auto;
-                    border-radius: 5rem;
-                    margin-left: 1rem;
-                    margin-right: 2rem;
-                    margin-top: 1.2rem;
-                }
-
-                .persons-info {
-                    h2 {
-                        padding-top: 0.2rem;
-                        margin-bottom: 1rem;
-                    }
-                }
-
-                button {
-                    width: 8rem;
-                    margin-left: 9.8rem;
-                    margin-top: 1rem;
-                    border-radius: 5rem;
-                }
-            }
-        }
-    }
-
-    @media all and (min-width: 750px) {
-        .friends-body {
-
-            form {
-                display: flex;
-                flex-direction: row;
-                text-align: center;
-                width: 65rem;
-                margin: auto;
-
-                label {
-                    margin-top: 1rem;
-                    margin-right: 2rem;
-                }
-
-                .friend-search-input {
-                    margin-right: 0;
-                    margin-left: 0;
-                }
-
-                button {
-                    margin-left: 0;
-                    width: 10rem;
-                }
-            }
-
-
-        .list-of-results {
-            .each-result {
-                width: 45rem;
-
-                button {
-                    width: 9rem;
-                    margin-left: 19rem;
-                }
-            }
-        }
-        }
-
-`;
-
 export default UserFriends;
+
+const StyledButtons = styled.div`
+    header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .friend-body {
+        color: white;
+        text-align: center;
+        padding-top: 2rem;
+    }
+`;
