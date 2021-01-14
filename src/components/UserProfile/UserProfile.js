@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import VertNavBar from '../SideBar/SideBar';
 import { Route, Switch, Link, useParams, useHistory } from 'react-router-dom';
 import UserAbout from './UserAbout/UserAbout';
@@ -11,32 +11,43 @@ import styled from 'styled-components';
 
 const UserProfile = () => {
     const [profile, setProfile] = useState(null);
+    const [staticUsername, setStaticUsername] = useState('');
+    const [selected, setSelected] = useState(null);
     let history = useHistory();
     let { username } = useParams();
 
-    useEffect(
-        () => {
-            const getUserProfile = async () => {
-                try {
-                    const res = await fetch(`${API_URL}/users/${username}`);
-                    const data = await res.json();
-                    console.log(data);
-                    if (!data.success) {
-                        return history.push('/404');
-                    }
-
-                    return setProfile(data.profile);
-                } catch (err) {
+    useEffect(() => {
+        const getUserProfile = async () => {
+            try {
+                const res = await fetch(`${API_URL}/users/${username}`);
+                const data = await res.json();
+                setStaticUsername(data.profile.username);
+                if (!data.success) {
                     return history.push('/404');
                 }
-            };
+                return setProfile(data.profile);
+            } catch (err) {
+                return history.push('/404');
+            }
+        };
 
-            getUserProfile();
-        },
-        {
-            /*[username, history]*/
+        getUserProfile();
+    }, []);
+
+    const renderUserBody = () => {
+        switch (selected) {
+            case 'about':
+                return <UserAbout profile={profile} />;
+            case 'games':
+                return <UserGames profile={profile} />;
+            case 'images':
+                return <UserImages profile={profile} />;
+            case 'friends':
+                return <UserFriends profile={profile} />;
+            default:
+                return <UserAbout profile={profile} />;
         }
-    );
+    };
 
     return profile ? (
         <StyledMain>
@@ -52,68 +63,57 @@ const UserProfile = () => {
                             className='banner-img'
                         ></img>
                         <div className='user-tags-img'>
-                            <Link to={`/${username}`}>
-                                <img
-                                    src={profile.profile_url}
-                                    alt='users default'
-                                    className='user-image'
-                                ></img>
-                            </Link>
+                            <img
+                                src={profile.profile_url}
+                                alt='users default'
+                                className='user-image'
+                            ></img>
                             <div className='user-tags'>
-                                <span>{username}</span>
+                                <span>{staticUsername}</span>
                                 <span className='user-gamertag'>
                                     {profile.external_usernames}
                                 </span>
                             </div>
                         </div>
                         <div className='edit-profile-btn'>
-                            <Link to={`${username}/editProfile`}>
-                                <button>Edit Profile</button>
-                            </Link>
+                            <button>Edit Profile</button>
                         </div>
                         <div className='control-center'>
                             <div>
-                                <Link to='/userAbout'>
-                                    <button>About</button>
-                                </Link>
+                                <button
+                                    id='about'
+                                    onClick={() => setSelected('about')}
+                                >
+                                    About
+                                </button>
                             </div>
                             <div>
-                                <Link to='/userGames'>
-                                    <button>Games</button>
-                                </Link>
+                                <button
+                                    id='games'
+                                    onClick={() => setSelected('games')}
+                                >
+                                    Games
+                                </button>
                             </div>
                             <div>
-                                <Link to='/userImages'>
-                                    <button>Images</button>
-                                </Link>
+                                <button
+                                    id='images'
+                                    onClick={() => setSelected('images')}
+                                >
+                                    Images
+                                </button>
                             </div>
                             <div>
-                                <Link to='/userFriends'>
-                                    <button>Friends</button>
-                                </Link>
+                                <button
+                                    id='friends'
+                                    onClick={() => setSelected('friends')}
+                                >
+                                    Friends
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div className='user-body'>
-                        <Switch>
-                            <Route
-                                exact
-                                path={`/${username}/editProfile`}
-                            ></Route>
-                            <Route exact path='/userAbout'>
-                                <UserAbout profile={profile} />
-                            </Route>
-                            <Route exact path='/userGames'>
-                                <UserGames profile={profile} />
-                            </Route>
-                            <Route exact path='/userImages'>
-                                <UserImages profile={profile} />
-                            </Route>
-                            <Route exact path='/userFriends'>
-                                <UserFriends />
-                            </Route>
-                        </Switch>
-                    </div>
+                    <div className='user-body'>{renderUserBody()}</div>
                 </div>
             </div>
         </StyledMain>
@@ -127,17 +127,17 @@ const StyledMain = styled.main`
     }
 
     .user-profile {
-        width: 100%;
-        height: 100%;
         position: fixed;
         overflow: auto;
-        left: 0rem;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
 
         .header {
             position: fixed;
+            left: 0;
             top: 0;
-            width: 100%;
-            height: 20rem;
 
             .banner-img {
                 width: 100%;
@@ -202,8 +202,9 @@ const StyledMain = styled.main`
         }
         .user-body {
             position: relative;
+            width: 100%;
             height: 100%;
-            top: 20rem;
+            top: 16rem;
         }
     }
 
@@ -217,6 +218,7 @@ const StyledMain = styled.main`
             .header {
                 position: fixed;
                 top: 0;
+                left: 20rem;
                 width: 70%;
                 height: 25rem;
 

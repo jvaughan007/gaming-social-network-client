@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Games from '../../Games/Games';
 
 const UserGames = (profile) => {
     const user = profile.profile;
     return (
         <StyleWrapper>
             <div className='games-body'>
-                <div className='gaming-info'>
-                    <span>Preferred platform: {user.preferred_hardware}</span>
-                    <div className='usernames'>
-                        <span>Usernames:</span>
-                        <span>Origin: {user.external_usernames}</span>
-                    </div>
-                </div>
+                <Games />
             </div>
         </StyleWrapper>
     );
