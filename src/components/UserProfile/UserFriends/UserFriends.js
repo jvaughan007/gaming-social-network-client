@@ -39,7 +39,6 @@ const UserFriends = () => {
                 },
             });
             const data = await res.json();
-            console.log(data);
             setRequests(data.returnAllPendingFriends);
         } catch (err) {
             console.log(err);
@@ -116,7 +115,7 @@ const UserFriends = () => {
         <StyledButtons>
             <header>
                 <input
-                    placeholder='search for a friend...'
+                    placeholder='search a username...'
                     onChange={(e) => handleSearch(e)}
                 ></input>
                 <select onChange={(e) => setSelected(e.target.value)}>

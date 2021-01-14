@@ -25,7 +25,6 @@ const UserProfile = () => {
                 if (!data.success) {
                     return history.push('/404');
                 }
-
                 return setProfile(data.profile);
             } catch (err) {
                 return history.push('/404');
@@ -128,11 +127,16 @@ const StyledMain = styled.main`
     }
 
     .user-profile {
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
 
         .header {
             position: fixed;
+            left: 0;
+            top: 0;
 
             .banner-img {
                 width: 100%;
@@ -199,7 +203,7 @@ const StyledMain = styled.main`
             position: relative;
             width: 100%;
             height: 100%;
-            top: 20rem;
+            top: 16rem;
         }
     }
 
@@ -213,6 +217,7 @@ const StyledMain = styled.main`
             .header {
                 position: fixed;
                 top: 0;
+                left: 20rem;
                 width: 70%;
                 height: 25rem;
 
