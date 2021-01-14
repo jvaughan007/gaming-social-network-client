@@ -128,6 +128,7 @@ const StyledMain = styled.main`
 
     .user-profile {
         position: fixed;
+        overflow: auto;
         top: 0;
         left: 0;
         width: 100%;

@@ -47,6 +47,7 @@ const UserAbout = (profile) => {
                 }),
             });
             const data = await res.json();
+            console.log(data);
             setAbout(data.profile.user_bio);
         } catch (err) {
             console.log(err);

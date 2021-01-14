@@ -1,34 +1,103 @@
-import React, { useState } from 'react';
-import ImageUploader from 'react-images-upload';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { API_URL } from '../../../config';
 
-const UserImages = () => {
+const UserImages = (profile) => {
+    const user = profile.profile;
     const [images, setImages] = useState([]);
-    const [addImage, setAddImage] = useState(false);
+    const [image, setImage] = useState(null);
+    const [processing, setProcessing] = useState(false);
+    const [error, setError] = useState(null);
 
-    const onDrop = (picture) => {
-        setImages(images.concat(picture));
+    useEffect(() => {
+        getAllImages();
+    }, []);
+
+    const getAllImages = async () => {
+        try {
+            const res = await fetch(
+                `${API_URL}/profiles/${user.username}/images`
+            );
+
+            const data = await res.json();
+            setImages(data.images);
+            if (!data.success) {
+                setError('something');
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
-    const handleAdd = () => {
-        if (addImage) {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            setProcessing(true);
+
+            const formData = new FormData();
+            formData.append('image', image);
+
+            const JWT = localStorage.getItem('jwt');
+            const res = await fetch(`${API_URL}/profiles/update/image`, {
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${JWT}`,
+                    Accept: 'application/json',
+                },
+                body: formData,
+            });
+
+            const data = await res.json();
+            if (!data.success) {
+                setError('something');
+            }
+
+            postImageToDatabase(data.imageURL);
+            setProcessing(false);
+            setImage(null);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const postImageToDatabase = async (imageURL) => {
+        try {
+            const res = await fetch(
+                `${API_URL}/profiles/${user.username}/images`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: user.user_id,
+                        imageURL: imageURL,
+                    }),
+                }
+            );
+
+            const data = await res.json();
+            setImages(data.images);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const fileChangedHandler = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+
+    const handleDisplayImages = () => {
+        if (images.length > 0) {
             return (
-                <StyledUploader>
-                    <ImageUploader
-                        withIcon={true}
-                        buttonText='Choose images'
-                        onChange={onDrop}
-                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                        maxFileSize={5242880}
-                    />
-                </StyledUploader>
+                <div>
+                    {images.map((image, y) => {
+                        return <img src={image.image_url} key={y}></img>;
+                    })}
+                </div>
             );
         } else {
-            return (
-                <StyledImages>
-                    <div className='image-body'></div>
-                </StyledImages>
-            );
+            return <span>You have no images</span>;
         }
     };
 
@@ -37,11 +106,24 @@ const UserImages = () => {
             <div className='images-body'>
                 <header>
                     <span>Your images:</span>
-                    <button onClick={() => setAddImage((c) => !c)}>
-                        Add images
-                    </button>
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor='image'>Upload image</label>
+                        <input
+                            id='image'
+                            type='file'
+                            onChange={fileChangedHandler}
+                        />
+                        {processing ? (
+                            <button type='button' disabled>
+                                Upload
+                            </button>
+                        ) : (
+                            <button type='submit'>Upload</button>
+                        )}
+                    </form>
                 </header>
-                {handleAdd()}
+                <div className='error'>{error}</div>
+                <div className='images-list'>{handleDisplayImages()}</div>
             </div>
         </StyledWrapper>
     );
@@ -60,42 +142,35 @@ const StyledWrapper = styled.main`
             justify-content: space-between;
 
             span {
-                padding: 1rem 3rem 0.5rem 0.5rem;
+                padding: 2rem 3rem 0.5rem 0.5rem;
                 margin-left: 2rem;
                 border-bottom: solid 2px white;
             }
 
-            button {
-                border: solid 2px white;
-                background-color: transparent;
-                color: white;
-                font-size: 1.3rem;
-                padding: 0.5rem 1rem 0.5rem 1rem;
+            form {
+                border: solid 1px white;
+                padding: 1rem;
+                label {
+                    margin-right: 2rem;
+                }
+
+                button {
+                    margin-left: 9rem;
+                }
+            }
+        }
+        .images-list {
+            text-align: center;
+            margin-top: 4rem;
+
+            span {
+                color: red;
             }
 
-            button:focus {
-                outline: none;
+            img {
+                width: 100%;
+                height: 100%;
             }
         }
     }
-`;
-
-const StyledImages = styled.div`
-    text-align: center;
-    .image-body {
-        margin: auto;
-        height: 50rem;
-        width: 95%;
-        border: solid 2px #0d7377;
-        margin-top: 1rem;
-        padding: 1rem;
-    }
-`;
-
-const StyledUploader = styled.div`
-    color: black;
-    margin: auto;
-    height: 50rem;
-    width: 95%;
-    margin-top: 1rem;
 `;
