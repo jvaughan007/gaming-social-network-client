@@ -90,7 +90,7 @@ const UserImages = (profile) => {
     const handleDisplayImages = () => {
         if (images.length > 0) {
             return (
-                <div>
+                <div className='image-div'>
                     {images.map((image, y) => {
                         return <img src={image.image_url} key={y}></img>;
                     })}
@@ -135,7 +135,6 @@ const StyledWrapper = styled.main`
     .images-body {
         width: 100%;
         color: white;
-        margin-top: 2rem;
 
         header {
             display: flex;
@@ -167,9 +166,13 @@ const StyledWrapper = styled.main`
                 color: red;
             }
 
-            img {
-                width: 100%;
+            .image-div {
                 height: 100%;
+                img {
+                    width: 60%;
+                    height: 60%;
+                    margin-top: 4rem;
+                }
             }
         }
     }
