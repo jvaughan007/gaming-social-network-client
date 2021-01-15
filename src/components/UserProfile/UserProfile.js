@@ -193,6 +193,7 @@ const StyledMain = styled.main`
                     border: none;
                     background-color: transparent;
                     padding: 2rem;
+                    padding-bottom: 1.5rem;
                 }
                 button:focus {
                     border-bottom: solid 3.5px white;
@@ -201,6 +202,8 @@ const StyledMain = styled.main`
             }
         }
         .user-body {
+            position: absolute;
+            top: 18rem;
             background-color: rgb(19, 27, 33, 0.8);
             position: relative;
             width: 100%;
