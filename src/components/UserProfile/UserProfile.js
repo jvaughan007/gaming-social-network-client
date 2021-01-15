@@ -201,10 +201,10 @@ const StyledMain = styled.main`
             }
         }
         .user-body {
+            background-color: rgb(19, 27, 33, 0.8);
             position: relative;
             width: 100%;
             height: 100%;
-            top: 16rem;
         }
     }
 
