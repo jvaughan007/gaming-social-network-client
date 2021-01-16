@@ -18,38 +18,21 @@ import Game from './components/Game/Game';
 import Group from './components/Group/Group';
 import Groups from './components/Groups/Groups';
 import CreateGroup from './components/CreateGroup/CreateGroup';
+import PrivateRoute from './PrivateRoute';
+
+const theme = {
+  colors: {
+    dark1: '#131B21',
+    dark2: '#192229',
+    dark3: '#1F2731',
+    purple: '#9453D3',
+    teal: '#0D7377',
+    blue: '#14FFEC',
+    white: '#fff'
+  }
+};
 
 const App = () => {
-  // useEffect(() => {
-  //   const socket = socketIOClient('ws://localhost:5000');
-  //   // socket.on('message', (data) => {
-  //   //   console.log(data);
-  //   // });
-  //   socket.emit('message', {
-  //     user_id: 1,
-  //     conv_id: 420,
-  //     msg: 'from react msg hi bye this working?'
-  //   });
-
-  //   socket.on('message', (msg) => {
-  //     console.log(msg);
-  //   });
-
-  //   return () => socket.disconnect();
-  // }, []);
-
-  const theme = {
-    colors: {
-      dark1: '#131B21',
-      dark2: '#192229',
-      dark3: '#1F2731',
-      purple: '#9453D3',
-      teal: '#0D7377',
-      blue: '#14FFEC',
-      white: '#fff'
-    }
-  };
-
   return (
     <>
       <Router>
@@ -57,9 +40,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <StyledWrapper>
             <Switch>
-              <Route exact path='/'>
-                <Home></Home>
-              </Route>
+              <PrivateRoute path='/' component={Home} exact></PrivateRoute>
               <Route exact path='/dashboard'>
                 <UserDashboard></UserDashboard>
               </Route>
