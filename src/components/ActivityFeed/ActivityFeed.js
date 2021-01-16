@@ -4,6 +4,12 @@ import { API_URL } from '../../config';
 import ActivityFeedPost from './ActivityFeedPost';
 import CreatePost from './CreatePost';
 
+// @TODO - Fix below
+// TypeError: Cannot read property 'username' of undefined
+// at getPosts (ActivityFeed.js:21)
+
+// @TODO - Format timestamps with date-fns
+
 const ActivityFeed = () => {
   const [posts, setPosts] = useState(null);
 
