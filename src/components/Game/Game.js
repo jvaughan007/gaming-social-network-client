@@ -5,6 +5,11 @@ import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 import { API_URL } from '../../config';
 
+// @TODO - Please add number of people who have favorited the game on the front-end
+// @TODO - Get rid of borders
+// @TODO - Drop sidebar in
+// @TODO - Use proper theme colors
+
 const Game = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(false);

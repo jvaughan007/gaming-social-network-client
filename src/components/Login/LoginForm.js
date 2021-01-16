@@ -7,8 +7,6 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState(null);
-  // going to use the code below when I implement accepting terms/privacy for fun
-  // const [agreed, setAgreed] = useState(false);
   const firstInput = useRef(null);
   let history = useHistory();
 
@@ -39,10 +37,9 @@ const LoginForm = () => {
         const errors = data.errors.map((err) => err.msg);
         return setErrors(errors);
       }
-
+      // set user creds in store
       localStorage.setItem('jwt', data.token);
-      // need to push to dashboard when dashboard component is finished
-      return history.push('/');
+      return history.push('/dashboard');
     } catch (err) {
       return setErrors(['Something went wrong. Please try again.']);
     }

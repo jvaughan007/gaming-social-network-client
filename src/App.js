@@ -41,15 +41,19 @@ const App = () => {
           <StyledWrapper>
             <Switch>
               <PrivateRoute path='/' component={Home} exact></PrivateRoute>
-              <Route exact path='/dashboard'>
-                <UserDashboard></UserDashboard>
-              </Route>
+              <PrivateRoute
+                path='/dashboard'
+                component={UserDashboard}
+                exact
+              ></PrivateRoute>
+              {/* don't enter these routes if already signed in */}
               <Route exact path='/signup'>
                 <Signup></Signup>
               </Route>
               <Route exact path='/login'>
                 <Login></Login>
               </Route>
+              {/* end */}
               <Route exact path='/messages'>
                 <Chat />
               </Route>

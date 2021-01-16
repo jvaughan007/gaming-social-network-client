@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import Loader from 'react-loader-spinner';
-import { signup } from './store/actions/authActions';
+import { signup, logout } from './store/actions/authActions';
 import { API_URL } from './config';
 
 const PrivateRoute = (props) => {
@@ -14,6 +14,7 @@ const PrivateRoute = (props) => {
   const loginSuccess = useCallback((user) => dispatch(signup(user)), [
     dispatch
   ]);
+  const logUserOut = useCallback(() => dispatch(logout()), [dispatch]);
 
   useEffect(() => {
     let isMounted = true;
@@ -38,12 +39,14 @@ const PrivateRoute = (props) => {
           }
         } else {
           if (isMounted) {
+            logUserOut();
             setLoading(false);
             return setAuthenticated(false);
           }
         }
       } catch (err) {
         if (isMounted) {
+          logUserOut();
           setLoading(false);
           return setAuthenticated(false);
         }
@@ -53,7 +56,7 @@ const PrivateRoute = (props) => {
     return () => {
       isMounted = false;
     };
-  }, [loginSuccess]);
+  }, [loginSuccess, logUserOut]);
 
   const renderAuthenticated = () => {
     if (loading) {
@@ -86,6 +89,19 @@ const PrivateRoute = (props) => {
   return renderAuthenticated();
 };
 
-const StyledSpinner = styled.main``;
+const StyledSpinner = styled.main`
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .spinner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
 
 export default PrivateRoute;
