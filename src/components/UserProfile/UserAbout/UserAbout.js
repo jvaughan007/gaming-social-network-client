@@ -69,7 +69,6 @@ const UserAbout = (profile) => {
 const StyledWrapper = styled.main`
     .about-body {
         color: white;
-        margin-top: 2rem;
 
         header {
             display: flex;

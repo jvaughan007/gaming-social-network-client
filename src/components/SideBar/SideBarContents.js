@@ -27,10 +27,7 @@ export default function NavBarContents(props) {
                         <input type='text' placeholder='Search...'></input>
                     </section>
                     <div className='home-btn'>
-                        <Link
-                            to='/dashboard'
-                            onClick={(event) => event.preventDefault()}
-                        >
+                        <Link to='/dashboard'>
                             <button>
                                 <span>
                                     <FaHome />
@@ -59,30 +56,36 @@ export default function NavBarContents(props) {
                             <span className='category'>Connect</span>
                         </span>
                         <div className='dropdown-content'>
-                            <button>
-                                <span>
-                                    <FaUsers />
-                                </span>
-                                <span className='dd-label'>Groups</span>
-                            </button>
-                            <button>
-                                <span>
-                                    <FaSms />
-                                </span>
-                                <span className='dd-label'>Chat</span>
-                            </button>
+                            <Link to='/groups/filter'>
+                                <button>
+                                    <span>
+                                        <FaUsers />
+                                    </span>
+                                    <span className='dd-label'>Groups</span>
+                                </button>
+                            </Link>
+                            <Link to='/messages'>
+                                <button>
+                                    <span>
+                                        <FaSms />
+                                    </span>
+                                    <span className='dd-label'>Chat</span>
+                                </button>
+                            </Link>
                             <button>
                                 <span>
                                     <FaUserFriends />
                                 </span>
                                 <span className='dd-label'>Friends</span>
                             </button>
-                            <button>
-                                <span>
-                                    <FaGamepad />
-                                </span>
-                                <span className='dd-label'>Games</span>
-                            </button>
+                            <Link to='/games'>
+                                <button>
+                                    <span>
+                                        <FaGamepad />
+                                    </span>
+                                    <span className='dd-label'>Games</span>
+                                </button>
+                            </Link>
                         </div>
                     </div>
 
@@ -91,14 +94,16 @@ export default function NavBarContents(props) {
                             <span className='category'>Create</span>
                         </span>
                         <div className='dropdown-content'>
-                            <button>
-                                <span>
-                                    <FaUsers />
-                                </span>
-                                <span className='dd-label'>
-                                    Create new Group
-                                </span>
-                            </button>
+                            <Link to='/groups/new'>
+                                <button>
+                                    <span>
+                                        <FaUsers />
+                                    </span>
+                                    <span className='dd-label'>
+                                        Create new Group
+                                    </span>
+                                </button>
+                            </Link>
                         </div>
                     </div>
 
@@ -112,12 +117,17 @@ export default function NavBarContents(props) {
                     </div>
 
                     <div className='home-btn log-out'>
-                        <button>
-                            <span>
-                                <FaSignOutAlt />
-                            </span>
-                            <span className='home'>Log Out</span>
-                        </button>
+                        <Link
+                            to='/'
+                            onClick={() => localStorage.removeItem('jwt')}
+                        >
+                            <button>
+                                <span>
+                                    <FaSignOutAlt />
+                                </span>
+                                <span className='home'>Log Out</span>
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
