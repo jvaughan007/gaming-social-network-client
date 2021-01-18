@@ -54,27 +54,36 @@ const App = () => {
                 <Login></Login>
               </Route>
               {/* end */}
-              <Route exact path='/messages'>
-                <Chat />
-              </Route>
-              <Route exact path='/games'>
-                <Games></Games>
-              </Route>
-              <Route exact path='/groups/filter'>
-                <Groups></Groups>
-              </Route>
-              <Route exact path='/:username'>
-                <UserProfile />
-              </Route>
-              <Route exact path='/group/:id'>
-                <Group></Group>
-              </Route>
-              <Route exact path='/groups/new'>
-                <CreateGroup></CreateGroup>
-              </Route>
-              <Route exact path='/game/:id'>
-                <Game></Game>
-              </Route>
+              <PrivateRoute
+                exact
+                path='/games'
+                component={Games}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/groups/filter'
+                component={Groups}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/:username'
+                component={UserProfile}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/group/:id'
+                component={Group}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/groups/new'
+                component={CreateGroup}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/game/:id'
+                component={Game}
+              ></PrivateRoute>
               <Route path='/404'>
                 <NotFound></NotFound>
               </Route>
