@@ -12,7 +12,7 @@ import {
 } from 'react-icons/fa';
 import { logout } from '../../store/actions/authActions';
 
-const NavBarContents = () => {
+const SidebarContents = () => {
   const dispatch = useDispatch();
   const logoutUser = useCallback(() => dispatch(logout()), [dispatch]);
   let history = useHistory();
@@ -126,4 +126,4 @@ const NavBarContents = () => {
   );
 };
 
-export default NavBarContents;
+export default SidebarContents;

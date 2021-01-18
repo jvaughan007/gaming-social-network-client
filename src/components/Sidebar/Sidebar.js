@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import NavContent from './SideBarContents';
+import NavContent from './SidebarContents';
 
 import { slide as Menu } from 'react-burger-menu';
 
-const VertNavBar = () => {
+const Sidebar = () => {
   return (
     <StyledMain>
       <div className='mobile-view'>
@@ -163,4 +163,4 @@ const StyledMain = styled.main`
   }
 `;
 
-export default VertNavBar;
+export default Sidebar;
