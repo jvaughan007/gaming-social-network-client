@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import VertNavBar from '../Sidebar/SideBar';
-import { Route, Switch, Link, useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import UserAbout from './UserAbout/UserAbout';
 import UserGames from './UserGames/UserGames';
 import UserImages from './UserImages/UserImages';
@@ -32,7 +32,7 @@ const UserProfile = () => {
     };
 
     getUserProfile();
-  }, []);
+  }, [history, username]);
 
   const renderUserBody = () => {
     switch (selected) {
