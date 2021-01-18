@@ -56,7 +56,6 @@ const App = () => {
                 component={UserDashboard}
                 exact
               ></PrivateRoute>
-
               <PrivateRoute
                 exact
                 path='/games'
