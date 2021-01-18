@@ -41,6 +41,7 @@ const App = () => {
           <StyledWrapper>
             <Switch>
               {/* don't enter these routes if already signed in */}
+              {/* redirect to /dashboard */}
               <Route path='/' exact>
                 <Home></Home>
               </Route>
