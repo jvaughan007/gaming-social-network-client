@@ -6,10 +6,12 @@ const UserDashboard = () => {
     return (
         <StyledMain>
             <h1>User's Dashboard</h1>
-            {/* <nav>
+            <nav>
                 <SideBar />
-            </nav> */}
-            <ActivityFeed></ActivityFeed>
+            </nav>
+            <div className='activity-feed'>
+                <ActivityFeed></ActivityFeed>
+            </div>
         </StyledMain>
     );
 };
@@ -23,11 +25,12 @@ const StyledMain = styled.main`
     height: 100%;
     background-color: #0d7377;
 
-    // nav {
-    //     position: fixed;
-    //     left: 0;
-    //     z-index: 1000;
-    // }
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
 
     h1 {
         color: white;

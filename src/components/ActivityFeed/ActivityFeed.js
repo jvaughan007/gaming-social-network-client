@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import { API_URL } from '../../config';
 import ActivityFeedPost from './ActivityFeedPost';
 import CreatePost from './CreatePost';
-import SideBar from '../SideBar/SideBar';
-
-// @TODO - Format timestamps with date-fns
 
 const ActivityFeed = () => {
     const [posts, setPosts] = useState(null);
@@ -39,9 +36,6 @@ const ActivityFeed = () => {
 
     return (
         <StyledWrapper>
-            <nav>
-                <SideBar />
-            </nav>
             <div className='activity-feed-wrapper'>
                 <CreatePost addPost={addPost} />
                 <ul>
@@ -60,12 +54,6 @@ const ActivityFeed = () => {
 };
 
 const StyledWrapper = styled.main`
-    nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1000;
-    }
     .activity-feed-wrapper {
         width: 100%;
         position: fixed;
@@ -76,7 +64,7 @@ const StyledWrapper = styled.main`
     @media all and (min-width: 700px) {
         .activity-feed-wrapper {
             width: 70%;
-            left: 23rem;
+            left: 20%;
         }
     }
 `;
