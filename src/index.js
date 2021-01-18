@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import rootReducer from './store/reducers/rootReducer';
 import App from './App';
+import { UserProvider } from './components/Contexts/UserContexts';
 
 const store = createStore(
   rootReducer,
@@ -14,9 +15,11 @@ const store = createStore(
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* <UserProvider> */}
     <Provider store={store}>
       <App />
     </Provider>
+    {/* </UserProvider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
