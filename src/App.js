@@ -18,38 +18,21 @@ import Game from './components/Game/Game';
 import Group from './components/Group/Group';
 import Groups from './components/Groups/Groups';
 import CreateGroup from './components/CreateGroup/CreateGroup';
+import PrivateRoute from './PrivateRoute';
+
+const theme = {
+  colors: {
+    dark1: '#131B21',
+    dark2: '#192229',
+    dark3: '#1F2731',
+    purple: '#9453D3',
+    teal: '#0D7377',
+    blue: '#14FFEC',
+    white: '#fff'
+  }
+};
 
 const App = () => {
-  // useEffect(() => {
-  //   const socket = socketIOClient('ws://localhost:5000');
-  //   // socket.on('message', (data) => {
-  //   //   console.log(data);
-  //   // });
-  //   socket.emit('message', {
-  //     user_id: 1,
-  //     conv_id: 420,
-  //     msg: 'from react msg hi bye this working?'
-  //   });
-
-  //   socket.on('message', (msg) => {
-  //     console.log(msg);
-  //   });
-
-  //   return () => socket.disconnect();
-  // }, []);
-
-  const theme = {
-    colors: {
-      dark1: '#131B21',
-      dark2: '#192229',
-      dark3: '#1F2731',
-      purple: '#9453D3',
-      teal: '#0D7377',
-      blue: '#14FFEC',
-      white: '#fff'
-    }
-  };
-
   return (
     <>
       <Router>
@@ -57,11 +40,10 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <StyledWrapper>
             <Switch>
-              <Route exact path='/'>
+              {/* don't enter these routes if already signed in */}
+              {/* redirect to /dashboard */}
+              <Route path='/' exact>
                 <Home></Home>
-              </Route>
-              <Route exact path='/dashboard'>
-                <UserDashboard></UserDashboard>
               </Route>
               <Route exact path='/signup'>
                 <Signup></Signup>
@@ -69,27 +51,42 @@ const App = () => {
               <Route exact path='/login'>
                 <Login></Login>
               </Route>
-              <Route exact path='/messages'>
-                <Chat />
-              </Route>
-              <Route exact path='/games'>
-                <Games></Games>
-              </Route>
-              <Route exact path='/groups/filter'>
-                <Groups></Groups>
-              </Route>
-              <Route exact path='/:username'>
-                <UserProfile />
-              </Route>
-              <Route exact path='/group/:id'>
-                <Group></Group>
-              </Route>
-              <Route exact path='/groups/new'>
-                <CreateGroup></CreateGroup>
-              </Route>
-              <Route exact path='/game/:id'>
-                <Game></Game>
-              </Route>
+              {/* end */}
+              <PrivateRoute
+                path='/dashboard'
+                component={UserDashboard}
+                exact
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/games'
+                component={Games}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/groups/filter'
+                component={Groups}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/:username'
+                component={UserProfile}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/group/:id'
+                component={Group}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/groups/new'
+                component={CreateGroup}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path='/game/:id'
+                component={Game}
+              ></PrivateRoute>
               <Route path='/404'>
                 <NotFound></NotFound>
               </Route>
