@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import VertNavBar from '../SideBar/SideBar';
+import VertNavBar from '../Sidebar/SideBar';
 import { Route, Switch, Link, useParams, useHistory } from 'react-router-dom';
 import UserAbout from './UserAbout/UserAbout';
 import UserGames from './UserGames/UserGames';

@@ -72,14 +72,6 @@ const NavBarContents = () => {
                   <span className='dd-label'>Groups</span>
                 </button>
               </Link>
-              <Link to='/messages'>
-                <button>
-                  <span>
-                    <FaSms />
-                  </span>
-                  <span className='dd-label'>Chat</span>
-                </button>
-              </Link>
               <button>
                 <span>
                   <FaUserFriends />
