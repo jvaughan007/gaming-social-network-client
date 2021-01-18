@@ -1,10 +1,9 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import {
   FaHome,
   FaUsers,
-  FaSms,
   FaUserFriends,
   FaGamepad,
   FaSignOutAlt,
@@ -15,11 +14,8 @@ import { logout } from '../../store/actions/authActions';
 
 const NavBarContents = () => {
   const dispatch = useDispatch();
-  const authState = useSelector(({ auth }) => auth);
   const logoutUser = useCallback(() => dispatch(logout()), [dispatch]);
   let history = useHistory();
-
-  // you can check the authState by using authState.user.
 
   const onLogoutClick = () => {
     logoutUser();
@@ -70,14 +66,6 @@ const NavBarContents = () => {
                     <FaUsers />
                   </span>
                   <span className='dd-label'>Groups</span>
-                </button>
-              </Link>
-              <Link to='/messages'>
-                <button>
-                  <span>
-                    <FaSms />
-                  </span>
-                  <span className='dd-label'>Chat</span>
                 </button>
               </Link>
               <button>

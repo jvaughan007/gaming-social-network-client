@@ -1,11 +1,18 @@
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBar from './NavBar/NavBar';
 import backImgMobile from './images/dimitris-unsplash.jpg';
 import backImgDesktop from './images/alex-haney-unsplash.jpg';
 
-const Home = ({ socket }) => {
+const Home = () => {
   let history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem('jwt')) {
+      return history.push('/dashboard');
+    }
+  }, [history]);
 
   return (
     <>

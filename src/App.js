@@ -9,7 +9,6 @@ import GlobalStyle from './globalStyle';
 import Home from './components/Home/Home';
 import NotFound from './components/NotFound/NotFound';
 import Signup from './components/Signup/Signup';
-import Chat from './components/Chat/Chat';
 import Login from './components/Login/Login';
 import Games from './components/Games/Games';
 import UserDashboard from './components/UserDashboard/UserDashboard';

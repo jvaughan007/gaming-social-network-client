@@ -14,16 +14,17 @@ const UserDashboard = () => {
             </div>
         </StyledMain>
     );
+
 };
 
 const StyledMain = styled.main`
-    position: fixed;
-    overflow: auto;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #0d7377;
+  position: fixed;
+  overflow: auto;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0d7377;
 
     nav {
         position: fixed;
