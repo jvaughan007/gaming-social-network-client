@@ -17,7 +17,7 @@ const StyledMain = styled.main`
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #0d7377;
+  background-color: ${({ theme }) => theme.colors.teal};
 
   h1 {
     color: white;
