@@ -40,13 +40,10 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <StyledWrapper>
             <Switch>
-              <PrivateRoute path='/' component={Home} exact></PrivateRoute>
-              <PrivateRoute
-                path='/dashboard'
-                component={UserDashboard}
-                exact
-              ></PrivateRoute>
               {/* don't enter these routes if already signed in */}
+              <Route path='/' exact>
+                <Home></Home>
+              </Route>
               <Route exact path='/signup'>
                 <Signup></Signup>
               </Route>
@@ -54,6 +51,12 @@ const App = () => {
                 <Login></Login>
               </Route>
               {/* end */}
+              <PrivateRoute
+                path='/dashboard'
+                component={UserDashboard}
+                exact
+              ></PrivateRoute>
+
               <PrivateRoute
                 exact
                 path='/games'
