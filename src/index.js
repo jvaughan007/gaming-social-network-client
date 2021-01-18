@@ -9,17 +9,17 @@ import App from './App';
 import { UserProvider } from './components/Contexts/UserContexts';
 
 const store = createStore(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(thunk))
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 ReactDOM.render(
-    <React.StrictMode>
-        <UserProvider>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </UserProvider>
-    </React.StrictMode>,
-    document.getElementById('root')
+  <React.StrictMode>
+    {/* <UserProvider> */}
+    <Provider store={store}>
+      <App />
+    </Provider>
+    {/* </UserProvider> */}
+  </React.StrictMode>,
+  document.getElementById('root')
 );
