@@ -16,27 +16,27 @@
 
 <h1>Routes</h1>
 
-<h3>'/' the Landing page route</h3>
+<h3><i>'/'</i> the Landing page route</h3>
 <span>This is the first page users will land on. Where they can see a demo of our site, sign up, and log in</span>
 <br/>
 <p align="center"><img width="460" height="300" src="src/ReadMeAssets/GSN-Home.png"/></p>
 
-<h3>'/login' login page route && '/signup' sign up page route</h3>
+<h3><i>'/login'</i> login page route && <i>'/signup'</i> sign up page route</h3>
 <span>This is where users can sign up or login in order to get an authenticated JWT to access the entire website, if they try access another route without an authenticated JWT they would be redirected to login page</span>
 
 | Login                                                                | Sign Up                                                               |
 | -------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | <img width="460" height="300" src="src/ReadMeAssets/GSN-Login.png"/> | <img width="460" height="300" src="src/ReadMeAssets/GSN-SignUp.png"/> |
 
-<h3>'/dashboard' the dashboard route is private route for signed up users</h3>
+<h3><i>'/dashboard'</i> the dashboard route is private route for signed up users</h3>
 <span>This is where users are directed after sign up and login. Users now have full access to finding games, friends, groups, and creating their own profile</span>
 <p align="center"><img width="460" height="300" src="src/ReadMeAssets/GSN-Dashboard.png"/></p>
 
-<h3>'/:username' the profile route</h3>
+<h3><i>'/:username'</i> the profile route</h3>
 <span>This is where users can see and edit their bios, see their favorited games, upload personal images, see friend request, and find new friends</span>
 <p align="center"><img width="460" height="300" src="src/ReadMeAssets/GSN-Profile.png"/></p>
 
-<h3>'/groups' finding groups route and '/games' finding games route</h3>
+<h3><i>'/groups'</i> finding groups route && <i>'/games'</i> finding games route</h3>
 <span>These routes are where users can search for new groups to join and search for new games to play and favorite</span>
 
 | Groups                                                                   | Games                                                                    |
