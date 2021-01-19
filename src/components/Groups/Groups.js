@@ -3,13 +3,13 @@ import { useHistory, useLocation, Link } from 'react-router-dom';
 import { API_URL } from '../../config';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
+import noImg from './images/no-image.png';
 import { parse } from 'query-string';
 
 const Groups = () => {
   const [groups, setGroups] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [invalidQuery, setInvalidQuery] = useState(false);
   let history = useHistory();
   const searchInput = useRef(null);
   let location = useLocation();
@@ -56,47 +56,6 @@ const Groups = () => {
     getGroups();
   }, [location.search]);
 
-  const handleSearchResults = () => {
-    if (loading) {
-      return (
-        <Loader
-          type='TailSpin'
-          color='#14FFEC'
-          height={100}
-          width={100}
-          className='spinner'
-        />
-      );
-    }
-
-    if (!groups) {
-      return;
-    }
-
-    if (groups && !groups.length) {
-      return (
-        <h1 className='no-results'>Sorry there are no groups with that name</h1>
-      );
-    }
-
-    return (
-      <div className='results-found'>
-        {groups.map((group, y) => {
-          console.log(group);
-          return (
-            <div key={y} className='each-result'>
-              <div className='group-info'>
-                <h1>{group.group_name}</h1>
-                <span>{group.slug}</span>
-              </div>
-              <button>+</button>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -114,44 +73,149 @@ const Groups = () => {
     return history.push('/groups');
   };
 
-  return (
-    <div>
-      <StyledForm>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div>
-            <input
-              type='text'
-              placeholder='search groups...'
-              defaultValue={searchQuery}
-              ref={searchInput}
-              onChange={(e) => {
-                setSearchQuery(e.currentTarget.value);
-                setInvalidQuery(false);
-              }}
-            />
-            {searchQuery ? (
-              <button type='button' onClick={handleReset}>
-                X
-              </button>
-            ) : null}
-          </div>
-          <button type='submit' className='search'>
-            Search
-          </button>
-        </form>
-      </StyledForm>
+  const renderSearchResults = () => {
+    if (loading) {
+      return (
+        <Loader
+          type='TailSpin'
+          color='#14FFEC'
+          height={100}
+          width={100}
+          className='spinner'
+        />
+      );
+    }
 
-      <StyledResults>
-        <div>{handleSearchResults()}</div>
-      </StyledResults>
-    </div>
+    if (!groups) {
+      return;
+    }
+
+    if (groups && !groups.length) {
+      return <h2 className='no-results'>No results found 😞</h2>;
+    }
+
+    return groups.map((group) => (
+      <SearchResult
+        key={group.id}
+        onClick={() => history.push(`/group/${group.slug}`)}
+      >
+        <div className='image-wrapper'>
+          <img
+            src={group.background_image ? group.background_image : noImg}
+            alt={group.name}
+          />
+        </div>
+        <div className='group-info'>
+          <h3>{group.group_name}</h3>
+        </div>
+      </SearchResult>
+    ));
+  };
+
+  return (
+    <StyledMain>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type='text'
+            placeholder='search for a group...'
+            defaultValue={searchQuery}
+            ref={searchInput}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && searchQuery.trim().length ? (
+            <button type='button' onClick={handleReset}>
+              X
+            </button>
+          ) : null}
+        </div>
+
+        <button type='submit'>Search</button>
+      </form>
+      <SearchResults>{renderSearchResults()}</SearchResults>
+    </StyledMain>
   );
 };
 
-const StyledForm = styled.div`
-  width: 100%;
-  margin: auto;
-  margin-top: 4rem;
+const SearchResults = styled.div`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 1.6rem;
+  margin-top: 3.2rem;
+  position: relative;
+
+  .no-results {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    color: #14ffec;
+  }
+
+  .spinner {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (min-width: 576px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+`;
+
+const SearchResult = styled.div`
+  background: #323232;
+  height: 26rem;
+  border-radius: 0.4rem;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);
+
+  :hover {
+    transform: scale(1.05);
+  }
+
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+
+    img {
+      border-radius: 0.4rem 0.4rem 0 0;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .group-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30%;
+
+    h3 {
+      text-align: center;
+      color: #fff;
+    }
+  }
+`;
+
+const StyledMain = styled.main`
+  margin-top: 3.2rem;
 
   form {
     display: flex;
@@ -180,13 +244,10 @@ const StyledForm = styled.div`
         border-radius: 20rem;
         height: 2.4rem;
         background: gray;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        outline: none;
       }
     }
-    .search {
+
+    button {
       width: 24%;
       border: none;
       cursor: pointer;
@@ -195,32 +256,31 @@ const StyledForm = styled.div`
       color: #fff;
       outline: none;
     }
-  }
-`;
 
-const StyledResults = styled.div`
-  color: white;
-  margin-top: 2rem;
+    @media (min-width: 576px) {
+      div {
+        width: 83%;
 
-  .no-results {
-    text-align: center;
-  }
-
-  .results-found {
-    .each-result {
-      display: flex;
-      color: black;
-      margin-top: 2rem;
-      background-color: white;
-      border-radius: 2rem;
-      padding: 1rem;
+        input {
+          width: 100%;
+        }
+      }
 
       button {
-        margin-left: 3rem;
-        margin-top: 1.5rem;
-        height: 3rem;
+        width: 16%;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      div {
+        width: 89.5%;
+      }
+
+      button {
+        width: 10%;
       }
     }
   }
 `;
+
 export default Groups;

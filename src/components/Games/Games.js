@@ -108,7 +108,7 @@ const Games = () => {
             ref={searchInput}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          {searchQuery.trim().length ? (
+          {searchQuery && searchQuery.trim().length ? (
             <button type='button' onClick={reset}>
               X
             </button>
