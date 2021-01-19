@@ -22,6 +22,7 @@
 <h3>'/signup' sign up page route</h3>
 <h3>'/login' login page route</h3>
 <span>This is where users can sign up or login in order to get an authenticated JWT to access the entire website, if they try access another route without an authenticated JWT they would be redirected to login page</span>
-| Login | Sign Up |
-| ------------- | ------------- |
-| <img width="460" height="300" src="src/ReadMeAssets/GSN-Login.png"/>  | <img width="460" height="300" src="src/ReadMeAssets/GSN-Signup.png"/>  |
+
+| Login                                                                | Sign Up                                                               |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| <img width="460" height="300" src="src/ReadMeAssets/GSN-Login.png"/> | <img width="460" height="300" src="src/ReadMeAssets/GSN-Signup.png"/> |
