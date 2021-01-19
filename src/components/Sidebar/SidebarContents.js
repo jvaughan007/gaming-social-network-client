@@ -60,7 +60,7 @@ const SidebarContents = () => {
               <span className='category'>Connect</span>
             </span>
             <div className='dropdown-content'>
-              <Link to='/groups/filter'>
+              <Link to='/groups'>
                 <button>
                   <span>
                     <FaUsers />

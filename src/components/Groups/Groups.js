@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { API_URL } from '../../config';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
@@ -19,22 +19,21 @@ const Groups = () => {
 
     setSearchQuery(search);
 
+    // have to double to filter
+
     const getGroups = async () => {
       try {
         const token = localStorage.getItem('jwt');
         setLoading(true);
-        const res = await fetch(
-          `${API_URL}/groups/filter?searchTerm=${search}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              authorization: `Bearer ${token}`
-            }
+        const res = await fetch(`${API_URL}/groups`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`
           }
-        );
+        });
         const data = await res.json();
-        setGroups(data.filteredGroups);
+        setGroups(data.groups);
         return setLoading(false);
       } catch (err) {
         console.log(err);
@@ -55,14 +54,17 @@ const Groups = () => {
         />
       );
     }
+
     if (!groups) {
       return;
     }
+
     if (groups && !groups.length) {
       return (
         <h1 className='no-results'>Sorry there are no groups with that name</h1>
       );
     }
+
     return (
       <div className='results-found'>
         {groups.map((group, y) => {
@@ -114,7 +116,7 @@ const Groups = () => {
           <div>
             <input
               type='text'
-              placeholder='Search a new group....'
+              placeholder='search groups...'
               defaultValue={searchQuery}
               ref={searchInput}
               onChange={(e) => {
