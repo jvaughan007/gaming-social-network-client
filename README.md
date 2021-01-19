@@ -36,7 +36,7 @@
 <span>This is where users can see and edit their bios, see their favorited games, upload personal images, see friend request, and find new friends</span>
 <p align="center"><img width="460" height="300" src="src/ReadMeAssets/GSN-Profile.png"/></p>
 
-<h3>'/groups' groups route and '/games' finding games route</h3>
+<h3>'/groups' finding groups route and '/games' finding games route</h3>
 <span>These routes are where users can search for new groups to join and search for new games to play and favorite</span>
 
 | Groups                                                                   | Games                                                                    |
