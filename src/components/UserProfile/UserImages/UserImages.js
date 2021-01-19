@@ -90,7 +90,7 @@ const UserImages = (profile) => {
     const handleDisplayImages = () => {
         if (images.length > 0) {
             return (
-                <div>
+                <div className='image-div'>
                     {images.map((image, y) => {
                         return <img src={image.image_url} key={y}></img>;
                     })}
@@ -135,27 +135,29 @@ const StyledWrapper = styled.main`
     .images-body {
         width: 100%;
         color: white;
-        margin-top: 2rem;
 
         header {
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
 
             span {
-                padding: 2rem 3rem 0.5rem 0.5rem;
-                margin-left: 2rem;
+                padding: 0.5rem 0rem 1rem 0rem;
+                width: 15rem;
                 border-bottom: solid 2px white;
+                margin-bottom: 1rem;
+                margin-left: 2rem;
             }
 
             form {
-                border: solid 1px white;
-                padding: 1rem;
+                margin-left: 2rem;
+
                 label {
-                    margin-right: 2rem;
+                    margin-bottom: 1rem;
                 }
 
                 button {
-                    margin-left: 9rem;
+                    margin-top: 1rem;
                 }
             }
         }
@@ -167,9 +169,54 @@ const StyledWrapper = styled.main`
                 color: red;
             }
 
-            img {
-                width: 100%;
+            .image-div {
                 height: 100%;
+                img {
+                    width: 80%;
+                    height: 80%;
+                    margin-top: 4rem;
+                }
+            }
+        }
+    }
+
+    @media all and (min-width: 750px) {
+        .images-body {
+            header {
+                flex-direction: row;
+
+                span {
+                    padding: 2rem 3rem 0.5rem 0.5rem;
+                }
+
+                form {
+                    border: solid 1px white;
+                    padding: 1rem;
+                    label {
+                        margin-right: 2rem;
+                    }
+
+                    button {
+                        margin-left: 9rem;
+                    }
+                }
+            }
+            .images-list {
+                text-align: center;
+                margin-top: 4rem;
+
+                span {
+                    color: red;
+                }
+
+                .image-div {
+                    height: 100%;
+                    img {
+                        width: 80%;
+                        height: 80%;
+                        margin-top: 4rem;
+                    }
+                }
             }
         }
     }
