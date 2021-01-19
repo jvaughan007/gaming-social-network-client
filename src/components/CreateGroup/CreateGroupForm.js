@@ -30,8 +30,11 @@ const CreateGroupForm = () => {
   };
 
   return (
-    <StyledForm>
+    <StyledForm onSubmit={
+      this.handleSubmit
+    }>
       <input type='text' />
+      <button type="submit">Submit</button>
     </StyledForm>
   );
 };

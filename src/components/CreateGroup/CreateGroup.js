@@ -5,7 +5,9 @@ const CreateGroup = () => {
   return (
     <StyledMain>
       <h1>Create Group</h1>
-      <CreateGroupForm></CreateGroupForm>
+      <CreateGroupForm>
+        <div></div>
+      </CreateGroupForm>
     </StyledMain>
   );
 };
