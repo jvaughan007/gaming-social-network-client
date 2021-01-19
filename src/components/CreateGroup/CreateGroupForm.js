@@ -30,9 +30,7 @@ const CreateGroupForm = () => {
   };
 
   return (
-    <StyledForm onSubmit={
-      this.handleSubmit
-    }>
+    <StyledForm onSubmit={(e) => this.handleSubmit(e)}>
       <input type='text' />
       <button type="submit">Submit</button>
     </StyledForm>
