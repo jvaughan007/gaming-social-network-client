@@ -17,4 +17,4 @@
 <h1>Routes</h1>
 <h3>'/' the Landing page route</h3>
 <span>This is the first page users will land on. Where they can see a demo of our site, sign up, and log in</span>
-<img src="src/ReadMeAssets/GSN-Home.png"/>
+<p align="center"><img width="460" height="300" src="src/ReadMeAssets/GSN-Home.png"/></p>
