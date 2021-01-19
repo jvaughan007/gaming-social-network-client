@@ -25,4 +25,4 @@
 
 | Login                                                                | Sign Up                                                               |
 | -------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| <img width="460" height="300" src="src/ReadMeAssets/GSN-Login.png"/> | <img width="460" height="300" src="src/ReadMeAssets/GSN-Signup.png"/> |
+| <img width="460" height="300" src="src/ReadMeAssets/GSN-Login.png"/> | <img width="460" height="300" src="src/ReadMeAssets/GSN-SignUp.png"/> |
