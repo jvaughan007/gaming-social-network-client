@@ -18,23 +18,37 @@ const Groups = () => {
     const { search } = parse(location.search);
 
     setSearchQuery(search);
-
     // have to double to filter
 
     const getGroups = async () => {
       try {
-        const token = localStorage.getItem('jwt');
-        setLoading(true);
-        const res = await fetch(`${API_URL}/groups`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${token}`
-          }
-        });
-        const data = await res.json();
-        setGroups(data.groups);
-        return setLoading(false);
+        if (!search) {
+          const token = localStorage.getItem('jwt');
+          setLoading(true);
+          const res = await fetch(`${API_URL}/groups`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              authorization: `Bearer ${token}`
+            }
+          });
+          const data = await res.json();
+          setGroups(data.groups);
+          return setLoading(false);
+        } else if (search) {
+          const token = localStorage.getItem('jwt');
+          setLoading(true);
+          const res = await fetch(`${API_URL}/groups?searchTerm=${search}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              authorization: `Bearer ${token}`
+            }
+          });
+          const data = await res.json();
+          setGroups(data.groups);
+          return setLoading(false);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -85,32 +99,23 @@ const Groups = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!searchQuery.trim().length) {
-      return setInvalidQuery(true);
-    }
-    return history.push(`/groups/filter?search=${searchQuery.trim()}`);
-  };
 
-  const handleInvalidQuery = () => {
-    if (invalidQuery) {
-      return (
-        <div>
-          <span>Enter a search query</span>
-        </div>
-      );
+    if (!searchQuery.trim().length) {
+      return;
     }
+
+    return history.push(`/groups?search=${searchQuery.trim()}`);
   };
 
   const handleReset = () => {
     setSearchQuery('');
     setGroups(null);
     searchInput.current.value = '';
-    return history.push('/groups/filter');
+    return history.push('/groups');
   };
 
   return (
     <div>
-      {handleInvalidQuery()}
       <StyledForm>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div>
@@ -152,10 +157,12 @@ const StyledForm = styled.div`
     display: flex;
     height: 4.8rem;
     justify-content: space-between;
+
     div {
       height: 100%;
       width: 74%;
       position: relative;
+
       input {
         padding-left: 0.8rem;
         border: none;
@@ -164,6 +171,7 @@ const StyledForm = styled.div`
         width: 100%;
         height: 100%;
       }
+
       button {
         position: absolute;
         top: 1.1rem;
@@ -171,7 +179,11 @@ const StyledForm = styled.div`
         width: 2.4rem;
         border-radius: 20rem;
         height: 2.4rem;
-        border: solid 1px gray;
+        background: gray;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        outline: none;
       }
     }
     .search {
