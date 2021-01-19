@@ -1,72 +1,45 @@
-# Getting Started with Create React App
+<h1>Gaming Social Network</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<a href="https://thegsn.xyz/">Link to live App</a>
+<a href="https://github.com/domcodesjs/gaming-social-network-server">Link to server code</a>
 
-## Available Scripts
+<p>Users are able to create a profile where they can create a bio about themselves, upload images, find new games, find new friends, and find groups to play with.</p>
+<br/>
+<p>Users can also post their current activity and like and comment on other user's posts.</p>
+<br/>
 
-In the project directory, you can run:
+<h1>Who uses Gaming Social Network</h1>
+<ul>
+<li>People who play games</li>
+<li>People looking to start playing games</li>
+<li>People looking for friends, groups or a place to hangout</li>
+</ul>
 
-### `npm start`
+<h1>Routes</h1>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<h3><i>'/'</i> the Landing page route</h3>
+<span>This is the first page users will land on. Where they can see a demo of our site, sign up, and log in</span>
+<br/>
+<p align="center"><img width="460" height="300" src="src/ReadMeAssets/GSN-Home.png"/></p>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<h3><i>'/login'</i> login page route && <i>'/signup'</i> sign up page route</h3>
+<span>This is where users can sign up or login in order to get an authenticated JWT to access the entire website, if they try access another route without an authenticated JWT they would be redirected to login page</span>
 
-### `npm test`
+| Login                                                                | Sign Up                                                               |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| <img width="460" height="300" src="src/ReadMeAssets/GSN-Login.png"/> | <img width="460" height="300" src="src/ReadMeAssets/GSN-SignUp.png"/> |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<h3><i>'/dashboard'</i> the dashboard route is private route for signed up users</h3>
+<span>This is where users are directed after sign up and login. Users now have full access to finding games, friends, groups, and creating their own profile</span>
+<p align="center"><img width="460" height="300" src="src/ReadMeAssets/GSN-Dashboard.png"/></p>
 
-### `npm run build`
+<h3><i>'/:username'</i> the profile route</h3>
+<span>This is where users can see and edit their bios, see their favorited games, upload personal images, see friend request, and find new friends</span>
+<p align="center"><img width="460" height="300" src="src/ReadMeAssets/GSN-Profile.png"/></p>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<h3><i>'/groups'</i> finding groups route && <i>'/games'</i> finding games route</h3>
+<span>These routes are where users can search for new groups to join and search for new games to play and favorite</span>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
+| Groups                                                                   | Games                                                                    |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| <img width="460" height="300" src="src/ReadMeAssets/GSN-FindGroup.png"/> | <img width="460" height="300" src="src/ReadMeAssets/GSN-FindGames.png"/> |

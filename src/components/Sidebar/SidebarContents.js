@@ -13,6 +13,7 @@ import {
 import { logout } from '../../store/actions/authActions';
 
 const SidebarContents = () => {
+  const username = localStorage.getItem('username');
   const dispatch = useDispatch();
   const logoutUser = useCallback(() => dispatch(logout()), [dispatch]);
   let history = useHistory();
@@ -45,7 +46,7 @@ const SidebarContents = () => {
           </div>
 
           <div className='home-btn'>
-            <Link to='/:username' onClick={(event) => event.preventDefault()}>
+            <Link to={`/${username}`}>
               <button>
                 <span>
                   <FaIdBadge />
