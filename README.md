@@ -38,3 +38,7 @@
 
 <h3>'/groups' groups route and '/games' finding games route</h3>
 <span>These routes are where users can search for new groups to join and search for new games to play and favorite</span>
+
+| Groups                                                                   | Games                                                                    |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| <img width="460" height="300" src="src/ReadMeAssets/GSN-FindGroup.png"/> | <img width="460" height="300" src="src/ReadMeAssets/GSN-FindGames.png"/> |
