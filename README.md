@@ -17,4 +17,11 @@
 <h1>Routes</h1>
 <h3>'/' the Landing page route</h3>
 <span>This is the first page users will land on. Where they can see a demo of our site, sign up, and log in</span>
+<br/>
 <p align="center"><img width="460" height="300" src="src/ReadMeAssets/GSN-Home.png"/></p>
+<h3>'/signup' sign up page route</h3>
+<h3>'/login' login page route</h3>
+<span>This is where users can sign up or login in order to get an authenticated JWT to access the entire website, if they try access another route without an authenticated JWT they would be redirected to login page</span>
+| Login | Sign Up |
+| ------------- | ------------- |
+| <img width="460" height="300" src="src/ReadMeAssets/GSN-Login.png"/>  | <img width="460" height="300" src="src/ReadMeAssets/GSN-Signup.png"/>  |
