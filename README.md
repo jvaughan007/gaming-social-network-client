@@ -7,14 +7,12 @@
 <br/>
 <p>Users can also post their current activity and like and comment on other user's posts.</p>
 <br/>
-<p>Users can chat in real time with other people, in groups or individual messages</p>
-<br/>
 
 <h1>Who uses Gaming Social Network</h1>
 <ul>
 <li>People who play games</li>
 <li>People looking to start playing games</li>
-<li>People looking for friends, groups or a place to hangout and chat with others</li>
+<li>People looking for friends, groups or a place to hangout</li>
 </ul>
 
 <h1>Routes</h1>
