@@ -4,11 +4,21 @@ import styled from 'styled-components';
 const UserFriends = () => {
     const [search, setSearch] = useState(null);
     const [friends, setFriends] = useState([]);
+    const [results, setResults] = useState(null);
     const [requests, setRequests] = useState([]);
     const [selected, setSelected] = useState('');
 
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         setSearch(e.target.value);
+        try {
+            const res = await fetch(
+                `http://localhost:5000/users/search?searchTerm=${search}`
+            );
+            const data = await res.json();
+            setResults(data.users);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const getAllFriends = async () => {
@@ -106,8 +116,19 @@ const UserFriends = () => {
     const handleFriendsBodyDisplay = () => {
         if (!search) {
             return <div>{handleDisplay()}</div>;
-        } else {
-            return <span>Searching...</span>;
+        }
+        if (results) {
+            return (
+                <div>
+                    {results.map((each, y) => {
+                        return (
+                            <div key={y} className='each-friend-result'>
+                                <h1>{each.username}</h1>
+                            </div>
+                        );
+                    })}
+                </div>
+            );
         }
     };
 

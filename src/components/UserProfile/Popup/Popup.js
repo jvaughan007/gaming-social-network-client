@@ -33,6 +33,8 @@ const PopupModal = () => {
                                 )}
                             </form>
                             <br />
+                            <br />
+                            <br />
                             <form>
                                 <label htmlFor='image'>Upload new image</label>
                                 <input id='image' type='file' />
