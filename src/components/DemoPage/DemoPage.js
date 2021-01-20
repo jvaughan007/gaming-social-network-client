@@ -22,8 +22,8 @@ const DemoPage = () => {
                 <br />
                 <h3>Login</h3>
                 <p>
-                    If you alredy have an account, simply enter your email 
-                    and password to be redirected to your dashbard upon
+                    If you already have an account, simply enter your email 
+                    and password to be redirected to your dashboard upon
                     submission!
                 </p>
                 <br />
@@ -37,6 +37,9 @@ const DemoPage = () => {
                     <li>Share your accomplishments with others!</li>
                     <li>Create, share and read posts to the community!</li>
                 </ol>
+                    <div>
+                        <Link to="/"><button>Let's Go!</button></Link>
+                    </div>
                 </div>
             </StyledMain>
         </div>
