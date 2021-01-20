@@ -20,10 +20,12 @@ const UserImages = (profile) => {
             );
 
             const data = await res.json();
-            setImages(data.images);
+
             if (!data.success) {
-                setError('something');
+                console.log(data.success);
             }
+
+            setImages(data.images);
         } catch (err) {
             console.log(err);
         }
@@ -49,6 +51,7 @@ const UserImages = (profile) => {
             });
 
             const data = await res.json();
+            console.log(data);
             if (!data.success) {
                 setError('something');
             }
@@ -88,7 +91,7 @@ const UserImages = (profile) => {
     };
 
     const handleDisplayImages = () => {
-        if (images.length > 0) {
+        if (images && images.length > 0) {
             return (
                 <div className='image-div'>
                     {images.map((image, y) => {
@@ -105,7 +108,7 @@ const UserImages = (profile) => {
         <StyledWrapper>
             <div className='images-body'>
                 <header>
-                    <span>Your images:</span>
+                    <span>Your images</span>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor='image'>Upload image</label>
                         <input
@@ -145,8 +148,9 @@ const StyledWrapper = styled.main`
                 padding: 0.5rem 0rem 1rem 0rem;
                 width: 15rem;
                 border-bottom: solid 2px white;
-                margin-bottom: 1rem;
-                margin-left: 2rem;
+                margin-bottom: 3rem;
+                margin-left: 30%;
+                text-align: center;
             }
 
             form {
@@ -190,7 +194,6 @@ const StyledWrapper = styled.main`
                 }
 
                 form {
-                    border: solid 1px white;
                     padding: 1rem;
                     label {
                         margin-right: 2rem;
