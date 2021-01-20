@@ -63,6 +63,7 @@ const StyledWrapper = styled.main`
         border-radius: 0.4rem;
         display: flex;
         flex-direction: column;
+        overflow: auto;
         padding: 2.4rem;
         margin-top: 3rem;
         .ellipse {

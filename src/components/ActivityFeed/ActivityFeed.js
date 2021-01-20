@@ -18,7 +18,6 @@ const ActivityFeed = () => {
                 },
             });
             const data = await res.json();
-            localStorage.setItem('username', data.posts[0].username);
             return setPosts(data.posts);
         } catch (err) {
             console.log(err);
@@ -56,15 +55,13 @@ const ActivityFeed = () => {
 const StyledWrapper = styled.main`
     .activity-feed-wrapper {
         width: 100%;
-        position: fixed;
-        left: 0rem;
         padding: 1rem;
     }
 
     @media all and (min-width: 700px) {
         .activity-feed-wrapper {
             width: 70%;
-            left: 20%;
+            margin-left: 20%;
         }
     }
 `;
