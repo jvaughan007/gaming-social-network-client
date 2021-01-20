@@ -73,7 +73,7 @@ const App = () => {
               ></PrivateRoute>
               <PrivateRoute
                 exact
-                path='/group/:id'
+                path='/group/:slug'
                 component={Group}
               ></PrivateRoute>
               <PrivateRoute
