@@ -29,7 +29,7 @@ const Login = () => {
                 <span>-</span>Find and connect with gaming groups
               </li>
               <li>
-                <span>-</span>Connect with gamers that share your
+                <span>-</span>Connect with gamers that share a passion for your favorite games
               </li>
               <li>
                 <span>-</span>Share your gaming accomplishments with the world

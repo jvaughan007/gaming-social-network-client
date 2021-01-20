@@ -18,6 +18,7 @@ import Group from './components/Group/Group';
 import Groups from './components/Groups/Groups';
 import CreateGroup from './components/CreateGroup/CreateGroup';
 import PrivateRoute from './PrivateRoute';
+import DemoPage from './components/DemoPage/DemoPage';
 
 const theme = {
   colors: {
@@ -43,6 +44,12 @@ const App = () => {
               {/* redirect to /dashboard */}
               <Route path='/' exact>
                 <Home></Home>
+              </Route>
+              <Route path='/demo' exact>
+                <DemoPage></DemoPage>
+              </Route>
+              <Route path='/demo' exact>
+                <DemoPage></DemoPage>
               </Route>
               <Route exact path='/signup'>
                 <Signup></Signup>

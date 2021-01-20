@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBar from './NavBar/NavBar';
 import backImgMobile from './images/dimitris-unsplash.jpg';
@@ -26,6 +26,7 @@ const Home = () => {
                         <button onClick={() => history.push('/signup')}>
                             Sign Up
                         </button>
+                        <Link to="/demo"><button>Demo</button></Link>
                     </div>
                     <div className='intro-video'>
                         <iframe title='mock video' height='320'></iframe>
