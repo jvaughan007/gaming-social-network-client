@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 
 const DemoPage = () => {
@@ -44,6 +45,25 @@ const DemoPage = () => {
 
 
 const StyledMain = styled.main`
+    .main {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+    }
+
+    .demoHeading {
+        background-color: aliceblue;
+        font-size: small;
+        text-align: center;
+    }
+
+    .demoGetStarted {
+        margin: 1rem .5rem 0 .5rem;
+        background-color: aliceblue;
+        padding: 1rem;
+        margin-bottom: 2rem;
+
+    }
 `;
 
 export default DemoPage;

@@ -48,6 +48,9 @@ const App = () => {
               <Route path='/demo' exact>
                 <DemoPage></DemoPage>
               </Route>
+              <Route path='/demo' exact>
+                <DemoPage></DemoPage>
+              </Route>
               <Route exact path='/signup'>
                 <Signup></Signup>
               </Route>
