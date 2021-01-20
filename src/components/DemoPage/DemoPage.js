@@ -31,7 +31,7 @@ const DemoPage = () => {
                 <p>Once you have reached your dashboard, you can...</p>
                 <ol>
                     <li>Edit your profile! (i.e. - avatar, about, banner, etc.)</li>
-                    <li>Add a list of your favorite games!</li>
+                    <li>Create and add to a list of your favorite games!</li>
                     <li>Find and connect with game groups!</li>
                     <li>Add other gamers as friends!</li>
                     <li>Share your accomplishments with others!</li>
