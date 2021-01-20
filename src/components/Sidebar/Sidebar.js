@@ -144,7 +144,7 @@ const StyledMain = styled.main`
             }
         }
     }
-    @media all and (min-width: 700px) {
+    @media all and (min-width: 970px) {
         .bm-burger-button {
             width: 3.5rem;
             height: 3rem;
