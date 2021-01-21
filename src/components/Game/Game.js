@@ -4,6 +4,8 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 import { API_URL } from '../../config';
+import notFavorited from './images/notfavorited.svg';
+import isFavorited from './images/favorited.svg';
 
 // @TODO - Please add number of people who have favorited the game on the front-end
 // @TODO - Get rid of borders
@@ -157,11 +159,11 @@ const Game = () => {
 
           {!favorited ? (
             <div className='favorite'>
-              <button onClick={favoriteGame}>Favorite</button>
+              <button onClick={favoriteGame}><img src={notFavorited} alt='Favorite' /></button>
             </div>
           ) : (
             <div className='unfavorite'>
-              <button onClick={unfavoriteGame}>Unfavorite</button>
+              <button onClick={unfavoriteGame}><img src={isFavorited} alt='Unfavorite' /></button>
             </div>
           )}
         </div>
