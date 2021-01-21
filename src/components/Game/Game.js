@@ -140,6 +140,14 @@ const Game = () => {
       );
     }
 
+    const getFavoriteCount = async () => {
+      try {
+        
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     return game && !loading ? (
       <StyledMain className='gamePage_gameContainer'>
         <div className='gamePage_title'>
