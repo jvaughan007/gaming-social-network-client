@@ -142,6 +142,16 @@ const Game = () => {
 
     const getFavoriteCount = async () => {
       try {
+        const res = await fetch(
+          `${API_URL}/favorites/count/${JSON.stringify(gameId)}`,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
+            }
+          }
         
       } catch (err) {
         console.log(err);
