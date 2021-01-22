@@ -80,7 +80,7 @@ const UserProfile = () => {
                             </div>
                         </div>
                         <div className='edit-profile-btn'>
-                            <PopupModel />
+                            <PopupModel profile={profile} />
                         </div>
                         <div className='control-center'>
                             <div>
@@ -142,12 +142,14 @@ const StyledMain = styled.main`
             position: fixed;
             left: 0;
             top: 0;
+            height: 20rem;
 
             .banner-img {
                 width: 100%;
                 height: 100%;
                 opacity: 0.6;
                 z-index: -1000;
+                object-fit: cover;
             }
 
             .user-tags-img {
@@ -155,17 +157,18 @@ const StyledMain = styled.main`
                 bottom: 6rem;
                 display: flex;
                 img {
-                    width: 5rem;
-                    height: 5rem;
+                    width: 7rem;
+                    height: 7rem;
                     margin-left: 2rem;
                     border-radius: 10rem;
                     margin-right: 2rem;
+                    object-fit: cover;
                 }
                 .user-tags {
                     color: white;
                     display: flex;
                     flex-direction: column;
-                    font-size: 2.3rem;
+                    font-size: 3.4rem;
                     padding-top: 0.3rem;
 
                     .user-gamertag {
@@ -178,7 +181,7 @@ const StyledMain = styled.main`
                 position: absolute;
                 top: 2rem;
                 right: 2rem;
-                font-size: 1.2rem;
+                font-size: 1.5rem;
 
                 button {
                     padding: 0.75rem 1rem 0.75rem 1rem;
@@ -199,7 +202,7 @@ const StyledMain = styled.main`
                     color: white;
                     border: none;
                     background-color: transparent;
-                    padding: 2rem;
+                    padding: 1rem;
                     padding-bottom: 1.5rem;
                 }
                 button:focus {
@@ -210,7 +213,7 @@ const StyledMain = styled.main`
         }
         .user-body {
             position: absolute;
-            top: 17rem;
+            top: 20rem;
             background-color: rgb(19, 27, 33, 0.8);
             position: relative;
             width: 100%;
@@ -218,9 +221,23 @@ const StyledMain = styled.main`
         }
     }
 
-    @media all and (min-width: 750px) {
+    @media all and (min-width: 500px) {
         .user-profile {
-            width: 70%;
+            .header {
+                .control-center {
+                    padding-left: 2rem;
+
+                    button {
+                        padding: 2rem;
+                    }
+                }
+            }
+        }
+    }
+
+    @media all and (min-width: 968px) {
+        .user-profile {
+            width: 80%;
             height: 100%;
             position: fixed;
             left: 20rem;
@@ -229,21 +246,26 @@ const StyledMain = styled.main`
                 position: fixed;
                 top: 0;
                 left: 20rem;
-                width: 70%;
-                height: 25rem;
+                width: 80%;
+                height: 28rem;
+
+                .banner-img {
+                    object-fit: cover;
+                }
 
                 .user-tags-img {
                     position: absolute;
                     bottom: 7rem;
                     display: flex;
                     img {
-                        width: 8rem;
-                        height: 8rem;
-                        margin-left: 5rem;
+                        width: 11rem;
+                        height: 11rem;
+                        margin-left: 3rem;
                         border-radius: 10rem;
                         margin-right: 2rem;
                     }
                     .user-tags {
+                        padding-top: 2rem;
                         font-size: 3.5rem;
 
                         .user-gamertag {
@@ -265,7 +287,7 @@ const StyledMain = styled.main`
                 }
             }
             .user-body {
-                top: 26rem;
+                top: 28rem;
             }
         }
     }

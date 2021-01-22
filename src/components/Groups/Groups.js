@@ -276,7 +276,7 @@ const StyledMain = styled.main`
         }
 
         @media (min-width: 576px) {
-            margin-left: 15%;
+            margin-left: 20%;
             div {
                 width: 83%;
 

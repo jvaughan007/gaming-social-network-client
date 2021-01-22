@@ -9,7 +9,6 @@ const UserFriends = (profile) => {
     const [results, setResults] = useState(null);
     const [requests, setRequests] = useState([]);
     const [selected, setSelected] = useState('');
-    const [friendMessage, setFriendMessage] = useState(null);
 
     const handleSearch = async (e) => {
         setSearch(e.target.value);
@@ -35,7 +34,7 @@ const UserFriends = (profile) => {
                 },
             });
             const data = await res.json();
-            setFriends(data.returnAllCurrentFriends);
+            setFriends(data.allCurrentFriends);
         } catch (err) {
             console.log(err);
         }
@@ -52,7 +51,7 @@ const UserFriends = (profile) => {
                 },
             });
             const data = await res.json();
-            setRequests(data.returnAllPendingFriends);
+            setRequests(data.allPendingFriends);
         } catch (err) {
             console.log(err);
         }
@@ -66,29 +65,79 @@ const UserFriends = (profile) => {
     const handleDisplayFriends = () => {
         if (friends.length > 0) {
             return (
-                <div>
-                    {friends.map((friend) => {
-                        console.log(friend);
-                    })}
-                </div>
+                <StyledFriends>
+                    <div>
+                        {friends.map((friend, y) => {
+                            return (
+                                <div className='each-friend' key={y}>
+                                    <span>{friend.username}</span>
+                                    <button
+                                        onClick={() =>
+                                            deleteFriend(friend.friends_id)
+                                        }
+                                    >
+                                        X
+                                    </button>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </StyledFriends>
             );
         } else {
             return (
                 <div>
-                    <span>You have no friends</span>
+                    <span>You have no friends yet</span>
                 </div>
             );
         }
     };
 
+    const deleteFriend = async (friendsId) => {
+        try {
+            console.log(friendsId, profile.profile.id);
+            const token = localStorage.getItem('jwt');
+            const res = await fetch(`${API_URL}/friends/deleteFriend`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    user_b: profile.profile.id,
+                    user_a: friendsId,
+                }),
+            });
+            const data = await res.json();
+            console.log(data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     const handleRequestsList = () => {
-        if (requests.length > 0) {
+        if (requests.length >= 1) {
             return (
-                <div>
-                    {requests.map((request) => {
-                        console.log(request);
-                    })}
-                </div>
+                <StyledRequests>
+                    <div>
+                        {requests.map((request, y) => {
+                            console.log(request);
+                            return (
+                                <div className='each-request' key={y}>
+                                    <span>{request.username}</span>
+                                    <button
+                                        onClick={() =>
+                                            acceptFriendRequest(
+                                                request.friends_id
+                                            )
+                                        }
+                                    >
+                                        Accept
+                                    </button>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </StyledRequests>
             );
         } else {
             return (
@@ -96,6 +145,28 @@ const UserFriends = (profile) => {
                     <span>You have no requests</span>
                 </div>
             );
+        }
+    };
+
+    const acceptFriendRequest = async (friendsId) => {
+        try {
+            const token = localStorage.getItem('jwt');
+            const res = await fetch(`${API_URL}/friends/acceptFriend`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    user_b: profile.profile.id,
+                    user_a: friendsId,
+                }),
+            });
+            const data = await res.json();
+            console.log(data);
+            setRequests(data.allPendingFriends);
+        } catch (err) {
+            console.log(err);
         }
     };
 
@@ -136,7 +207,6 @@ const UserFriends = (profile) => {
                                 <EachFriend
                                     each={each}
                                     HandleAddFriend={HandleAddFriend}
-                                    setFriendMessage={setFriendMessage}
                                     key={y}
                                 />
                             );
@@ -150,10 +220,8 @@ const UserFriends = (profile) => {
     const HandleAddFriend = async (friendId) => {
         const token = localStorage.getItem('jwt');
         const user_b = friendId.toString();
-        const message = friendMessage;
         const friend = {
             user_b,
-            message,
         };
         try {
             const res = await fetch(`${API_URL}/friends/request`, {
@@ -208,29 +276,77 @@ const StyledWrapper = styled.div`
         padding-top: 2rem;
     }
     .each-friend-result {
-        height: 8rem;
+        height: 7rem;
+        width: 24rem;
         border: solid 1px white;
         color: black;
         background-color: white;
         border-radius: 5rem;
-        margin: 2rem;
+        margin: auto;
+        margin-top: 2rem;
         display: flex;
-        flex-direction: column;
         justify-content: center;
 
         span {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        input {
-            width: 22rem;
-            margin: auto;
+            margin-right: 5rem;
+            margin-top: 2rem;
         }
 
         button {
-            width: 3rem;
-            margin: auto;
+            height: 2.5rem;
+            margin-top: 2rem;
+        }
+    }
+`;
+
+const StyledRequests = styled.div`
+    .each-request {
+        height: 7rem;
+        width: 24rem;
+        border: solid 1px white;
+        color: black;
+        background-color: white;
+        border-radius: 5rem;
+        margin: auto;
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+
+        span {
+            font-size: 2.5rem;
+            margin-right: 5rem;
+            margin-top: 2rem;
+        }
+
+        button {
+            height: 2.5rem;
+            margin-top: 2rem;
+        }
+    }
+`;
+
+const StyledFriends = styled.div`
+    .each-friend {
+        height: 7rem;
+        width: 24rem;
+        border: solid 1px white;
+        color: black;
+        background-color: white;
+        border-radius: 5rem;
+        margin: auto;
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+
+        span {
+            font-size: 2.5rem;
+            margin-right: 5rem;
+            margin-top: 2rem;
+        }
+        button {
+            height: 2.5rem;
+            margin-top: 2rem;
         }
     }
 `;
