@@ -221,7 +221,12 @@ const StyledMain = styled.main`
         border-radius: 0.4rem;
         padding: 1rem;
         color: white;
+<<<<<<< HEAD
     }
+=======
+}
+
+>>>>>>> 874f66a3029c616ed681ca088b713cb83a2d318a
     div.gamePage_details {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
