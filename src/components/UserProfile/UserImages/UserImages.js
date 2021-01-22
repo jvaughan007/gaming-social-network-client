@@ -100,7 +100,7 @@ const UserImages = (profile) => {
                 </div>
             );
         } else {
-            return <span>You have no images</span>;
+            return <span>You have no images yet</span>;
         }
     };
 
@@ -169,10 +169,6 @@ const StyledWrapper = styled.main`
             text-align: center;
             margin-top: 4rem;
 
-            span {
-                color: red;
-            }
-
             .image-div {
                 height: 100%;
                 img {
@@ -187,14 +183,14 @@ const StyledWrapper = styled.main`
     @media all and (min-width: 750px) {
         .images-body {
             header {
-                flex-direction: row;
+                justify-content: space-between;
 
                 span {
-                    padding: 2rem 3rem 0.5rem 0.5rem;
+                    margin-left: 0;
+                    text-align: left;
                 }
 
                 form {
-                    padding: 1rem;
                     label {
                         margin-right: 2rem;
                     }
@@ -207,10 +203,6 @@ const StyledWrapper = styled.main`
             .images-list {
                 text-align: center;
                 margin-top: 4rem;
-
-                span {
-                    color: red;
-                }
 
                 .image-div {
                     height: 100%;

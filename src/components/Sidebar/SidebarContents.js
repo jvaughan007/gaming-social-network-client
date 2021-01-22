@@ -69,14 +69,6 @@ const SidebarContents = () => {
                                     <span className='dd-label'>Groups</span>
                                 </button>
                             </Link>
-                            <Link to={`/${username}`}>
-                                <button>
-                                    <span>
-                                        <FaUserFriends />
-                                    </span>
-                                    <span className='dd-label'>Friends</span>
-                                </button>
-                            </Link>
                             <Link to='/games'>
                                 <button>
                                     <span>
