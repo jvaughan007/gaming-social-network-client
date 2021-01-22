@@ -153,6 +153,7 @@ const SearchResults = styled.div`
     }
 
     @media (min-width: 576px) {
+        margin-left: 20%;
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -257,9 +258,7 @@ const StyledMain = styled.main`
         }
 
         @media (min-width: 576px) {
-            form {
-                margin-left: 15%;
-            }
+            margin-left: 20%;
             div {
                 width: 83%;
 
@@ -274,9 +273,6 @@ const StyledMain = styled.main`
         }
 
         @media (min-width: 1200px) {
-            form {
-                margin-left: 15%;
-            }
             div {
                 width: 89.5%;
             }

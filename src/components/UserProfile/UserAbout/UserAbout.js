@@ -88,6 +88,7 @@ const StyledWrapper = styled.main`
                 color: white;
                 font-size: 1.3rem;
                 padding: 0.5rem 1rem 0.5rem 1rem;
+                margin-top: 1rem;
                 margin-right: 2rem;
             }
             button:focus {
@@ -97,7 +98,7 @@ const StyledWrapper = styled.main`
 
         .bio-text {
             margin: auto;
-            height: 50rem;
+            height: 30rem;
             width: 95%;
             margin-top: 1rem;
             padding: 1rem;
@@ -117,7 +118,7 @@ const StyledText = styled.div`
         textarea {
             width: 95%;
             margin-top: 1rem;
-            height: 50rem;
+            height: 40rem;
             padding: 1rem;
         }
         textarea:focus {
