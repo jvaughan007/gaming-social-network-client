@@ -1,8 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { API_URL } from '../../../config';
 
 const UserGames = (profile) => {
-    const user = profile.profile;
+    const [games, setGames] = useState(null);
+    const getAllFavorites = async () => {
+        const token = localStorage.getItem('jwt');
+        try {
+            const res = await fetch(`${API_URL}/favorites/`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+            });
+
+            const data = await res.json();
+            console.log(data);
+            setGames(data.favorites);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        getAllFavorites();
+    }, []);
+
     return (
         <StyleWrapper>
             <div className='games-body'></div>
