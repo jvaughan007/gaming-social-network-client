@@ -56,24 +56,34 @@ const Group = () => {
 
     if (!group && !loading) {
       return (
-        <StyledMain>
+        <StyledNoGroupMain>
           <h2 className='no-results'>This group does not exist 😞</h2>
-        </StyledMain>
+        </StyledNoGroupMain>
       );
     }
 
-    return <StyledMain>{group.group_name}</StyledMain>;
+    return (
+      <StyledMain>
+        <h1 className='group-name'>{group.group_name}</h1>
+      </StyledMain>
+    );
   };
 
   return renderGroup();
 };
 
-const StyledMain = styled.main`
+const StyledNoGroupMain = styled.main`
   .no-results {
     margin-top: 4rem;
     text-align: center;
     width: 100%;
     color: #14ffec;
+  }
+`;
+
+const StyledMain = styled.main`
+  .group-name {
+    color: #fff;
   }
 `;
 
