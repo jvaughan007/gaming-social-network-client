@@ -140,23 +140,22 @@ const Game = () => {
       );
     }
 
-    const getFavoriteCount = async () => {
-      try {
-        const res = await fetch(
-          `${API_URL}/favorites/count/${JSON.stringify(gameId)}`,
-          {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`
-            }
-          }
-        
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    // const getFavoriteCount = async () => {
+    //   try {
+    //     const res = await fetch(
+    //       `${API_URL}/favorites/count/${JSON.stringify(gameId)}`,
+    //       {
+    //         method: 'GET',
+    //         headers: {
+    //           Accept: 'application/json',
+    //           'Content-Type': 'application/json',
+    //           Authorization: `Bearer ${token}`
+    //         }
+    //       }
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // }
 
     return game && !loading ? (
       <StyledMain className='gamePage_gameContainer'>
@@ -177,11 +176,15 @@ const Game = () => {
 
           {!favorited ? (
             <div className='favorite'>
-              <button onClick={favoriteGame}><img src={notFavorited} alt='Favorite' /></button>
+              <button onClick={favoriteGame}>
+                <img src={notFavorited} alt='Favorite' />
+              </button>
             </div>
           ) : (
             <div className='unfavorite'>
-              <button onClick={unfavoriteGame}><img src={isFavorited} alt='Unfavorite' /></button>
+              <button onClick={unfavoriteGame}>
+                <img src={isFavorited} alt='Unfavorite' />
+              </button>
             </div>
           )}
         </div>
