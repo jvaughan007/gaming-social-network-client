@@ -34,6 +34,7 @@ const UserFriends = (profile) => {
                 },
             });
             const data = await res.json();
+            console.log(data);
             setFriends(data.allCurrentFriends);
         } catch (err) {
             console.log(err);
@@ -51,6 +52,8 @@ const UserFriends = (profile) => {
                 },
             });
             const data = await res.json();
+            console.log(data);
+
             setRequests(data.allPendingFriends);
         } catch (err) {
             console.log(err);
@@ -73,7 +76,10 @@ const UserFriends = (profile) => {
                                     <span>{friend.username}</span>
                                     <button
                                         onClick={() =>
-                                            deleteFriend(friend.friends_id)
+                                            deleteFriend(
+                                                friend.user_a,
+                                                friend.friends_id
+                                            )
                                         }
                                     >
                                         X
@@ -93,25 +99,21 @@ const UserFriends = (profile) => {
         }
     };
 
-    const deleteFriend = async (friendsId) => {
-        try {
-            console.log(friendsId, profile.profile.id);
-            const token = localStorage.getItem('jwt');
-            const res = await fetch(`${API_URL}/friends/deleteFriend`, {
-                method: 'DELETE',
-                headers: {
-                    authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    user_b: profile.profile.id,
-                    user_a: friendsId,
-                }),
-            });
-            const data = await res.json();
-            console.log(data);
-        } catch (err) {
-            console.log(err);
-        }
+    const deleteFriend = (user_a) => {
+        console.log('user_a', user_a);
+        console.log('user_b', profile.profile.id);
+        const deleteFriend = {
+            user_b: profile.profile.id,
+            user_a: user_a,
+        };
+        const token = localStorage.getItem('jwt');
+        fetch(`${API_URL}/friends/deleteFriend`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(deleteFriend),
+        });
     };
 
     const handleRequestsList = () => {
@@ -127,7 +129,8 @@ const UserFriends = (profile) => {
                                     <button
                                         onClick={() =>
                                             acceptFriendRequest(
-                                                request.friends_id
+                                                request.friends_id,
+                                                request.user_a
                                             )
                                         }
                                     >
@@ -148,7 +151,7 @@ const UserFriends = (profile) => {
         }
     };
 
-    const acceptFriendRequest = async (friendsId) => {
+    const acceptFriendRequest = async (friends_id, user_a) => {
         try {
             const token = localStorage.getItem('jwt');
             const res = await fetch(`${API_URL}/friends/acceptFriend`, {
@@ -159,7 +162,8 @@ const UserFriends = (profile) => {
                 },
                 body: JSON.stringify({
                     user_b: profile.profile.id,
-                    user_a: friendsId,
+                    user_a: user_a,
+                    friends_id: friends_id,
                 }),
             });
             const data = await res.json();
