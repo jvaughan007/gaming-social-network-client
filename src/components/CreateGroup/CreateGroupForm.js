@@ -5,6 +5,7 @@ import { API_URL } from '../../config';
 
 const CreateGroupForm = () => {
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [errors, setErrors] = useState(null);
   const [image, setImage] = useState(null);
   const [processing, setProcessing] = useState(false);
@@ -24,6 +25,7 @@ const CreateGroupForm = () => {
 
       const formData = new FormData();
       formData.append('group_name', name);
+      formData.append('group_description', description);
       formData.append('image', image);
 
       const token = localStorage.getItem('jwt');
@@ -58,6 +60,7 @@ const CreateGroupForm = () => {
   return (
     <StyledForm onSubmit={handleSubmit}>
       <input type='text' onChange={(e) => setName(e.target.value)} />
+      <textarea type='text' onChange={(e) => setDescription(e.target.value)} />
       <input type='file' onChange={fileChangedHandler} />
       {image ? (
         <>
