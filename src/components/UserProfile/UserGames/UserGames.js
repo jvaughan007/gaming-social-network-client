@@ -20,6 +20,7 @@ const UserGames = (profile) => {
             if (!data.favorites.length) {
                 setGames(null);
             }
+            console.log(data);
             setGames(data.favorites);
         } catch (err) {
             console.log(err);
@@ -40,6 +41,24 @@ const UserGames = (profile) => {
                     </div>
                 </StyleFavorites>
             );
+        } else {
+            return (
+                <StyleGames>
+                    <div className='outer-wrapper'>
+                        {games.map((game, y) => {
+                            return (
+                                <div className='each-game' key={y}>
+                                    <h1>{game.name}</h1>
+                                    <div className='game-info'>
+                                        <img src={game.background_image}></img>
+                                        <p>{game.description_raw}</p>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </StyleGames>
+            );
         }
     };
 
@@ -54,7 +73,9 @@ const UserGames = (profile) => {
     );
 };
 
-const StyleWrapper = styled.main``;
+const StyleWrapper = styled.main`
+    padding-top: 4rem;
+`;
 
 const StyleFavorites = styled.div`
     .no-favs {
@@ -65,6 +86,48 @@ const StyleFavorites = styled.div`
 
         a {
             text-decoration: underline;
+        }
+    }
+`;
+
+const StyleGames = styled.div`
+    .each-game {
+        color: black;
+        padding: 2rem;
+        border: solid 1px white;
+        background-color: white;
+        margin: 2rem;
+        margin-top: 0;
+        border-radius: 5rem;
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .game-info {
+            img {
+                width: 100%;
+            }
+            p {
+                line-height: 2.5rem;
+            }
+        }
+    }
+
+    @media all and (min-width: 700px) {
+        .each-game {
+            .game-info {
+                height: 100%;
+                display: flex;
+
+                img {
+                    height: 20rem;
+                    width: 30rem;
+                    vertical-align: center;
+                    margin-right: 3rem;
+                }
+            }
         }
     }
 `;
