@@ -226,7 +226,7 @@ const StyledMain = styled.main`
         border-radius: 0.4rem;
         padding: 1rem;
         color: white;
-    }
+}
 
     div.gamePage_details {
         display: grid;
