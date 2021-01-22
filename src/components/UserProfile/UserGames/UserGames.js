@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { API_URL } from '../../../config';
 
 const UserGames = (profile) => {
+    const [games, setGames] = useState(null);
     const getAllFavorites = async () => {
         const token = localStorage.getItem('jwt');
         try {
@@ -16,6 +17,7 @@ const UserGames = (profile) => {
 
             const data = await res.json();
             console.log(data);
+            setGames(data.favorites);
         } catch (err) {
             console.log(err);
         }

@@ -5,9 +5,9 @@ import EachFriend from './EachFriend/EachFriend';
 
 const UserFriends = (profile) => {
     const [search, setSearch] = useState(null);
-    const [friends, setFriends] = useState([]);
+    const [friends, setFriends] = useState(null);
     const [results, setResults] = useState(null);
-    const [requests, setRequests] = useState([]);
+    const [requests, setRequests] = useState(null);
     const [selected, setSelected] = useState('');
 
     const handleSearch = async (e) => {
@@ -63,7 +63,7 @@ const UserFriends = (profile) => {
     }, []);
 
     const handleDisplayFriends = () => {
-        if (friends.length > 0) {
+        if (friends) {
             return (
                 <StyledFriends>
                     <div>
@@ -115,7 +115,7 @@ const UserFriends = (profile) => {
     };
 
     const handleRequestsList = () => {
-        if (requests.length >= 1) {
+        if (requests) {
             return (
                 <StyledRequests>
                     <div>
