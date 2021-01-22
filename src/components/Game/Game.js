@@ -143,24 +143,22 @@ const Game = () => {
             );
         }
 
-        const getFavoriteCount = async (gameId) => {
-            const token = localStorage.getItem('jwt');
-            try {
-                const res = await fetch(
-                    `${API_URL}/favorites/count/${JSON.stringify(gameId)}`,
-                    {
-                        method: 'GET',
-                        headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-            } catch (err) {
-                console.log(err);
-            }
-        };
+        // const getFavoriteCount = async () => {
+        //   try {
+        //     const res = await fetch(
+        //       `${API_URL}/favorites/count/${JSON.stringify(gameId)}`,
+        //       {
+        //         method: 'GET',
+        //         headers: {
+        //           Accept: 'application/json',
+        //           'Content-Type': 'application/json',
+        //           Authorization: `Bearer ${token}`
+        //         }
+        //       }
+        //   } catch (err) {
+        //     console.log(err);
+        //   }
+        // }
 
         return game && !loading ? (
             <StyledMain className='gamePage_gameContainer'>
@@ -208,7 +206,6 @@ const StyledMain = styled.main`
     margin-top: 5rem;
     border-style: inset;
     border-radius: 0.4rem;
-
     div:first-child {
         img {
             width: 80%;
@@ -216,18 +213,15 @@ const StyledMain = styled.main`
             border-radius: 0.4rem;
         }
     }
-
     div.gamePage_title {
         margin: 3rem 0 0 5rem;
     }
-
     div.gamePage_title h1 .titleText {
         border-style: inset;
         border-radius: 0.4rem;
         padding: 1rem;
         color: white;
     }
-
     div.gamePage_details {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -239,13 +233,11 @@ const StyledMain = styled.main`
         padding: 3rem;
         background-color: black;
     }
-
     div.gamePage_image {
         display: flex;
         align-items: center;
         justify-content: center;
     }
-
     div.gamePage_desc {
         display: flex;
         align-items: center;
@@ -254,7 +246,6 @@ const StyledMain = styled.main`
         margin-bottom: 2rem;
         max-height: 40rem;
     }
-
     div.gamePage_desc p {
         background: aliceblue;
         border-style: inset;
