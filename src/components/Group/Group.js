@@ -5,12 +5,12 @@ import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import { API_URL } from '../../config';
 
-// we need to check if the group exists and if so load it in if not navigate to 404
 // we need to get the group members
 // we need to get the group posts
 
 const Group = () => {
   const [group, setGroup] = useState(null);
+  const [isMember, setIsMember] = useState(null);
   const [loading, setLoading] = useState(true);
   let history = useHistory();
   let { slug } = useParams();
@@ -32,6 +32,9 @@ const Group = () => {
           return setLoading(false);
         }
 
+        console.log(data);
+
+        setIsMember(data.isMember);
         setGroup(data.group);
         return setLoading(false);
       } catch (err) {
@@ -40,6 +43,63 @@ const Group = () => {
     };
     getGroup();
   }, [slug, history]);
+
+  const handleJoinGroup = async (e) => {
+    try {
+      e.target.disabled = true;
+      const token = localStorage.getItem('jwt');
+      const res = await fetch(`${API_URL}/groups/join`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ group_id: group.id, entity_id: group.entity_id })
+      });
+      const data = await res.json();
+
+      if (!data.success) {
+        e.target.disabled = false;
+        return;
+      }
+
+      e.target.disabled = false;
+      return setIsMember(true);
+    } catch (err) {
+      return history.push('/404');
+    }
+  };
+
+  const handleLeaveGroup = async (e) => {
+    try {
+      e.target.disabled = true;
+      const token = localStorage.getItem('jwt');
+      const res = await fetch(`${API_URL}/groups/leave`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          group_id: group.id,
+          entity_id: group.entity_id
+        })
+      });
+      const data = await res.json();
+
+      if (!data.success) {
+        e.target.disabled = false;
+        return;
+      }
+
+      e.target.disabled = false;
+      return setIsMember(false);
+    } catch (err) {
+      return history.push('/404');
+    }
+  };
 
   const renderGroup = () => {
     if (loading) {
@@ -65,6 +125,11 @@ const Group = () => {
     return (
       <StyledMain>
         <h1 className='group-name'>{group.group_name}</h1>
+        {isMember ? (
+          <button onClick={handleLeaveGroup}>Leave Group</button>
+        ) : (
+          <button onClick={handleJoinGroup}>Join Group</button>
+        )}
       </StyledMain>
     );
   };
