@@ -20,7 +20,6 @@ const UserGames = (profile) => {
             if (!data.favorites.length) {
                 setGames(null);
             }
-            console.log(data);
             setGames(data.favorites);
         } catch (err) {
             console.log(err);
