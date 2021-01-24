@@ -59,15 +59,16 @@ const CreateGroupForm = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
+      {errors ? (
+        <StyledErrors>
+          {errors.map((msg, idx) => (
+            <p key={idx}>{msg}</p>
+          ))}
+        </StyledErrors>
+      ) : null}
       <input type='text' onChange={(e) => setName(e.target.value)} />
       <textarea type='text' onChange={(e) => setDescription(e.target.value)} />
       <input type='file' onChange={fileChangedHandler} />
-      {image ? (
-        <>
-          <h3>Image Preview</h3>
-          <img src={URL.createObjectURL(image)} alt='Group Img' />
-        </>
-      ) : null}
       {processing ? (
         <button disabled>Create Group</button>
       ) : (
@@ -80,6 +81,20 @@ const CreateGroupForm = () => {
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+`;
+
+const StyledErrors = styled.div`
+  p {
+    background: #e31c3d;
+    color: #fff;
+    border-radius: 0.4rem;
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  p:last-child {
+    margin-bottom: 1.6rem;
+  }
 `;
 
 export default CreateGroupForm;
