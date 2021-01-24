@@ -17,6 +17,7 @@ const Game = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [favorited, setFavorited] = useState(null);
+    const [info, setInfo] = useState(false);
     let history = useHistory();
     let params = useParams();
 
@@ -69,6 +70,8 @@ const Game = () => {
                 }
 
                 const data = await res.json();
+
+                console.log(data);
 
                 if (!data) {
                     return setError('Could not find that game');
@@ -130,6 +133,16 @@ const Game = () => {
         }
     };
 
+    const handleMoreInfo = () => {
+        if (info) {
+            return (
+                <div>
+                    <p>{game.description_raw}</p>
+                </div>
+            );
+        }
+    };
+
     const renderGame = () => {
         if (loading) {
             return (
@@ -162,21 +175,8 @@ const Game = () => {
 
         return game && !loading ? (
             <StyledMain className='gamePage_gameContainer'>
-                <div className='gamePage_title'>
-                    <h1>
-                        <span className='titleText'>{game.name}</span>
-                    </h1>
-                </div>
-
-                <div className='gamePage_details'>
-                    <div className='gamePage_image'>
-                        <img src={game.background_image} alt={game.name} />
-                    </div>
-
-                    <div className='gamePage_desc'>
-                        <p>{game.description_raw}</p>
-                    </div>
-
+                <div className='control-center'>
+                    <button onClick={() => history.goBack()}>Back</button>
                     {!favorited ? (
                         <div className='favorite'>
                             <button onClick={favoriteGame}>
@@ -191,6 +191,43 @@ const Game = () => {
                         </div>
                     )}
                 </div>
+                <div className='gamePage_title'>
+                    <h1>
+                        <a href={`${game.website}`}>{game.name}</a>
+                    </h1>
+                </div>
+
+                <div className='gamePage_details'>
+                    <div className='gamePage_image'>
+                        <img src={game.background_image} alt={game.name} />
+                    </div>
+
+                    <div className='gamePage_desc'>
+                        <p>{game.reddit_description}</p>
+                        <div className='genres'>
+                            <span>Genres: </span>
+                            {game.genres.map((genre) => (
+                                <div className='each-genre'>
+                                    <span>{genre.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <div className='platforms'>
+                            <span>Playable on: </span>
+                            {game.platforms.map((platform, y) => (
+                                <div className='each-platform'>
+                                    <span key={y}>
+                                        {platform.platform.name}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                        <button onClick={() => setInfo((c) => !c)}>
+                            More Info
+                        </button>
+                        {handleMoreInfo()}
+                    </div>
+                </div>
             </StyledMain>
         ) : null;
     };
@@ -199,62 +236,115 @@ const Game = () => {
 };
 
 const StyledMain = styled.main`
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-gap: 3.2rem;
-    background: #009688;
-    margin-top: 5rem;
-    border-style: inset;
-    border-radius: 0.4rem;
-    div:first-child {
-        img {
-            width: 80%;
-            border-style: inset;
-            border-radius: 0.4rem;
+    padding: 2rem;
+    background-color: #0d7377;
+    min-height: 100vh;
+
+    .control-center {
+        display: flex;
+        justify-content: space-between;
+    }
+    .gamePage_title {
+        color: white;
+        display: flex;
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+        justify-content: center;
+
+        h1 {
+            font-size: 2.5rem;
+            text-decoration: underline;
         }
     }
-    div.gamePage_title {
-        margin: 3rem 0 0 5rem;
+
+    .gamePage_details {
+        .gamePage_image {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            img {
+                width: 100%;
+                box-shadow: 7px 7px 10px black;
+            }
+        }
+
+        .gamePage_desc {
+            margin-top: 4rem;
+            text-align: center;
+            color: white;
+
+            .genres {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 2rem;
+                .each-genre {
+                    margin-left: 1rem;
+                }
+            }
+            .platforms {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-top: 2rem;
+                .each-platform {
+                    margin-top: 1rem;
+                }
+            }
+            p {
+                color: white;
+                word-wrap: break-word;
+                line-height: 2.5rem;
+            }
+            button {
+                margin-top: 2rem;
+                margin-bottom: 3rem;
+            }
+        }
     }
-    div.gamePage_title h1 .titleText {
-        border-style: inset;
-        border-radius: 0.4rem;
-        padding: 1rem;
-        color: white;
-    }
-    div.gamePage_details {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 1.6rem;
-        margin-bottom: 3rem;
-        border-style: inset;
-        border-radius: 0.4rem;
-        margin: 3rem;
-        padding: 3rem;
-        background-color: black;
-    }
-    div.gamePage_image {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    div.gamePage_desc {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-        max-height: 40rem;
-    }
-    div.gamePage_desc p {
-        background: aliceblue;
-        border-style: inset;
-        border-radius: 0.4rem;
-        width: 80%;
-        height: 80%;
-        overflow-y: scroll;
-        margin-bottom: 2rem;
-        padding: 1.3rem;
+    @media all and (min-width: 590px) {
+        .gamePage_title {
+            color: white;
+            h1 {
+                font-size: 2.5rem;
+                text-decoration: none;
+
+                a {
+                    cursor: pointer;
+                }
+
+                a:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+        .gamePage_details {
+            .gamePage_image {
+                img {
+                    width: 80%;
+                }
+            }
+            .gamePage_desc {
+                .genres {
+                    flex-direction: row;
+                    align-items: center;
+
+                    .each-genre {
+                        margin-left: 1rem;
+                        margin-bottom: 1rem;
+                    }
+                }
+                .platforms {
+                    flex-direction: row;
+                    align-items: center;
+
+                    .each-platform {
+                        margin-left: 1rem;
+                        margin-bottom: 1rem;
+                    }
+                }
+            }
+        }
     }
 `;
 
