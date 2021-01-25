@@ -237,7 +237,7 @@ const StyledMain = styled.main`
 
     @media all and (min-width: 968px) {
         .user-profile {
-            width: 80%;
+            width: 95%;
             height: 100%;
             position: fixed;
             left: 20rem;
@@ -246,7 +246,7 @@ const StyledMain = styled.main`
                 position: fixed;
                 top: 0;
                 left: 20rem;
-                width: 80%;
+                width: 95%;
                 height: 28rem;
 
                 .banner-img {
@@ -276,6 +276,7 @@ const StyledMain = styled.main`
                 .edit-profile-btn {
                     font-size: 1.7rem;
                     bottom: 0;
+                    right: 15rem;
                     top: 19rem;
                 }
                 .control-center {

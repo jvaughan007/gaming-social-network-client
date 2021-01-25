@@ -95,7 +95,11 @@ const UserImages = (profile) => {
             return (
                 <div className='image-div'>
                     {images.map((image, y) => {
-                        return <img src={image.image_url} key={y}></img>;
+                        return (
+                            <div key={y}>
+                                <img src={image.image_url}></img>
+                            </div>
+                        );
                     })}
                 </div>
             );
@@ -108,7 +112,7 @@ const UserImages = (profile) => {
         <StyledWrapper>
             <div className='images-body'>
                 <header>
-                    <span>Your images</span>
+                    <span>My images</span>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor='image'>Upload image</label>
                         <input
@@ -175,12 +179,14 @@ const StyledWrapper = styled.main`
                     width: 80%;
                     height: 80%;
                     margin-top: 4rem;
+                    border-radius: 5rem;
+                    box-shadow: 5px 5px 5px black;
                 }
             }
         }
     }
 
-    @media all and (min-width: 750px) {
+    @media all and (min-width: 450px) {
         .images-body {
             header {
                 justify-content: space-between;
@@ -191,26 +197,53 @@ const StyledWrapper = styled.main`
                 }
 
                 form {
+                    display: flex;
+                    height: 4rem;
                     label {
                         margin-right: 2rem;
                     }
 
                     button {
-                        margin-left: 9rem;
+                        margin-left: 5rem;
                     }
                 }
             }
             .images-list {
-                text-align: center;
-                margin-top: 4rem;
-
                 .image-div {
-                    height: 100%;
-                    img {
-                        width: 80%;
-                        height: 80%;
-                        margin-top: 4rem;
-                    }
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 2rem;
+                }
+            }
+        }
+    }
+
+    @media all and (min-width: 750px) {
+        .images-body {
+            .images-list {
+                .image-div {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 2rem;
+                }
+            }
+        }
+    }
+
+    @media all and (min-width: 970px) {
+        .images-body {
+            header {
+                span {
+                    margin-top: 3rem;
+                }
+            }
+
+            .images-list {
+                width: 90%;
+                .image-div {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 2rem;
                 }
             }
         }
