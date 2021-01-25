@@ -6,13 +6,11 @@ import CommentFeed from './CommentFeed';
 import styled from 'styled-components';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns';
 
-const ActivityFeedPost = ({ post, time }, showCommentsBool = false) => {
+const ActivityFeedPost = ({ post }, showCommentsBool = false) => {
     const [showComments, setShowComments] = useState(showCommentsBool);
     const [likes, setLikes] = useState(0);
 
-    const timestamp = new Date(time);
-
-    console.log(timestamp);
+    const timeStamp = formatDistance(new Date(post.created_at), new Date());
 
     const handleDisplayUsername = () => {
         if (post.username === localStorage.getItem('username')) {
@@ -37,7 +35,9 @@ const ActivityFeedPost = ({ post, time }, showCommentsBool = false) => {
                             className='avatar'
                         ></img>
                         {handleDisplayUsername()}
-                        <span className='created-at'>Posted ago</span>
+                        <span className='created-at'>
+                            Posted {timeStamp} ago
+                        </span>
                     </div>
                     <div className='post-content'>
                         <p>{post.post_text}</p>

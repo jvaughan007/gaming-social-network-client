@@ -108,6 +108,26 @@ const StyledWrapper = styled.main`
             }
         }
     }
+
+    @media all and (min-width: 970px) {
+        .about-body {
+            header {
+                span {
+                    margin-top: 3rem;
+                }
+                button {
+                    width: 8rem;
+                    margin-right: 15rem;
+                    margin-top: 3rem;
+                }
+            }
+
+            .bio-text {
+                width: 70%;
+                word-wrap: normal;
+            }
+        }
+    }
 `;
 
 const StyledText = styled.div`
@@ -120,9 +140,29 @@ const StyledText = styled.div`
             margin-top: 1rem;
             height: 40rem;
             padding: 1rem;
+            background-color: rgb(84, 84, 84, 0.7);
+            color: white;
+            line-height: 3rem;
         }
         textarea:focus {
             outline: none;
+        }
+    }
+
+    @media all and (min-width: 970px) {
+        .edit-bio {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 70%;
+            margin: auto;
+            margin-top: 4rem;
+
+            button {
+                width: 10rem;
+                margin: auto;
+                margin-top: 2rem;
+            }
         }
     }
 `;

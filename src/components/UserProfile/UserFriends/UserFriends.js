@@ -35,7 +35,6 @@ const UserFriends = (profile) => {
                 },
             });
             const data = await res.json();
-            console.log(data);
             setFriends(data.allCurrentFriends);
         } catch (err) {
             console.log(err);
@@ -53,7 +52,6 @@ const UserFriends = (profile) => {
                 },
             });
             const data = await res.json();
-            console.log(data);
             getSentRequests();
             setRequests(data.allPendingFriends);
         } catch (err) {
@@ -72,7 +70,6 @@ const UserFriends = (profile) => {
                 },
             });
             const data = await res.json();
-            console.log(data);
 
             setSentRequests(data.allSentRequests);
         } catch (err) {
@@ -83,7 +80,6 @@ const UserFriends = (profile) => {
     useEffect(() => {
         getAllFriends();
         getAllRequests();
-        console.log(profile);
     }, []);
 
     const handleDisplayFriends = () => {
@@ -92,7 +88,6 @@ const UserFriends = (profile) => {
                 <StyledFriends>
                     <div>
                         {friends.map((friend, y) => {
-                            console.log(friend);
                             return (
                                 <div className='each-friend' key={y}>
                                     <span>{friend.username}</span>
@@ -181,7 +176,6 @@ const UserFriends = (profile) => {
                 <div className='sent-requests'>
                     <h2>Sent request to: </h2>
                     {sentRequests.map((request, y) => {
-                        console.log(request);
                         return (
                             <div className='each-sent' key={y}>
                                 <span>{request.username}</span>
@@ -209,7 +203,6 @@ const UserFriends = (profile) => {
                 }),
             });
             const data = await res.json();
-            console.log(data);
             setRequests(data.allPendingFriends);
         } catch (err) {
             console.log(err);
@@ -248,7 +241,6 @@ const UserFriends = (profile) => {
             return (
                 <div>
                     {results.map((each, y) => {
-                        console.log(each);
                         if (each.id !== profile.profile.id) {
                             return (
                                 <EachFriend
@@ -281,7 +273,6 @@ const UserFriends = (profile) => {
             });
 
             const data = await res.json();
-            console.log(data);
         } catch (err) {
             console.log(err);
         }
@@ -343,6 +334,18 @@ const StyledWrapper = styled.div`
         button {
             height: 2.5rem;
             margin-top: 2rem;
+        }
+    }
+
+    @media all and (min-width: 970px) {
+        header {
+            input {
+                margin-top: 3rem;
+            }
+            select {
+                margin-right: 15rem;
+                margin-top: 3rem;
+            }
         }
     }
 `;

@@ -116,6 +116,8 @@ const StyleGames = styled.div`
 
     @media all and (min-width: 700px) {
         .each-game {
+            width: 80%;
+            margin-left: 5rem;
             .game-info {
                 height: 100%;
                 display: flex;
@@ -125,6 +127,8 @@ const StyleGames = styled.div`
                     width: 30rem;
                     vertical-align: center;
                     margin-right: 3rem;
+                    border-radius: 2rem;
+                    box-shadow: 5px 5px 5px black;
                 }
             }
         }

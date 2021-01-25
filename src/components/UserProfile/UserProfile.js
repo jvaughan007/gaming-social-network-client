@@ -235,62 +235,63 @@ const StyledMain = styled.main`
     }
   }
 
-  @media all and (min-width: 968px) {
-    .user-profile {
-      width: 80%;
-      height: 100%;
-      position: fixed;
-      left: 20rem;
+@media all and (min-width: 968px) {
+        .user-profile {
+            width: 95%;
+            height: 100%;
+            position: fixed;
+            left: 20rem;
 
-      .header {
-        position: fixed;
-        top: 0;
-        left: 20rem;
-        width: 80%;
-        height: 28rem;
+            .header {
+                position: fixed;
+                top: 0;
+                left: 20rem;
+                width: 95%;
+                height: 28rem;
 
-        .banner-img {
-          object-fit: cover;
-        }
+                .banner-img {
+                    object-fit: cover;
+                }
 
-        .user-tags-img {
-          position: absolute;
-          bottom: 7rem;
-          display: flex;
-          img {
-            width: 11rem;
-            height: 11rem;
-            margin-left: 3rem;
-            border-radius: 10rem;
-            margin-right: 2rem;
-          }
-          .user-tags {
-            padding-top: 2rem;
-            font-size: 3.5rem;
+                .user-tags-img {
+                    position: absolute;
+                    bottom: 7rem;
+                    display: flex;
+                    img {
+                        width: 11rem;
+                        height: 11rem;
+                        margin-left: 3rem;
+                        border-radius: 10rem;
+                        margin-right: 2rem;
+                    }
+                    .user-tags {
+                        padding-top: 2rem;
+                        font-size: 3.5rem;
 
-            .user-gamertag {
-              font-size: 2.4rem;
+                        .user-gamertag {
+                            font-size: 2.4rem;
+                        }
+                    }
+                }
+                .edit-profile-btn {
+                    font-size: 1.7rem;
+                    bottom: 0;
+                    right: 15rem;
+                    top: 19rem;
+                }
+                .control-center {
+                    padding-left: 5rem;
+
+                    button {
+                        margin-right: 4rem;
+                    }
+                }
             }
-          }
+            .user-body {
+                top: 28rem;
+            }
         }
-        .edit-profile-btn {
-          font-size: 1.7rem;
-          bottom: 0;
-          top: 19rem;
-        }
-        .control-center {
-          padding-left: 5rem;
-
-          button {
-            margin-right: 4rem;
-          }
-        }
-      }
-      .user-body {
-        top: 28rem;
-      }
     }
-  }
 `;
 
 export default UserProfile;
