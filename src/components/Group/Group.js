@@ -6,13 +6,11 @@ import styled from 'styled-components';
 import { API_URL } from '../../config';
 import Sidebar from '../Sidebar/Sidebar';
 
-// we need to get the group members
-// we need to get the group posts
-
 const Group = () => {
   const [group, setGroup] = useState(null);
   const [isMember, setIsMember] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [content, setContent] = useState('posts');
   let history = useHistory();
   let { slug } = useParams();
 
@@ -102,6 +100,41 @@ const Group = () => {
     }
   };
 
+  const renderGroupAbout = () => {
+    return (
+      <StyledGroupAbout>
+        <h1>About</h1>
+        <p>{group.group_description}</p>
+      </StyledGroupAbout>
+    );
+  };
+
+  const renderGroupMembers = () => {
+    return (
+      <StyledGroupMembers>
+        <h1>Group Members</h1>
+      </StyledGroupMembers>
+    );
+  };
+
+  const renderGroupPosts = () => {
+    return (
+      <StyledGroupPosts>
+        <h1>Posts</h1>
+      </StyledGroupPosts>
+    );
+  };
+
+  const renderMainContent = () => {
+    if (content === 'posts') {
+      return renderGroupPosts();
+    } else if (content === 'members') {
+      return renderGroupMembers();
+    } else if (content === 'about') {
+      return renderGroupAbout();
+    }
+  };
+
   const renderGroup = () => {
     if (loading) {
       return (
@@ -142,7 +175,14 @@ const Group = () => {
               <button onClick={handleJoinGroup}>Join Group</button>
             )}
           </StyledHeader>
-          <StyledMain></StyledMain>
+          <StyledNav>
+            <ul>
+              <li onClick={() => setContent('posts')}>Posts</li>
+              <li onClick={() => setContent('members')}>Members</li>
+              <li onClick={() => setContent('about')}>About</li>
+            </ul>
+          </StyledNav>
+          <StyledMain>{renderMainContent()}</StyledMain>
         </StyledDiv>
       </>
     );
@@ -177,7 +217,7 @@ const StyledNoGroupMain = styled.main`
 `;
 
 const StyledHeader = styled.header`
-  height: 20vh;
+  height: 30vh;
   background: url('https://image.freepik.com/free-vector/simple-unique-gaming-banner-template_92741-92.jpg')
     no-repeat;
   background-size: 100% 100%;
@@ -219,6 +259,38 @@ const StyledHeader = styled.header`
   }
 `;
 
-const StyledMain = styled.main``;
+const StyledNav = styled.nav`
+  ul {
+    padding: 0 1.6rem;
+    display: flex;
+    align-items: center;
+    height: 4.8rem;
+  }
+
+  li {
+    font-size: 2.4rem;
+    color: #fff;
+    margin-right: 2.4rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+`;
+
+const StyledMain = styled.main`
+  padding: 0 1.6rem;
+`;
+
+const StyledGroupPosts = styled.div`
+  color: #fff;
+`;
+
+const StyledGroupAbout = styled.div`
+  color: #fff;
+`;
+
+const StyledGroupMembers = styled.div`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+`;
 
 export default Group;
