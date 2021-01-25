@@ -4,14 +4,15 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import { API_URL } from '../../config';
-
-// we need to get the group members
-// we need to get the group posts
+import Sidebar from '../Sidebar/Sidebar';
+import ActivityFeed from '../ActivityFeed/ActivityFeed';
 
 const Group = () => {
   const [group, setGroup] = useState(null);
+  const [members, setMembers] = useState(null);
   const [isMember, setIsMember] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [content, setContent] = useState('posts');
   let history = useHistory();
   let { slug } = useParams();
 
@@ -36,6 +37,7 @@ const Group = () => {
 
         setIsMember(data.isMember);
         setGroup(data.group);
+        setMembers(data.members);
         return setLoading(false);
       } catch (err) {
         return history.push('/404');
@@ -101,6 +103,48 @@ const Group = () => {
     }
   };
 
+  const renderGroupAbout = () => {
+    return (
+      <StyledGroupAbout>
+        <p>{group.group_description}</p>
+      </StyledGroupAbout>
+    );
+  };
+
+  const renderGroupMembers = () => {
+    return (
+      <StyledGroupMembers>
+        {members.map((member) => (
+          <div className='member'>
+            <img src={member.profile_url} alt='Member Avatar' />
+            <h3>{member.username}</h3>
+            <button onClick={() => history.push(`/${member.username}`)}>
+              Visit Profile
+            </button>
+          </div>
+        ))}
+      </StyledGroupMembers>
+    );
+  };
+
+  const renderGroupPosts = () => {
+    return (
+      <StyledGroupPosts>
+        <ActivityFeed type={group} className='activity-feed'></ActivityFeed>
+      </StyledGroupPosts>
+    );
+  };
+
+  const renderMainContent = () => {
+    if (content === 'posts') {
+      return renderGroupPosts();
+    } else if (content === 'members') {
+      return renderGroupMembers();
+    } else if (content === 'about') {
+      return renderGroupAbout();
+    }
+  };
+
   const renderGroup = () => {
     if (loading) {
       return (
@@ -116,39 +160,181 @@ const Group = () => {
 
     if (!group && !loading) {
       return (
-        <StyledNoGroupMain>
-          <h2 className='no-results'>This group does not exist 😞</h2>
-        </StyledNoGroupMain>
+        <StyledDiv>
+          <Sidebar></Sidebar>
+          <StyledNoGroupMain>
+            <h2>This group does not exist 😞</h2>
+          </StyledNoGroupMain>
+        </StyledDiv>
       );
     }
 
     return (
-      <StyledMain>
-        <h1 className='group-name'>{group.group_name}</h1>
-        {isMember ? (
-          <button onClick={handleLeaveGroup}>Leave Group</button>
-        ) : (
-          <button onClick={handleJoinGroup}>Join Group</button>
-        )}
-      </StyledMain>
+      <>
+        <Sidebar></Sidebar>
+        <StyledDiv>
+          <StyledHeader>
+            <div className='avatar-and-title'>
+              <img src={group.image_url} alt='Avatar' />
+              <h1 className='group-name'>{group.group_name}</h1>
+            </div>
+
+            {isMember ? (
+              <button onClick={handleLeaveGroup}>Leave Group</button>
+            ) : (
+              <button onClick={handleJoinGroup}>Join Group</button>
+            )}
+          </StyledHeader>
+          <StyledNav>
+            <ul>
+              <li onClick={() => setContent('posts')}>Posts</li>
+              <li onClick={() => setContent('members')}>Members</li>
+              <li onClick={() => setContent('about')}>About</li>
+            </ul>
+          </StyledNav>
+          <StyledMain>{renderMainContent()}</StyledMain>
+        </StyledDiv>
+      </>
     );
   };
 
   return renderGroup();
 };
 
-const StyledNoGroupMain = styled.main`
-  .no-results {
-    margin-top: 4rem;
-    text-align: center;
+const StyledDiv = styled.div`
+  width: calc(100% - 20rem);
+  float: right;
+  @media all and (max-width: 970px) {
     width: 100%;
+  }
+`;
+
+const StyledNoGroupMain = styled.main`
+  width: calc(100% - 20rem);
+  height: 100vh;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
     color: #14ffec;
+  }
+
+  @media all and (max-width: 970px) {
+    width: 100%;
+  }
+`;
+
+const StyledHeader = styled.header`
+  padding: 5.6rem;
+  background: url('https://blog.toornament.com/wp-content/uploads/2019/02/banner_apex.png')
+    no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    border-radius: 0.4rem;
+    border: none;
+    cursor: pointer;
+    height: 4.8rem;
+    padding: 0.8rem 3.2rem;
+    background: #9453d3;
+    color: #fff;
+  }
+
+  .avatar-and-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 8.8rem;
+      height: 8.8rem;
+      border-radius: 100%;
+      border: 0.2rem solid #fff;
+    }
+
+    .group-name {
+      color: #fff;
+      background: #000;
+      border-radius: 0.4rem;
+      opacity: 0.9;
+      margin: 1.6rem 0;
+      padding: 0.8rem;
+    }
+  }
+`;
+
+const StyledNav = styled.nav`
+  ul {
+    padding: 0 1.6rem;
+    display: flex;
+    align-items: center;
+    height: 4.8rem;
+  }
+
+  li {
+    font-size: 2.4rem;
+    color: #fff;
+    margin-right: 2.4rem;
+    font-weight: 700;
+    cursor: pointer;
   }
 `;
 
 const StyledMain = styled.main`
-  .group-name {
-    color: #fff;
+  padding: 0 1.6rem;
+`;
+
+const StyledGroupPosts = styled.div`
+  color: #fff;
+`;
+
+const StyledGroupAbout = styled.div`
+  color: #fff;
+`;
+
+const StyledGroupMembers = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1.6rem;
+
+  .member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border-radius: 0.4rem;
+    padding: 2.4rem;
+
+    img {
+      margin-bottom: 0.8rem;
+      width: 7rem;
+      height: 7rem;
+      border-radius: 100%;
+    }
+
+    button {
+      margin-top: 1.6rem;
+      border-radius: 0.4rem;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      height: 4.8rem;
+      outline: none;
+      background: #0d7377;
+      color: #fff;
+    }
+  }
+
+  @media all and (min-width: 970px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2.4rem;
   }
 `;
 
