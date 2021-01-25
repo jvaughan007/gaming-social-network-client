@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import NavContent from './SidebarContents';
+import img from './images/kamil.jpg';
 
 import { slide as Menu } from 'react-burger-menu';
 
@@ -44,7 +45,7 @@ const StyledMain = styled.main`
 
     /* Color/shape of close button cross */
     .bm-cross {
-        background: white;
+        background: red;
     }
 
     .side-bar {
@@ -55,18 +56,19 @@ const StyledMain = styled.main`
         overflow: auto;
 
         .logo {
+            background-image: url(${img});
+            background-size: cover;
+            background-position: center center;
+            padding-bottom: 1rem;
+            padding-top: 3rem;
             display: flex;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-
-            span {
-                border: solid 1px white;
-                margin: 2rem;
-            }
+            justify-content: center;
+            box-shadow: 0px 2px 10px #0d7377;
+            margin-bottom: 3rem;
 
             .nav-title {
-                color: white;
-                margin: 1.2rem 0 1.2rem 0.4rem;
+                color: #0d7377;
+
                 border: none;
                 font-size: 4.5rem;
             }
@@ -135,10 +137,8 @@ const StyledMain = styled.main`
             }
         }
 
-        .settings-btn {
-            margin-top: 10rem;
-        }
         .log-out {
+            margin-top: 5rem;
             span {
                 color: red;
             }

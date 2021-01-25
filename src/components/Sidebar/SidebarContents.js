@@ -28,12 +28,8 @@ const SidebarContents = () => {
             <div>
                 <div className='side-bar'>
                     <div className='logo'>
-                        <span>Icon</span>
                         <span className='nav-title'>GSN</span>
                     </div>
-                    <section className='search-field'>
-                        <input type='text' placeholder='Search...'></input>
-                    </section>
                     <div className='home-btn'>
                         <Link to='/dashboard'>
                             <button>
@@ -96,15 +92,6 @@ const SidebarContents = () => {
                                 </button>
                             </Link>
                         </div>
-                    </div>
-
-                    <div className='home-btn settings-btn'>
-                        <button>
-                            <span>
-                                <FaCog />
-                            </span>
-                            <span className='home'>Settings</span>
-                        </button>
                     </div>
 
                     <div className='home-btn log-out'>
