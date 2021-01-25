@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import NavContent from './SidebarContents';
-import img from './images/kamil.jpg';
 
 import { slide as Menu } from 'react-burger-menu';
 
@@ -136,14 +135,6 @@ const StyledMain = styled.main`
       }
     }
 
-<<<<<<< HEAD
-        .log-out {
-            margin-top: 5rem;
-            span {
-                color: red;
-            }
-        }
-=======
     .settings-btn {
       margin-top: 10rem;
     }
@@ -159,7 +150,6 @@ const StyledMain = styled.main`
       height: 3rem;
       left: 2rem;
       top: 1rem;
->>>>>>> groups
     }
 
     .mobile-view {
