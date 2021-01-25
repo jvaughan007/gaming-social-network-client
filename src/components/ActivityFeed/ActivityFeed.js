@@ -10,7 +10,7 @@ const ActivityFeed = () => {
     const getPosts = async () => {
         try {
             const token = localStorage.getItem('jwt');
-            const res = await fetch(`${API_URL}/posts`, {
+            const res = await fetch(`${API_URL}/posts/allPosts`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -18,7 +18,8 @@ const ActivityFeed = () => {
                 },
             });
             const data = await res.json();
-            return setPosts(data.posts);
+            console.log(data);
+            return setPosts(data);
         } catch (err) {
             console.log(err);
             setPosts([]);
@@ -43,6 +44,7 @@ const ActivityFeed = () => {
                               <ActivityFeedPost
                                   post={post}
                                   key={y}
+                                  time={post.created_at}
                               ></ActivityFeedPost>
                           ))
                         : null}

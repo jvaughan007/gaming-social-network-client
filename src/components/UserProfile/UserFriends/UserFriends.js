@@ -9,6 +9,7 @@ const UserFriends = (profile) => {
     const [results, setResults] = useState(null);
     const [requests, setRequests] = useState(null);
     const [selected, setSelected] = useState('');
+    const [sentRequests, setSentRequests] = useState(null);
 
     const handleSearch = async (e) => {
         setSearch(e.target.value);
@@ -53,8 +54,27 @@ const UserFriends = (profile) => {
             });
             const data = await res.json();
             console.log(data);
-
+            getSentRequests();
             setRequests(data.allPendingFriends);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const getSentRequests = async () => {
+        try {
+            const token = localStorage.getItem('jwt');
+            const res = await fetch(`${API_URL}/friends/sent`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await res.json();
+            console.log(data);
+
+            setSentRequests(data.allSentRequests);
         } catch (err) {
             console.log(err);
         }
@@ -63,6 +83,7 @@ const UserFriends = (profile) => {
     useEffect(() => {
         getAllFriends();
         getAllRequests();
+        console.log(profile);
     }, []);
 
     const handleDisplayFriends = () => {
@@ -71,15 +92,13 @@ const UserFriends = (profile) => {
                 <StyledFriends>
                     <div>
                         {friends.map((friend, y) => {
+                            console.log(friend);
                             return (
                                 <div className='each-friend' key={y}>
                                     <span>{friend.username}</span>
                                     <button
                                         onClick={() =>
-                                            deleteFriend(
-                                                friend.user_a,
-                                                friend.friends_id
-                                            )
+                                            deleteFriend(friend.friend_id)
                                         }
                                     >
                                         X
@@ -99,21 +118,25 @@ const UserFriends = (profile) => {
         }
     };
 
-    const deleteFriend = (user_a) => {
-        console.log('user_a', user_a);
-        console.log('user_b', profile.profile.id);
-        const deleteFriend = {
-            user_b: profile.profile.id,
-            user_a: user_a,
-        };
-        const token = localStorage.getItem('jwt');
-        fetch(`${API_URL}/friends/deleteFriend`, {
-            method: 'DELETE',
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(deleteFriend),
-        });
+    const deleteFriend = async (friend_id) => {
+        try {
+            console.log('user_b', profile.profile.id);
+            const token = localStorage.getItem('jwt');
+            const res = await fetch(`${API_URL}/friends/deleteFriend`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    user_a: profile.profile.user_id,
+                    friend_id: friend_id,
+                }),
+            });
+            const data = await res.json();
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const handleRequestsList = () => {
@@ -121,16 +144,16 @@ const UserFriends = (profile) => {
             return (
                 <StyledRequests>
                     <div>
+                        <h2>Receiving requests from:</h2>
                         {requests.map((request, y) => {
-                            console.log(request);
                             return (
                                 <div className='each-request' key={y}>
                                     <span>{request.username}</span>
                                     <button
                                         onClick={() =>
                                             acceptFriendRequest(
-                                                request.friends_id,
-                                                request.user_a
+                                                request.id,
+                                                request.sender
                                             )
                                         }
                                     >
@@ -139,6 +162,7 @@ const UserFriends = (profile) => {
                                 </div>
                             );
                         })}
+                        {displaySentRequests()}
                     </div>
                 </StyledRequests>
             );
@@ -151,19 +175,37 @@ const UserFriends = (profile) => {
         }
     };
 
-    const acceptFriendRequest = async (friends_id, user_a) => {
+    const displaySentRequests = () => {
+        if (sentRequests) {
+            return (
+                <div className='sent-requests'>
+                    <h2>Sent request to: </h2>
+                    {sentRequests.map((request, y) => {
+                        console.log(request);
+                        return (
+                            <div className='each-sent' key={y}>
+                                <span>{request.username}</span>
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        }
+    };
+
+    const acceptFriendRequest = async (id, sender) => {
         try {
             const token = localStorage.getItem('jwt');
             const res = await fetch(`${API_URL}/friends/acceptFriend`, {
-                method: 'PATCH',
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    user_b: profile.profile.id,
-                    user_a: user_a,
-                    friends_id: friends_id,
+                    id: id,
+                    sender: sender,
+                    user_id: profile.profile.user_id,
                 }),
             });
             const data = await res.json();
@@ -206,6 +248,7 @@ const UserFriends = (profile) => {
             return (
                 <div>
                     {results.map((each, y) => {
+                        console.log(each);
                         if (each.id !== profile.profile.id) {
                             return (
                                 <EachFriend
@@ -326,6 +369,28 @@ const StyledRequests = styled.div`
         button {
             height: 2.5rem;
             margin-top: 2rem;
+        }
+    }
+
+    .sent-requests {
+        margin-top: 3rem;
+
+        .each-sent {
+            height: 7rem;
+            width: 24rem;
+            border: solid 1px white;
+            color: black;
+            background-color: white;
+            border-radius: 5rem;
+            margin: auto;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+
+            span {
+                font-size: 2.5rem;
+                margin-top: 2rem;
+            }
         }
     }
 `;
