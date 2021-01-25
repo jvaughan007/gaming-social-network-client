@@ -5,9 +5,11 @@ import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import { API_URL } from '../../config';
 import Sidebar from '../Sidebar/Sidebar';
+import ActivityFeed from '../ActivityFeed/ActivityFeed';
 
 const Group = () => {
   const [group, setGroup] = useState(null);
+  const [members, setMembers] = useState(null);
   const [isMember, setIsMember] = useState(null);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState('posts');
@@ -35,6 +37,7 @@ const Group = () => {
 
         setIsMember(data.isMember);
         setGroup(data.group);
+        setMembers(data.members);
         return setLoading(false);
       } catch (err) {
         return history.push('/404');
@@ -103,7 +106,6 @@ const Group = () => {
   const renderGroupAbout = () => {
     return (
       <StyledGroupAbout>
-        <h1>About</h1>
         <p>{group.group_description}</p>
       </StyledGroupAbout>
     );
@@ -112,7 +114,15 @@ const Group = () => {
   const renderGroupMembers = () => {
     return (
       <StyledGroupMembers>
-        <h1>Group Members</h1>
+        {members.map((member) => (
+          <div className='member'>
+            <img src={member.profile_url} alt='Member Avatar' />
+            <h3>{member.username}</h3>
+            <button onClick={() => history.push(`/${member.username}`)}>
+              Visit Profile
+            </button>
+          </div>
+        ))}
       </StyledGroupMembers>
     );
   };
@@ -120,7 +130,7 @@ const Group = () => {
   const renderGroupPosts = () => {
     return (
       <StyledGroupPosts>
-        <h1>Posts</h1>
+        <ActivityFeed type={group} className='activity-feed'></ActivityFeed>
       </StyledGroupPosts>
     );
   };
@@ -217,8 +227,8 @@ const StyledNoGroupMain = styled.main`
 `;
 
 const StyledHeader = styled.header`
-  height: 30vh;
-  background: url('https://image.freepik.com/free-vector/simple-unique-gaming-banner-template_92741-92.jpg')
+  padding: 5.6rem;
+  background: url('https://blog.toornament.com/wp-content/uploads/2019/02/banner_apex.png')
     no-repeat;
   background-size: 100% 100%;
   display: flex;
@@ -252,6 +262,7 @@ const StyledHeader = styled.header`
     .group-name {
       color: #fff;
       background: #000;
+      border-radius: 0.4rem;
       opacity: 0.9;
       margin: 1.6rem 0;
       padding: 0.8rem;
@@ -290,7 +301,41 @@ const StyledGroupAbout = styled.div`
 
 const StyledGroupMembers = styled.div`
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1.6rem;
+
+  .member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border-radius: 0.4rem;
+    padding: 2.4rem;
+
+    img {
+      margin-bottom: 0.8rem;
+      width: 7rem;
+      height: 7rem;
+      border-radius: 100%;
+    }
+
+    button {
+      margin-top: 1.6rem;
+      border-radius: 0.4rem;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      height: 4.8rem;
+      outline: none;
+      background: #0d7377;
+      color: #fff;
+    }
+  }
+
+  @media all and (min-width: 970px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2.4rem;
+  }
 `;
 
 export default Group;
