@@ -4,7 +4,6 @@ import likeIcon from './images/thumbs-up.svg';
 import React, { useState } from 'react';
 import CommentFeed from './CommentFeed';
 import styled from 'styled-components';
-import { format, formatDistance, formatRelative, subDays } from 'date-fns';
 
 const ActivityFeedPost = ({ post, time }, showCommentsBool = false) => {
   const [showComments, setShowComments] = useState(showCommentsBool);
