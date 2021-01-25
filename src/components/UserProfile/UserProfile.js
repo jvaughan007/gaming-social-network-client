@@ -16,6 +16,7 @@ const UserProfile = () => {
     const [staticUsername, setStaticUsername] = useState('');
     const [edit, setEdit] = useState(false);
     const [selected, setSelected] = useState(null);
+    const [userIsOwner, setUserIsOwner] = useState(false);
 
     let history = useHistory();
     let { username } = useParams();
@@ -29,27 +30,57 @@ const UserProfile = () => {
                 if (!data.success) {
                     return history.push('/404');
                 }
+                console.log(data.profile);
                 return setProfile(data.profile);
             } catch (err) {
                 return history.push('/404');
             }
         };
 
+        const checkCorrectUser = async () => {
+            const token = localStorage.getItem('jwt');
+            try {
+                const res = await fetch(`${API_URL}/auth/verifyJWT`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const data = await res.json();
+                if (data.username === username) {
+                    setUserIsOwner(true);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
         getUserProfile();
+        checkCorrectUser();
     }, [history, username]);
 
     const renderUserBody = () => {
         switch (selected) {
             case 'about':
-                return <UserAbout profile={profile} />;
+                return (
+                    <UserAbout profile={profile} userIsOwner={userIsOwner} />
+                );
             case 'games':
                 return <UserGames profile={profile} />;
             case 'images':
-                return <UserImages profile={profile} />;
+                return (
+                    <UserImages profile={profile} userIsOwner={userIsOwner} />
+                );
             case 'friends':
-                return <UserFriends profile={profile} />;
+                return (
+                    <UserFriends profile={profile} userIsOwner={userIsOwner} />
+                );
             default:
-                return <UserAbout profile={profile} />;
+                return (
+                    <UserAbout profile={profile} userIsOwner={userIsOwner} />
+                );
         }
     };
 
@@ -74,14 +105,13 @@ const UserProfile = () => {
                             ></img>
                             <div className='user-tags'>
                                 <span>{staticUsername}</span>
-                                <span className='user-gamertag'>
-                                    {profile.external_usernames}
-                                </span>
                             </div>
                         </div>
-                        <div className='edit-profile-btn'>
-                            <PopupModel profile={profile} />
-                        </div>
+                        {userIsOwner ? (
+                            <div className='edit-profile-btn'>
+                                <PopupModel profile={profile} />
+                            </div>
+                        ) : null}
                         <div className='control-center'>
                             <div>
                                 <button
@@ -170,11 +200,6 @@ const StyledMain = styled.main`
                     flex-direction: column;
                     font-size: 3.4rem;
                     padding-top: 0.3rem;
-
-                    .user-gamertag {
-                        padding-top: 0.3rem;
-                        font-size: 1.7rem;
-                    }
                 }
             }
             .edit-profile-btn {

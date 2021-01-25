@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { API_URL } from '../../../config';
 
-const UserAbout = (profile) => {
-    const user = profile.profile;
+const UserAbout = ({ profile, userIsOwner }) => {
+    const user = profile;
     const [edit, setEdit] = useState(false);
     const [about, setAbout] = useState(user.user_bio);
+    const [hardware, setHardware] = useState(user.preferred_hardware);
 
     const handleEdit = () => {
         if (edit) {
@@ -16,23 +17,61 @@ const UserAbout = (profile) => {
                             onChange={(e) => setAbout(e.target.value)}
                             defaultValue={about}
                         ></textarea>
-                        <button
-                            onClick={() => {
-                                handleUpdateBio();
-                                setEdit((c) => !c);
-                            }}
-                        >
-                            Submit
-                        </button>
+                        <div className='bottom-controls'>
+                            <select
+                                onChange={(e) => setHardware(e.target.value)}
+                            >
+                                <option hidden value>
+                                    Change hardware
+                                </option>
+                                <option value='pc'>PC</option>
+                                <option value='playstation'>PlayStation</option>
+                                <option value='xbox'>Xbox</option>
+                                <option value='wii'>Wii</option>
+                                <option value='switch'>Switch</option>
+                                <option value='mobile'>Mobile</option>
+                                <option value='vr'>VR</option>
+                            </select>
+                            <button
+                                onClick={() => {
+                                    handleUpdateBio();
+                                    handleUpdateHardware();
+                                    setEdit((c) => !c);
+                                }}
+                            >
+                                Submit
+                            </button>
+                        </div>
                     </div>
                 </StyledText>
             );
         } else {
             return (
                 <div className='bio-text'>
-                    <p>{about}</p>
+                    <p>{about ? about : 'no bio yet'}</p>
                 </div>
             );
+        }
+    };
+
+    const handleUpdateHardware = async () => {
+        try {
+            const res = await fetch(
+                `${API_URL}/profiles/${user.username}/hardware`,
+                {
+                    method: 'PATCH',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({
+                        hardware: hardware,
+                        user_id: user.user_id,
+                    }),
+                }
+            );
+            const data = await res.json();
+            console.log(data);
+            setHardware(data.profile.preferred_hardware);
+        } catch (err) {
+            console.log(err);
         }
     };
 
@@ -58,9 +97,23 @@ const UserAbout = (profile) => {
             <div className='about-body'>
                 <header>
                     <span>About me:</span>
-                    <button onClick={() => setEdit((c) => !c)}>Edit</button>
+                    {userIsOwner === true ? (
+                        <button onClick={() => setEdit((c) => !c)}>Edit</button>
+                    ) : null}
                 </header>
                 {handleEdit()}
+
+                <div className='preferred-hardware'>
+                    <span>Preferred Hardware:</span>
+                    {hardware ? (
+                        <span>
+                            {hardware.charAt(0).toUpperCase() +
+                                hardware.slice(1)}
+                        </span>
+                    ) : (
+                        <span>None yet</span>
+                    )}
+                </div>
             </div>
         </StyledWrapper>
     );
@@ -76,8 +129,7 @@ const StyledWrapper = styled.main`
             justify-content: space-between;
 
             span {
-                padding: 1rem 3rem 0.5rem 0.5rem;
-                padding-right: 3rem;
+                padding: 1rem 3rem 1.5rem 3.5rem;
                 margin-left: 2rem;
                 border-bottom: solid 2px white;
             }
@@ -105,6 +157,13 @@ const StyledWrapper = styled.main`
 
             p {
                 line-height: 3rem;
+            }
+        }
+
+        .preferred-hardware {
+            span {
+                padding: 1rem 3rem 0.5rem 0.5rem;
+                margin-left: 2rem;
             }
         }
     }
@@ -146,6 +205,12 @@ const StyledText = styled.div`
         }
         textarea:focus {
             outline: none;
+        }
+
+        .bottom-controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
         }
     }
 

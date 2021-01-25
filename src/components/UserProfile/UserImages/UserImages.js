@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { API_URL } from '../../../config';
 
-const UserImages = (profile) => {
-    const user = profile.profile;
+const UserImages = ({ profile, userIsOwner }) => {
+    const user = profile;
     const [images, setImages] = useState([]);
     const [image, setImage] = useState(null);
     const [processing, setProcessing] = useState(false);
@@ -112,22 +112,24 @@ const UserImages = (profile) => {
         <StyledWrapper>
             <div className='images-body'>
                 <header>
-                    <span>My images</span>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor='image'>Upload image</label>
-                        <input
-                            id='image'
-                            type='file'
-                            onChange={fileChangedHandler}
-                        />
-                        {processing ? (
-                            <button type='button' disabled>
-                                Upload
-                            </button>
-                        ) : (
-                            <button type='submit'>Upload</button>
-                        )}
-                    </form>
+                    <span>My images:</span>
+                    {userIsOwner === true ? (
+                        <form onSubmit={handleSubmit}>
+                            <label htmlFor='image'>Upload image</label>
+                            <input
+                                id='image'
+                                type='file'
+                                onChange={fileChangedHandler}
+                            />
+                            {processing ? (
+                                <button type='button' disabled>
+                                    Upload
+                                </button>
+                            ) : (
+                                <button type='submit'>Upload</button>
+                            )}
+                        </form>
+                    ) : null}
                 </header>
                 <div className='error'>{error}</div>
                 <div className='images-list'>{handleDisplayImages()}</div>
@@ -149,11 +151,11 @@ const StyledWrapper = styled.main`
             justify-content: space-between;
 
             span {
-                padding: 0.5rem 0rem 1rem 0rem;
+                padding: 1rem 3rem 1.5rem 3.5rem;
                 width: 15rem;
                 border-bottom: solid 2px white;
                 margin-bottom: 3rem;
-                margin-left: 30%;
+                margin-left: 2rem;
                 text-align: center;
             }
 
@@ -192,7 +194,7 @@ const StyledWrapper = styled.main`
                 justify-content: space-between;
 
                 span {
-                    margin-left: 0;
+                    margin-left: 3rem;
                     text-align: left;
                 }
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { API_URL } from '../../../config';
 import EachFriend from './EachFriend/EachFriend';
 
-const UserFriends = (profile) => {
+const UserFriends = ({ profile, userIsOwner }) => {
     const [search, setSearch] = useState(null);
     const [friends, setFriends] = useState(null);
     const [results, setResults] = useState(null);
@@ -91,13 +91,15 @@ const UserFriends = (profile) => {
                             return (
                                 <div className='each-friend' key={y}>
                                     <span>{friend.username}</span>
-                                    <button
-                                        onClick={() =>
-                                            deleteFriend(friend.friend_id)
-                                        }
-                                    >
-                                        X
-                                    </button>
+                                    {userIsOwner === true ? (
+                                        <button
+                                            onClick={() =>
+                                                deleteFriend(friend.friend_id)
+                                            }
+                                        >
+                                            X
+                                        </button>
+                                    ) : null}
                                 </div>
                             );
                         })}
@@ -115,7 +117,7 @@ const UserFriends = (profile) => {
 
     const deleteFriend = async (friend_id) => {
         try {
-            console.log('user_b', profile.profile.id);
+            console.log('user_b', profile.id);
             const token = localStorage.getItem('jwt');
             const res = await fetch(`${API_URL}/friends/deleteFriend`, {
                 method: 'DELETE',
@@ -124,7 +126,7 @@ const UserFriends = (profile) => {
                     authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    user_a: profile.profile.user_id,
+                    user_a: profile.user_id,
                     friend_id: friend_id,
                 }),
             });
@@ -199,7 +201,7 @@ const UserFriends = (profile) => {
                 body: JSON.stringify({
                     id: id,
                     sender: sender,
-                    user_id: profile.profile.user_id,
+                    user_id: profile.user_id,
                 }),
             });
             const data = await res.json();
@@ -241,7 +243,7 @@ const UserFriends = (profile) => {
             return (
                 <div>
                     {results.map((each, y) => {
-                        if (each.id !== profile.profile.id) {
+                        if (each.id !== profile.id) {
                             return (
                                 <EachFriend
                                     each={each}
@@ -280,21 +282,23 @@ const UserFriends = (profile) => {
 
     return (
         <StyledWrapper>
-            <header>
-                <input
-                    placeholder='search a username...'
-                    onChange={(e) => handleSearch(e)}
-                ></input>
-                <select
-                    onChange={(e) => {
-                        setSelected(e.target.value);
-                        setSearch(null);
-                    }}
-                >
-                    <option value='friends'>All Friends</option>
-                    <option value='requests'>Friend requests</option>
-                </select>
-            </header>
+            {userIsOwner === true ? (
+                <header>
+                    <input
+                        placeholder='search a username...'
+                        onChange={(e) => handleSearch(e)}
+                    ></input>
+                    <select
+                        onChange={(e) => {
+                            setSelected(e.target.value);
+                            setSearch(null);
+                        }}
+                    >
+                        <option value='friends'>All Friends</option>
+                        <option value='requests'>Friend requests</option>
+                    </select>
+                </header>
+            ) : null}
             <div className='friend-body'>{handleFriendsBodyDisplay()}</div>
         </StyledWrapper>
     );
