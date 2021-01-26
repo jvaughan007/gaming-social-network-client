@@ -16,10 +16,6 @@ const DemoPage = () => {
         <div>
             <StyledMain>
                 <div className="demoHeading">
-                    <div className="demoImage">
-                        <img src={homepage} />
-                    </div>
-
                     <div className="demoDescription">
                         <h1>Welcome to the Gaming Social Network!</h1>
                         <h2>Connect Hard, Win Harder</h2>
@@ -31,12 +27,21 @@ const DemoPage = () => {
 
 
                 <div className="demoSectionContainer">
-
+                    
                     <div className="demoSection">
                         <div className="demoImage">
-                            <img src={register} />
+                            <img src={homepage} alt='Homepage' />
                         </div>
+                        <div className="demoDescription">
+                            <h2>Landing Page</h2>
+                            <p>Describe Landing Page here!</p> 
+                        </div>
+                    </div>
 
+                    <div className="demoSection">
+                            <div className="demoImage">
+                                <img src={register} alt='SignupForm' />
+                            </div>
                         <div className="demoDescription">
                             <h2>Signup</h2>
                             <p>
