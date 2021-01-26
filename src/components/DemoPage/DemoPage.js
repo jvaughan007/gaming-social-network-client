@@ -1,5 +1,14 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import dashboard from './images/dashboard.jpg';
+import find_friends from './images/find_friends.jpg';
+import games from './images/games.jpg';
+import groups from './images/groups.jpg';
+import homepage from './images/homepage.jpg';
+import login from './images/login.jpg';
+import profile from './images/profile.jpg';
+import register from './images/register.jpg';
+
 
 
 const DemoPage = () => {
@@ -10,6 +19,9 @@ const DemoPage = () => {
                     <h1>Welcome to the Gaming Social Network!</h1> 
                     <br />
                     <h2>Connect Hard, Win Harder</h2>
+                    <div className="imageHeading">
+                    <img src = {homepage}/>
+                    </div>
                 </div>
                 <div className="demoGetStarted">
                 <h3>Signup</h3> 
@@ -18,7 +30,11 @@ const DemoPage = () => {
                     to log in or to create an account. Here, you will input 
                     all the required fields and, on submission, be 
                     redirected to your dashboard!
+                
                 </p>
+                <div className="demoGetStartedImage">
+                <img src = {register}/>
+                </div>
                 <br />
                 <h3>Login</h3>
                 <p>
@@ -26,15 +42,21 @@ const DemoPage = () => {
                     and password to be redirected to your dashboard upon
                     submission!
                 </p>
+                <img src = {login}/>
                 <br />
                 <h3>Dashboard</h3>
                 <p>Once you have reached your dashboard, you can...</p>
                 <ol>
                     <li>Edit your profile! (i.e. - avatar, about, banner, etc.)</li>
+                    <img src = {profile}/>
                     <li>Create and add to a list of your favorite games!</li>
+                    <img src = {games}/>
                     <li>Find and connect with game groups!</li>
+                    <img src = {groups}/>
                     <li>Add other gamers as friends!</li>
+                    <img src = {find_friends}/>
                     <li>Share your accomplishments with others!</li>
+                    <img src = {dashboard}/>
                     <li>Create, share and read posts to the community!</li>
                 </ol>
                     <div>
@@ -61,10 +83,17 @@ const StyledMain = styled.main`
     }
 
     .demoGetStarted {
+        text-align: right;
         margin: 1rem .5rem 0 .5rem;
         background-color: aliceblue;
         padding: 1rem;
         margin-bottom: 2rem;
+
+    }
+    .demoGetStartedImage {
+        display:flex;
+        flex-direction: column;
+        position:left;
 
     }
 `;
