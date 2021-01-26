@@ -163,7 +163,6 @@ const SearchResults = styled.div`
 
   @media all and (min-width: 970px) {
     grid-template-columns: repeat(4, 1fr);
-    /* padding: 0; */
   }
 `;
 

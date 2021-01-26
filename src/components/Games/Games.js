@@ -98,39 +98,40 @@ const Games = () => {
   };
 
   return (
-    <StyledMain>
-      <nav>
-        <SideBar />
-      </nav>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type='text'
-            placeholder='search for a game...'
-            defaultValue={searchQuery}
-            ref={searchInput}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          {searchQuery && searchQuery.trim().length ? (
-            <button type='button' onClick={reset}>
-              X
-            </button>
-          ) : null}
-        </div>
+    <>
+      <SideBar />
+      <StyledDiv>
+        <StyledForm onSubmit={handleSubmit}>
+          <div>
+            <input
+              type='text'
+              placeholder='search for a game...'
+              defaultValue={searchQuery}
+              ref={searchInput}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && searchQuery.trim().length ? (
+              <button type='button' onClick={reset}>
+                X
+              </button>
+            ) : null}
+          </div>
 
-        <button type='submit'>Search</button>
-      </form>
-      <SearchResults>{renderSearchResults()}</SearchResults>
-    </StyledMain>
+          <button type='submit'>Search</button>
+        </StyledForm>
+        <SearchResults>{renderSearchResults()}</SearchResults>
+      </StyledDiv>
+    </>
   );
 };
 
 const SearchResults = styled.div`
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 1.6rem;
   margin-top: 3.2rem;
   position: relative;
+  padding: 0 1.6rem;
 
   .no-results {
     text-align: center;
@@ -147,27 +148,17 @@ const SearchResults = styled.div`
     align-items: center;
   }
 
-  @media (min-width: 576px) {
-    margin-left: 20%;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (min-width: 1200px) {
+  @media all and (min-width: 970px) {
     grid-template-columns: repeat(4, 1fr);
   }
 `;
 
 const SearchResult = styled.div`
-  background: #323232;
+  background: #131b21;
   height: 26rem;
   border-radius: 0.4rem;
   position: relative;
   cursor: pointer;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);
 
   :hover {
     transform: scale(1.05);
@@ -203,80 +194,61 @@ const SearchResult = styled.div`
   }
 `;
 
-const StyledMain = styled.main`
-  margin-top: 3.2rem;
+const StyledDiv = styled.div`
+  padding-top: 4.8rem;
+  width: calc(100% - 20rem);
+  float: right;
 
-  nav {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100;
+  @media all and (max-width: 970px) {
+    width: 100%;
   }
+`;
 
-  form {
-    display: flex;
-    height: 4.8rem;
-    justify-content: space-between;
+const StyledForm = styled.form`
+  display: flex;
+  height: 4.8rem;
+  justify-content: space-between;
+  padding: 0 1.6rem;
 
-    div {
+  div {
+    height: 100%;
+    width: 74%;
+    position: relative;
+
+    input {
+      padding-left: 0.8rem;
+      border: none;
+      border-radius: 0.4rem;
+      outline: none;
+      width: 100%;
       height: 100%;
-      width: 74%;
-      position: relative;
-
-      input {
-        padding-left: 0.8rem;
-        border: none;
-        border-radius: 0.4rem;
-        outline: none;
-        width: 100%;
-        height: 100%;
-      }
-
-      button {
-        position: absolute;
-        top: 1.1rem;
-        right: 1.6rem;
-        width: 2.4rem;
-        border-radius: 20rem;
-        height: 2.4rem;
-        background: gray;
-      }
     }
 
     button {
-      width: 24%;
-      border: none;
-      cursor: pointer;
-      border-radius: 0.4rem;
-      background: #9453d3;
-      color: #fff;
-      outline: none;
+      position: absolute;
+      top: 1.1rem;
+      right: 1.6rem;
+      width: 2.4rem;
+      border-radius: 20rem;
+      height: 2.4rem;
+      background: gray;
     }
+  }
 
-    @media (min-width: 576px) {
-      margin-left: 20%;
-      div {
-        width: 83%;
+  button {
+    width: 24%;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.4rem;
+    background: #9453d3;
+    color: #fff;
+    outline: none;
+  }
 
-        input {
-          width: 100%;
-        }
-      }
-
-      button {
-        width: 16%;
-      }
-    }
-
-    @media (min-width: 1200px) {
-      div {
-        width: 89.5%;
-      }
-
-      button {
-        width: 10%;
-      }
-    }
+  @media all and (min-width: 970px) {
+    width: 100%;
+    max-width: 68rem;
+    margin: 0;
   }
 `;
 
