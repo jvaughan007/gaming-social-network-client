@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useParams } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { API_URL } from '../../../config';
 
-const UserGames = (profile) => {
+const UserGames = ({ profile }) => {
     const [games, setGames] = useState(null);
+
     const getAllFavorites = async () => {
         const token = localStorage.getItem('jwt');
         try {
-            const res = await fetch(`${API_URL}/favorites/`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json',
-                    authorization: `Bearer ${token}`,
-                },
-            });
+            const res = await fetch(
+                `${API_URL}/favorites/userFavorites?userId=${profile.user_id}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                        authorization: `Bearer ${token}`,
+                    },
+                }
+            );
 
             const data = await res.json();
+            console.log(data);
             if (!data.favorites.length) {
                 setGames(null);
             }

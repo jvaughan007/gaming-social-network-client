@@ -271,7 +271,12 @@ const StyledNoGroupMain = styled.main`
 
 const StyledHeader = styled.header`
   padding: 5.6rem;
-  background: #0d7377;
+  background: rgb(13, 115, 119);
+  background: radial-gradient(
+    circle,
+    rgba(13, 115, 119, 1) 0%,
+    rgba(148, 83, 211, 1) 100%
+  );
   background-size: 100% 100%;
   display: flex;
   flex-direction: column;
