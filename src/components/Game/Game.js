@@ -5,25 +5,75 @@ import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 import { API_URL } from '../../config';
 import notFavorited from './images/notfavorited.svg';
-import isFavorited from './images/favorited.svg';
+import isFavoritedImg from './images/favorited.svg';
 
 const Game = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [favorited, setFavorited] = useState(null);
+  const [totalFavs, setTotalFavs] = useState(null);
   const [info, setInfo] = useState(false);
   let history = useHistory();
   let params = useParams();
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt');
+    const getFavoriteCount = async (gameId) => {
+      try {
+        const token = localStorage.getItem('jwt');
 
-    if (!token) {
-      return history.push('/404');
-    }
+        if (!token) {
+          return history.push('/404');
+        }
+        const res = await fetch(`${API_URL}/favorites/count?gameId=${gameId}`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const data = await res.json();
+
+        return setTotalFavs(data.favoriteCount);
+      } catch (err) {
+        return;
+      }
+    };
+    const getGame = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const res = await fetch(
+          `https://api.rawg.io/api/games/${params.id}?key=2a91788799104cdabdd2ed6da39afffb`
+        );
+
+        if (!res.ok) {
+          return setError('Could not find that game');
+        }
+
+        const data = await res.json();
+
+        if (!data) {
+          return setError('Could not find that game');
+        }
+        setGame(data);
+
+        getFavoriteCount(data.id);
+        return await isFavorited(data.id);
+      } catch (err) {
+        return setError('Could not find that game');
+      }
+    };
 
     const isFavorited = async (gameId) => {
+      const token = localStorage.getItem('jwt');
+
+      if (!token) {
+        return history.push('/404');
+      }
       try {
         const res = await fetch(
           `${API_URL}/favorites/${JSON.stringify(gameId)}`,
@@ -50,34 +100,8 @@ const Game = () => {
         console.log(err);
       }
     };
-
-    (async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const res = await fetch(
-          `https://api.rawg.io/api/games/${params.id}?key=2a91788799104cdabdd2ed6da39afffb`
-        );
-
-        if (!res.ok) {
-          return setError('Could not find that game');
-        }
-
-        const data = await res.json();
-
-        console.log(data);
-
-        if (!data) {
-          return setError('Could not find that game');
-        }
-        setGame(data);
-
-        return await isFavorited(data.id);
-      } catch (err) {
-        return setError('Could not find that game');
-      }
-    })();
+    getGame();
+    isFavorited();
   }, [params.id, history]);
 
   const favoriteGame = async () => {
@@ -151,27 +175,11 @@ const Game = () => {
       );
     }
 
-    // const getFavoriteCount = async () => {
-    //   try {
-    //     const res = await fetch(
-    //       `${API_URL}/favorites/count/${JSON.stringify(gameId)}`,
-    //       {
-    //         method: 'GET',
-    //         headers: {
-    //           Accept: 'application/json',
-    //           'Content-Type': 'application/json',
-    //           Authorization: `Bearer ${token}`
-    //         }
-    //       }
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // }
-
     return game && !loading ? (
       <StyledMain className='gamePage_gameContainer'>
         <div className='control-center'>
           <button onClick={() => history.goBack()}>Back</button>
+
           {!favorited ? (
             <div className='favorite'>
               <button onClick={favoriteGame}>
@@ -181,7 +189,7 @@ const Game = () => {
           ) : (
             <div className='unfavorite'>
               <button onClick={unfavoriteGame}>
-                <img src={isFavorited} alt='Unfavorite' />
+                <img src={isFavoritedImg} alt='Unfavorite' />
               </button>
             </div>
           )}
@@ -190,6 +198,9 @@ const Game = () => {
           <h1>
             <a href={`${game.website}`}>{game.name}</a>
           </h1>
+          <div>
+            <span>Times Favorited: {totalFavs ? totalFavs : '0'}</span>
+          </div>
         </div>
 
         <div className='gamePage_details'>
@@ -238,13 +249,18 @@ const StyledMain = styled.main`
   .gamePage_title {
     color: white;
     display: flex;
+    flex-direction: column;
     margin-top: 3rem;
     margin-bottom: 2rem;
-    justify-content: center;
+    align-items: center;
 
     h1 {
       font-size: 2.5rem;
       text-decoration: underline;
+    }
+
+    div {
+      margin-top: 1rem;
     }
   }
 
