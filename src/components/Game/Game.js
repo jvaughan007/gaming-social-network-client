@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 import { API_URL } from '../../config';
 import notFavorited from './images/notfavorited.svg';
-import isFavorited from './images/favorited.svg';
+import isFavoritedImg from './images/favorited.svg';
 
 // @TODO - Please add number of people who have favorited the game on the front-end
 // @TODO - Get rid of borders
@@ -77,13 +77,14 @@ const Game = () => {
             }
             setGame(data);
 
+            getFavoriteCount(data.id);
             return await isFavorited(data.id);
         } catch (err) {
             return setError('Could not find that game');
         }
     };
 
-    const getFavoriteCount = async () => {
+    const getFavoriteCount = async (gameId) => {
         try {
             const token = localStorage.getItem('jwt');
 
@@ -91,7 +92,7 @@ const Game = () => {
                 return history.push('/404');
             }
             const res = await fetch(
-                `${API_URL}/favorites/count?gameId=${game.id}`,
+                `${API_URL}/favorites/count?gameId=${gameId}`,
                 {
                     method: 'GET',
                     headers: {
@@ -103,7 +104,6 @@ const Game = () => {
             );
 
             const data = await res.json();
-            console.log(data);
 
             return setTotalFavs(data.favoriteCount);
         } catch (err) {
@@ -114,7 +114,7 @@ const Game = () => {
     useEffect(() => {
         getGame();
         isFavorited();
-        getFavoriteCount();
+        
     }, [params.id, history]);
 
     const favoriteGame = async () => {
@@ -192,6 +192,7 @@ const Game = () => {
             <StyledMain className='gamePage_gameContainer'>
                 <div className='control-center'>
                     <button onClick={() => history.goBack()}>Back</button>
+                            
                     {!favorited ? (
                         <div className='favorite'>
                             <button onClick={favoriteGame}>
@@ -201,20 +202,20 @@ const Game = () => {
                     ) : (
                         <div className='unfavorite'>
                             <button onClick={unfavoriteGame}>
-                                <img src={isFavorited} alt='Unfavorite' />
+                                <img src={isFavoritedImg} alt='Unfavorite' />
                             </button>
                         </div>
                     )}
+                    
                 </div>
                 <div className='gamePage_title'>
                     <h1>
                         <a href={`${game.website}`}>{game.name}</a>
                     </h1>
-                </div>
-
-                {/* game total favs are here */}
-                <div>
-                    <span>{totalFavs}</span>
+                    {/* game total favs are here */}
+                    <div>
+                        <span>Times Favorited: {totalFavs}</span>
+                    </div>
                 </div>
 
                 <div className='gamePage_details'>
@@ -267,13 +268,18 @@ const StyledMain = styled.main`
     .gamePage_title {
         color: white;
         display: flex;
+        flex-direction: column;
         margin-top: 3rem;
         margin-bottom: 2rem;
-        justify-content: center;
+        align-items: center;
 
         h1 {
             font-size: 2.5rem;
             text-decoration: underline;
+        }
+
+        div {
+          margin-top: 1rem;
         }
     }
 
