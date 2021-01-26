@@ -1,10 +1,19 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import SignupForm from './SignupForm';
 import mobileImage from './images/takehiro.jpg';
 import desktopImage from './images/ella-don.jpg';
 
 const Signup = () => {
+  let history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem('jwt')) {
+      return history.push('/dashboard');
+    }
+  }, [history]);
+
   return (
     <>
       <StyledMain>

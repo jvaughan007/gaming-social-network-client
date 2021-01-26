@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
 import noImg from './images/no-image.png';
 import { parse } from 'query-string';
+import SideBar from '../Sidebar/Sidebar';
 
 const Games = () => {
   const [games, setGames] = useState(null);
@@ -34,7 +35,6 @@ const Games = () => {
         return setLoading(false);
       } catch (err) {
         console.log(err);
-        // handle error here
       }
     };
 
@@ -99,6 +99,9 @@ const Games = () => {
 
   return (
     <StyledMain>
+      <nav>
+        <SideBar />
+      </nav>
       <form onSubmit={handleSubmit}>
         <div>
           <input
@@ -108,7 +111,7 @@ const Games = () => {
             ref={searchInput}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          {searchQuery.trim().length ? (
+          {searchQuery && searchQuery.trim().length ? (
             <button type='button' onClick={reset}>
               X
             </button>
@@ -145,6 +148,7 @@ const SearchResults = styled.div`
   }
 
   @media (min-width: 576px) {
+    margin-left: 20%;
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -202,6 +206,13 @@ const SearchResult = styled.div`
 const StyledMain = styled.main`
   margin-top: 3.2rem;
 
+  nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+  }
+
   form {
     display: flex;
     height: 4.8rem;
@@ -243,6 +254,7 @@ const StyledMain = styled.main`
     }
 
     @media (min-width: 576px) {
+      margin-left: 20%;
       div {
         width: 83%;
 

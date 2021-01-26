@@ -1,10 +1,19 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginForm from './LoginForm';
 import desktopImage from './images/login-photo.jpeg';
 import mobileImage from './images/pexels.jpg';
 
 const Login = () => {
+  let history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem('jwt')) {
+      return history.push('/dashboard');
+    }
+  }, [history]);
+
   return (
     <>
       <StyledMain>
@@ -20,7 +29,7 @@ const Login = () => {
                 <span>-</span>Find and connect with gaming groups
               </li>
               <li>
-                <span>-</span>Connect with gamers that share your
+                <span>-</span>Connect with gamers that share a passion for your favorite games
               </li>
               <li>
                 <span>-</span>Share your gaming accomplishments with the world

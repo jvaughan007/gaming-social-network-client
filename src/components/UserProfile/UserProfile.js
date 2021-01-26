@@ -1,24 +1,90 @@
 import React, { useState, useEffect } from 'react';
-import VertNavBar from '../SideBar/SideBar';
-import { Route, Switch, Link } from 'react-router-dom';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import VertNavBar from '../Sidebar/Sidebar';
+import { useParams, useHistory } from 'react-router-dom';
 import UserAbout from './UserAbout/UserAbout';
 import UserGames from './UserGames/UserGames';
 import UserImages from './UserImages/UserImages';
+import UserFriends from './UserFriends/UserFriends';
+import PopupModel from './Popup/Popup';
 import { API_URL } from '../../config';
-
 import styled from 'styled-components';
 
-const username = 'donotle98'; //this is just for a mockup
-
 const UserProfile = () => {
-    const [profile, setProfile] = useState({});
+    const [profile, setProfile] = useState(null);
+    const [staticUsername, setStaticUsername] = useState('');
+    const [edit, setEdit] = useState(false);
+    const [selected, setSelected] = useState(null);
+    const [userIsOwner, setUserIsOwner] = useState(false);
+
+    let history = useHistory();
+    let { username } = useParams();
+
     useEffect(() => {
-        //Fetch the user profile using the username, username will be accessed from local storage
-        return fetch(`${API_URL}/users/${username}`)
-            .then((res) => res.json())
-            .then((user) => setProfile(user.profile));
-    }, []);
-    return (
+        const getUserProfile = async () => {
+            try {
+                const res = await fetch(`${API_URL}/users/${username}`);
+                const data = await res.json();
+                setStaticUsername(data.profile.username);
+                if (!data.success) {
+                    return history.push('/404');
+                }
+                console.log(data.profile);
+                return setProfile(data.profile);
+            } catch (err) {
+                return history.push('/404');
+            }
+        };
+
+        const checkCorrectUser = async () => {
+            const token = localStorage.getItem('jwt');
+            try {
+                const res = await fetch(`${API_URL}/auth/verifyJWT`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const data = await res.json();
+                if (data.username === username) {
+                    setUserIsOwner(true);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getUserProfile();
+        checkCorrectUser();
+    }, [history, username]);
+
+    const renderUserBody = () => {
+        switch (selected) {
+            case 'about':
+                return (
+                    <UserAbout profile={profile} userIsOwner={userIsOwner} />
+                );
+            case 'games':
+                return <UserGames profile={profile} />;
+            case 'images':
+                return (
+                    <UserImages profile={profile} userIsOwner={userIsOwner} />
+                );
+            case 'friends':
+                return (
+                    <UserFriends profile={profile} userIsOwner={userIsOwner} />
+                );
+            default:
+                return (
+                    <UserAbout profile={profile} userIsOwner={userIsOwner} />
+                );
+        }
+    };
+
+    return profile ? (
         <StyledMain>
             <div className='user-container'>
                 <nav>
@@ -32,62 +98,60 @@ const UserProfile = () => {
                             className='banner-img'
                         ></img>
                         <div className='user-tags-img'>
-                            <Link to={`/${username}`}>
-                                <img
-                                    src={profile.profile_url}
-                                    alt='users default'
-                                    className='user-image'
-                                ></img>
-                            </Link>
+                            <img
+                                src={profile.profile_url}
+                                alt='users default'
+                                className='user-image'
+                            ></img>
                             <div className='user-tags'>
-                                <span>{username}</span>
-                                <span className='user-gamertag'>
-                                    {profile.external_usernames}
-                                </span>
+                                <span>{staticUsername}</span>
                             </div>
                         </div>
-                        <div className='edit-profile-btn'>
-                            <Link to='/editProfile'>
-                                <button>Edit Profile</button>
-                            </Link>
-                        </div>
+                        {userIsOwner ? (
+                            <div className='edit-profile-btn'>
+                                <PopupModel profile={profile} />
+                            </div>
+                        ) : null}
                         <div className='control-center'>
                             <div>
-                                <Link to='/userAbout'>
-                                    <button>About</button>
-                                </Link>
+                                <button
+                                    id='about'
+                                    onClick={() => setSelected('about')}
+                                >
+                                    About
+                                </button>
                             </div>
                             <div>
-                                <Link to='/userGames'>
-                                    <button>Games</button>
-                                </Link>
+                                <button
+                                    id='games'
+                                    onClick={() => setSelected('games')}
+                                >
+                                    Games
+                                </button>
                             </div>
                             <div>
-                                <Link to='/userImages'>
-                                    <button>Images</button>
-                                </Link>
+                                <button
+                                    id='images'
+                                    onClick={() => setSelected('images')}
+                                >
+                                    Images
+                                </button>
+                            </div>
+                            <div>
+                                <button
+                                    id='friends'
+                                    onClick={() => setSelected('friends')}
+                                >
+                                    Friends
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div className='user-body'>
-                        <Switch>
-                            <Route exact path='/editProfile'></Route>
-                            <Route exact path='/userAbout'>
-                                <UserAbout profile={profile} />
-                            </Route>
-                            <Route exact path='/userGames'>
-                                <UserGames profile={profile} />
-                            </Route>
-                            <Route exact path='/userImages'>
-                                <UserImages profile={profile} />
-                            </Route>
-                        </Switch>
-                    </div>
+                    <div className='user-body'>{renderUserBody()}</div>
                 </div>
-                <div className='doms-sidebar'></div>
             </div>
         </StyledMain>
-    );
+    ) : null;
 };
 const StyledMain = styled.main`
     nav {
@@ -95,16 +159,19 @@ const StyledMain = styled.main`
         left: 0;
         z-index: 1000;
     }
+
     .user-profile {
+        position: fixed;
+        overflow: auto;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        position: fixed;
-        left: 0rem;
 
         .header {
             position: fixed;
+            left: 0;
             top: 0;
-            width: 100%;
             height: 20rem;
 
             .banner-img {
@@ -112,6 +179,7 @@ const StyledMain = styled.main`
                 height: 100%;
                 opacity: 0.6;
                 z-index: -1000;
+                object-fit: cover;
             }
 
             .user-tags-img {
@@ -119,34 +187,33 @@ const StyledMain = styled.main`
                 bottom: 6rem;
                 display: flex;
                 img {
-                    width: 5rem;
-                    height: 5rem;
+                    width: 7rem;
+                    height: 7rem;
                     margin-left: 2rem;
                     border-radius: 10rem;
                     margin-right: 2rem;
+                    object-fit: cover;
                 }
                 .user-tags {
                     color: white;
                     display: flex;
                     flex-direction: column;
-                    font-size: 2.3rem;
+                    font-size: 3.4rem;
                     padding-top: 0.3rem;
-
-                    .user-gamertag {
-                        padding-top: 0.3rem;
-                        font-size: 1.7rem;
-                    }
                 }
             }
             .edit-profile-btn {
                 position: absolute;
                 top: 2rem;
                 right: 2rem;
-                font-size: 1.2rem;
+                font-size: 1.5rem;
 
                 button {
                     padding: 0.75rem 1rem 0.75rem 1rem;
                     border: none;
+                }
+                button:focus {
+                    outline: none;
                 }
             }
             .control-center {
@@ -154,14 +221,14 @@ const StyledMain = styled.main`
                 bottom: 1rem;
                 display: flex;
                 height: 5rem;
-                padding-left: 4rem;
+                padding-left: 1rem;
 
                 button {
-                    margin-right: 2rem;
                     color: white;
                     border: none;
                     background-color: transparent;
-                    padding: 2rem;
+                    padding: 1rem;
+                    padding-bottom: 1.5rem;
                 }
                 button:focus {
                     border-bottom: solid 3.5px white;
@@ -170,15 +237,32 @@ const StyledMain = styled.main`
             }
         }
         .user-body {
-            position: relative;
-            height: 100%;
+            position: absolute;
             top: 20rem;
+            background-color: rgb(19, 27, 33, 0.8);
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
     }
 
-    @media all and (min-width: 750px) {
+    @media all and (min-width: 500px) {
         .user-profile {
-            width: 70%;
+            .header {
+                .control-center {
+                    padding-left: 2rem;
+
+                    button {
+                        padding: 2rem;
+                    }
+                }
+            }
+        }
+    }
+
+    @media all and (min-width: 968px) {
+        .user-profile {
+            width: 95%;
             height: 100%;
             position: fixed;
             left: 20rem;
@@ -186,21 +270,27 @@ const StyledMain = styled.main`
             .header {
                 position: fixed;
                 top: 0;
-                width: 70%;
-                height: 25rem;
+                left: 20rem;
+                width: 95%;
+                height: 28rem;
+
+                .banner-img {
+                    object-fit: cover;
+                }
 
                 .user-tags-img {
                     position: absolute;
                     bottom: 7rem;
                     display: flex;
                     img {
-                        width: 8rem;
-                        height: 8rem;
-                        margin-left: 5rem;
+                        width: 11rem;
+                        height: 11rem;
+                        margin-left: 3rem;
                         border-radius: 10rem;
                         margin-right: 2rem;
                     }
                     .user-tags {
+                        padding-top: 2rem;
                         font-size: 3.5rem;
 
                         .user-gamertag {
@@ -211,17 +301,23 @@ const StyledMain = styled.main`
                 .edit-profile-btn {
                     font-size: 1.7rem;
                     bottom: 0;
+                    right: 15rem;
                     top: 19rem;
                 }
                 .control-center {
                     padding-left: 5rem;
+
+                    button {
+                        margin-right: 4rem;
+                    }
                 }
             }
             .user-body {
-                top: 26rem;
+                top: 28rem;
             }
         }
     }
 `;
 
 export default UserProfile;
+
