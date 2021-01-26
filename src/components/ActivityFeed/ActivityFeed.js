@@ -82,7 +82,9 @@ const ActivityFeed = ({ type, canPost, group_id, entity_id, colorMode }) => {
           </div>
         );
       } else if (!canPost && type === 'user') {
-        return null;
+        <div class='can-post'>
+          <h3>You're not allowed to post here.</h3>
+        </div>;
       }
     }
   };
@@ -109,12 +111,14 @@ const StyledMain = styled.main`
   .can-post {
     max-width: 68rem;
     height: 12rem;
-    background: #212121;
     border-radius: 0.4rem;
+    background: #e31c3d;
     margin: 2.4rem auto 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #fff;
+    text-align: center;
   }
 
   @media all and (max-width: 970px) {

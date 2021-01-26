@@ -267,8 +267,7 @@ const StyledNoGroupMain = styled.main`
 
 const StyledHeader = styled.header`
   padding: 5.6rem;
-  background: url('https://blog.toornament.com/wp-content/uploads/2019/02/banner_apex.png')
-    no-repeat;
+  background: #0d7377;
   background-size: 100% 100%;
   display: flex;
   flex-direction: column;
