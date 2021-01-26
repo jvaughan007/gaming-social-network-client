@@ -19,9 +19,8 @@ const DemoPage = () => {
                     <h1>Welcome to the Gaming Social Network!</h1> 
                     <br />
                     <h2>Connect Hard, Win Harder</h2>
-                    <div className="imageHeading">
                     <img src = {homepage}/>
-                    </div>
+                    
                 </div>
                 <div className="demoGetStarted">
                 <h3>Signup</h3> 
@@ -30,11 +29,9 @@ const DemoPage = () => {
                     to log in or to create an account. Here, you will input 
                     all the required fields and, on submission, be 
                     redirected to your dashboard!
-                
+
                 </p>
-                <div className="demoGetStartedImage">
                 <img src = {register}/>
-                </div>
                 <br />
                 <h3>Login</h3>
                 <p>
@@ -88,12 +85,6 @@ const StyledMain = styled.main`
         background-color: aliceblue;
         padding: 1rem;
         margin-bottom: 2rem;
-
-    }
-    .demoGetStartedImage {
-        display:flex;
-        flex-direction: column;
-        position:left;
 
     }
 `;
