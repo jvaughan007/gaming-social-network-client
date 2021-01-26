@@ -16,12 +16,17 @@ const DemoPage = () => {
         <div>
             <StyledMain>
                 <div className="demoHeading">
-                    <h1>Welcome to the Gaming Social Network!</h1>
-                    <br />
-                    <h2>Connect Hard, Win Harder</h2>
-                    <img src={homepage} />
+                    <div className="demoImage">
+                        <img src={homepage} />
+                    </div>
 
+                    <div className="demoDescription">
+                        <h1>Welcome to the Gaming Social Network!</h1>
+                        <h2>Connect Hard, Win Harder</h2>
+                    </div>
                 </div>
+
+
 
 
 
@@ -105,7 +110,7 @@ const DemoPage = () => {
                             <img src={groups} />
                         </div>
                         <div className="demoDescription">
-                        <p>Find and connect with game groups!</p>
+                            <p>Find and connect with game groups!</p>
                         </div>
                     </div>
 
@@ -113,23 +118,23 @@ const DemoPage = () => {
 
                     <div className="demoSection">
                         <div className="demoImage">
-                        <img src={find_friends} />
+                            <img src={find_friends} />
                         </div>
                         <div className="demoDescription">
                             <p>Add other gamers as friends!</p>
                         </div>
-                        </div>
+                    </div>
 
                     <br />
 
                     <div className="demoSection">
                         <div className="demoImage">
-                        <img src={dashboard} />
+                            <img src={dashboard} />
                         </div>
                         <div className="demoDescription">
-                    <p>Share your accomplishments with others!</p>
-                    <p>Create, share and read posts to the community!</p>
-                    </div>
+                            <p>Share your accomplishments with others!</p>
+                            <p>Create, share and read posts to the community!</p>
+                        </div>
                     </div>
 
                     <div>
@@ -164,22 +169,26 @@ const StyledMain = styled.main`
         padding: 1rem;
         margin-bottom: 2rem;
 
+    }
+
     .demoSection {
+        background - color: aliceblue;
 
     }
 
     .demoImage {
+        display: flex;
+        flex-direction: row;
 
     }
 
     .demoDescription {
-
-    }
-
+        margin: 1rem 10rem 0 .5rem;
+        font-size: small;
+        text-align: right;
 
     }
    
-    
    
 `;
 
