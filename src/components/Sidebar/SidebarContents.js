@@ -91,6 +91,7 @@ const StyledNav = styled.nav`
   flex-direction: column;
   padding-left: 1.6rem;
   padding-top: 2.4rem;
+  user-select: none;
 
   .top-nav {
     h1 {
@@ -99,8 +100,9 @@ const StyledNav = styled.nav`
     }
 
     h2 {
-      margin-top: 1.6rem;
-      margin-bottom: 0.4rem;
+      margin-top: 2.4rem;
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
       font-weight: 500;
     }
 
@@ -108,13 +110,14 @@ const StyledNav = styled.nav`
       display: flex;
       align-items: center;
       font-weight: 300;
+
       :hover {
         color: #9453d3;
       }
     }
 
     ul li:not(:first-child) {
-      margin-top: 0.8rem;
+      margin-top: 1.6rem;
     }
 
     ul li span {
@@ -122,12 +125,12 @@ const StyledNav = styled.nav`
     }
 
     .user-links {
-      margin-top: 1.6rem;
-      font-size: 2.2rem;
+      margin-top: 2.4rem;
+      font-size: 2rem;
     }
 
     .connect-links {
-      font-size: 2.2rem;
+      font-size: 2rem;
     }
 
     .create-links {
@@ -137,6 +140,7 @@ const StyledNav = styled.nav`
 
   .bottom-nav {
     button {
+      font-weight: 300;
       display: flex;
       align-items: center;
       padding: 0;
@@ -146,6 +150,7 @@ const StyledNav = styled.nav`
       font-size: 2.4rem;
       margin-bottom: 2.4rem;
       cursor: pointer;
+
       span {
         margin-left: 0.8rem;
       }

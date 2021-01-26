@@ -42,7 +42,6 @@ const CreateGroupForm = () => {
 
       if (!data.success) {
         setProcessing(false);
-        // handle errors here
         return;
       }
       setProcessing(false);
@@ -81,6 +80,21 @@ const CreateGroupForm = () => {
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 1.6rem;
+
+  input {
+    height: 4.8rem;
+    border-radius: 0.4rem;
+    padding-left: 0.8rem;
+    border: none;
+    outline: none;
+  }
+
+  @media all and (min-width: 970px) {
+    width: 100%;
+  }
 `;
 
 const StyledErrors = styled.div`
