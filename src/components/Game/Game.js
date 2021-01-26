@@ -17,72 +17,104 @@ const Game = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [favorited, setFavorited] = useState(null);
+    const [totalFavs, setTotalFavs] = useState(null);
     const [info, setInfo] = useState(false);
     let history = useHistory();
     let params = useParams();
 
-    useEffect(() => {
+    const isFavorited = async (gameId) => {
         const token = localStorage.getItem('jwt');
 
         if (!token) {
             return history.push('/404');
         }
-
-        const isFavorited = async (gameId) => {
-            try {
-                const res = await fetch(
-                    `${API_URL}/favorites/${JSON.stringify(gameId)}`,
-                    {
-                        method: 'GET',
-                        headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-
-                const data = await res.json();
-
-                if (!data.success) {
-                    setFavorited(false);
-                    return setLoading(false);
+        try {
+            const res = await fetch(
+                `${API_URL}/favorites/${JSON.stringify(gameId)}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
+            );
 
-                setFavorited(true);
+            const data = await res.json();
+
+            if (!data.success) {
+                setFavorited(false);
                 return setLoading(false);
-            } catch (err) {
-                console.log(err);
             }
-        };
 
-        (async () => {
-            try {
-                setLoading(true);
-                setError(null);
+            setFavorited(true);
+            return setLoading(false);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-                const res = await fetch(
-                    `https://api.rawg.io/api/games/${params.id}?key=2a91788799104cdabdd2ed6da39afffb`
-                );
+    const getGame = async () => {
+        try {
+            setLoading(true);
+            setError(null);
 
-                if (!res.ok) {
-                    return setError('Could not find that game');
-                }
+            const res = await fetch(
+                `https://api.rawg.io/api/games/${params.id}?key=2a91788799104cdabdd2ed6da39afffb`
+            );
 
-                const data = await res.json();
-
-                console.log(data);
-
-                if (!data) {
-                    return setError('Could not find that game');
-                }
-                setGame(data);
-
-                return await isFavorited(data.id);
-            } catch (err) {
+            if (!res.ok) {
                 return setError('Could not find that game');
             }
-        })();
+
+            const data = await res.json();
+
+            console.log(data);
+
+            if (!data) {
+                return setError('Could not find that game');
+            }
+            setGame(data);
+
+            return await isFavorited(data.id);
+        } catch (err) {
+            return setError('Could not find that game');
+        }
+    };
+
+    const getFavoriteCount = async () => {
+        try {
+            const token = localStorage.getItem('jwt');
+
+            if (!token) {
+                return history.push('/404');
+            }
+            const res = await fetch(
+                `${API_URL}/favorites/count?gameId=${game.id}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            const data = await res.json();
+            console.log(data);
+
+            return setTotalFavs(data.favoriteCount);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        getGame();
+        isFavorited();
+        getFavoriteCount();
     }, [params.id, history]);
 
     const favoriteGame = async () => {
@@ -156,23 +188,6 @@ const Game = () => {
             );
         }
 
-        // const getFavoriteCount = async () => {
-        //   try {
-        //     const res = await fetch(
-        //       `${API_URL}/favorites/count/${JSON.stringify(gameId)}`,
-        //       {
-        //         method: 'GET',
-        //         headers: {
-        //           Accept: 'application/json',
-        //           'Content-Type': 'application/json',
-        //           Authorization: `Bearer ${token}`
-        //         }
-        //       }
-        //   } catch (err) {
-        //     console.log(err);
-        //   }
-        // }
-
         return game && !loading ? (
             <StyledMain className='gamePage_gameContainer'>
                 <div className='control-center'>
@@ -195,6 +210,11 @@ const Game = () => {
                     <h1>
                         <a href={`${game.website}`}>{game.name}</a>
                     </h1>
+                </div>
+
+                {/* game total favs are here */}
+                <div>
+                    <span>{totalFavs}</span>
                 </div>
 
                 <div className='gamePage_details'>
