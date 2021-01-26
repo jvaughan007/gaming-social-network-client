@@ -189,7 +189,6 @@ const Game = () => {
         }
       );
 
-<<<<<<< HEAD
         return game && !loading ? (
             <StyledMain className='gamePage_gameContainer'>
                 <div className='control-center'>
@@ -253,40 +252,6 @@ const Game = () => {
             </StyledMain>
         ) : null;
     };
-=======
-      const data = await res.json();
-
-      if (data.success) {
-        return setFavorited(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleMoreInfo = () => {
-    if (info) {
-      return (
-        <div>
-          <p>{game.description_raw}</p>
-        </div>
-      );
-    }
-  };
-
-  const renderGame = () => {
-    if (loading) {
-      return (
-        <Loader
-          type='TailSpin'
-          color='#14FFEC'
-          height={100}
-          width={100}
-          className='spinner'
-        />
-      );
-    }
->>>>>>> revisions-dom
 
     // const getFavoriteCount = async () => {
     //   try {
