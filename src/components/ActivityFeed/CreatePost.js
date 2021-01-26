@@ -4,36 +4,50 @@ import imageIcon from './images/image.svg';
 import { API_URL } from '../../config';
 import styled from 'styled-components';
 
-const CreatePost = ({ addPost }) => {
+const CreatePost = ({ addPost, type, group_id, entity_id, colorMode }) => {
   const [text, setText] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('asdfasdf', type);
     try {
       if (!text.trim().length) {
         return;
       }
       const token = localStorage.getItem('jwt');
-      const res = await fetch(`${API_URL}/posts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ post_text: text })
-      });
-      const data = await res.json();
-      addPost(data.post);
-      console.log(data);
-      return setText('');
+
+      if (type === 'user') {
+        const res = await fetch(`${API_URL}/posts`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ post_text: text })
+        });
+        const data = await res.json();
+        addPost(data.post);
+        return setText('');
+      } else if (type === 'group') {
+        const res = await fetch(`${API_URL}/groups/${group_id}/posts`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ entity_id, post_text: text })
+        });
+        const data = await res.json();
+        addPost(data.post);
+        return setText('');
+      }
     } catch (err) {
       console.log(err);
-      // handle error here
     }
   };
 
   return (
-    <StyledWrapper>
+    <StyledWrapper colorMode={colorMode}>
       <form onSubmit={handleSubmit}>
         <textarea
           type='text'
@@ -42,14 +56,6 @@ const CreatePost = ({ addPost }) => {
           onChange={(e) => setText(e.target.value)}
         />
         <div>
-          <ul>
-            <li>
-              <img src={youtubeIcon} alt='Youtube' />
-            </li>
-            <li>
-              <img src={imageIcon} alt='Upload' />
-            </li>
-          </ul>
           <button type='submit'>Post</button>
         </div>
       </form>
@@ -72,23 +78,20 @@ const StyledWrapper = styled.main`
       border-radius: 0.4rem 0.4rem 0 0;
       resize: none;
       outline: none;
+      border: none;
     }
     div {
       height: 5.6rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      background-color: #212121;
+      justify-content: flex-end;
+      background-color: ${({ colorMode }) =>
+        colorMode === 'light' ? '#fff' : '#212121'};
       padding: 0.8rem;
       color: #fff;
       border-radius: 0 0 0.4rem 0.4rem;
-      ul {
-        display: flex;
-        li {
-          margin-right: 0.8rem;
-          cursor: pointer;
-        }
-      }
+      border-top: 1px solid #000;
+
       button {
         height: 4rem;
         border-radius: 0.4rem;

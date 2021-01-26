@@ -8,7 +8,7 @@ const UserDashboard = () => {
       <Sidebar />
       <StyledMain className='activity-feed'>
         <h1>{localStorage.getItem('username')}'s Dashboard</h1>
-        <ActivityFeed type='user'></ActivityFeed>
+        <ActivityFeed type='user' canPost={true}></ActivityFeed>
       </StyledMain>
     </>
   );

@@ -19,6 +19,7 @@ import Groups from './components/Groups/Groups';
 import CreateGroup from './components/CreateGroup/CreateGroup';
 import PrivateRoute from './PrivateRoute';
 import DemoPage from './components/DemoPage/DemoPage';
+import Wrapper from './components/common/Wrapper';
 
 const theme = {
   colors: {
@@ -43,19 +44,24 @@ const App = () => {
               {/* don't enter these routes if already signed in */}
               {/* redirect to /dashboard */}
               <Route path='/' exact>
-                <Home></Home>
+                <Wrapper>
+                  <Home></Home>
+                </Wrapper>
               </Route>
               <Route path='/demo' exact>
-                <DemoPage></DemoPage>
-              </Route>
-              <Route path='/demo' exact>
-                <DemoPage></DemoPage>
+                <Wrapper>
+                  <DemoPage></DemoPage>
+                </Wrapper>
               </Route>
               <Route exact path='/signup'>
-                <Signup></Signup>
+                <Wrapper>
+                  <Signup></Signup>
+                </Wrapper>
               </Route>
               <Route exact path='/login'>
-                <Login></Login>
+                <Wrapper>
+                  <Login></Login>
+                </Wrapper>
               </Route>
               {/* end */}
               <PrivateRoute

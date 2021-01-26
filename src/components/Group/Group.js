@@ -66,6 +66,8 @@ const Group = () => {
         return;
       }
 
+      await getUpdatedGroupMembers();
+
       e.target.disabled = false;
       return setIsMember(true);
     } catch (err) {
@@ -96,6 +98,8 @@ const Group = () => {
         return;
       }
 
+      await getUpdatedGroupMembers();
+
       e.target.disabled = false;
       return setIsMember(false);
     } catch (err) {
@@ -103,26 +107,43 @@ const Group = () => {
     }
   };
 
-  const renderGroupAbout = () => {
-    return (
-      <StyledGroupAbout>
-        <p>{group.group_description}</p>
-      </StyledGroupAbout>
-    );
+  const getUpdatedGroupMembers = async () => {
+    try {
+      const token = localStorage.getItem('jwt');
+      console.log(group.id);
+      const res = await fetch(`${API_URL}/groups/${group.id}/members`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const data = await res.json();
+      console.log(data);
+      return setMembers(data.members);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const renderGroupMembers = () => {
+    if (!members || !members.length) {
+      return;
+    }
+
     return (
       <StyledGroupMembers>
-        {members.map((member) => (
-          <div className='member'>
-            <img src={member.profile_url} alt='Member Avatar' />
-            <h3>{member.username}</h3>
-            <button onClick={() => history.push(`/${member.username}`)}>
-              Visit Profile
-            </button>
-          </div>
-        ))}
+        <div className='members'>
+          {members.map((member, idx) => (
+            <div className='member' key={idx}>
+              <img src={member.profile_url} alt='Member Avatar' />
+              <h3>{member.username}</h3>
+              <button onClick={() => history.push(`/${member.username}`)}>
+                Visit Profile
+              </button>
+            </div>
+          ))}
+        </div>
       </StyledGroupMembers>
     );
   };
@@ -130,7 +151,14 @@ const Group = () => {
   const renderGroupPosts = () => {
     return (
       <StyledGroupPosts>
-        <ActivityFeed type={group} className='activity-feed'></ActivityFeed>
+        <ActivityFeed
+          className='activity-feed'
+          type='group'
+          canPost={isMember}
+          group_id={group.id}
+          entity_id={group.entity_id}
+          colorMode='light'
+        ></ActivityFeed>
       </StyledGroupPosts>
     );
   };
@@ -140,8 +168,6 @@ const Group = () => {
       return renderGroupPosts();
     } else if (content === 'members') {
       return renderGroupMembers();
-    } else if (content === 'about') {
-      return renderGroupAbout();
     }
   };
 
@@ -175,7 +201,19 @@ const Group = () => {
         <StyledDiv>
           <StyledHeader>
             <div className='avatar-and-title'>
-              <img src={group.image_url} alt='Avatar' />
+              <div>
+                <img
+                  src={group.image_url}
+                  alt='Avatar'
+                  className='avatar-img'
+                />
+                <div className='edit-icon'>
+                  <img
+                    src='https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_mode_edit_48px-512.png'
+                    alt='Edit'
+                  />
+                </div>
+              </div>
               <h1 className='group-name'>{group.group_name}</h1>
             </div>
 
@@ -189,7 +227,6 @@ const Group = () => {
             <ul>
               <li onClick={() => setContent('posts')}>Posts</li>
               <li onClick={() => setContent('members')}>Members</li>
-              <li onClick={() => setContent('about')}>About</li>
             </ul>
           </StyledNav>
           <StyledMain>{renderMainContent()}</StyledMain>
@@ -204,6 +241,8 @@ const Group = () => {
 const StyledDiv = styled.div`
   width: calc(100% - 20rem);
   float: right;
+  height: 100%;
+
   @media all and (max-width: 970px) {
     width: 100%;
   }
@@ -252,11 +291,32 @@ const StyledHeader = styled.header`
     align-items: center;
     justify-content: center;
 
-    img {
+    div:first-child {
+      position: relative;
+    }
+
+    .avatar-img {
       width: 8.8rem;
       height: 8.8rem;
       border-radius: 100%;
       border: 0.2rem solid #fff;
+    }
+
+    .edit-icon {
+      width: 2.4rem;
+      height: 2.4rem;
+      padding: 0.4rem;
+      background: #fff;
+      border-radius: 100%;
+      position: absolute;
+      right: 0;
+      bottom: 0.4rem;
+      background: #f2f3f5;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+      }
     }
 
     .group-name {
@@ -271,11 +331,16 @@ const StyledHeader = styled.header`
 `;
 
 const StyledNav = styled.nav`
+  background: #131b21;
+  height: 6.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3.2rem;
+
   ul {
-    padding: 0 1.6rem;
     display: flex;
-    align-items: center;
-    height: 4.8rem;
+    width: 68rem;
   }
 
   li {
@@ -291,49 +356,50 @@ const StyledMain = styled.main`
   padding: 0 1.6rem;
 `;
 
-const StyledGroupPosts = styled.div`
-  color: #fff;
-`;
-
-const StyledGroupAbout = styled.div`
-  color: #fff;
-`;
+const StyledGroupPosts = styled.div``;
 
 const StyledGroupMembers = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1.6rem;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-top: 2.4rem;
 
-  .member {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #fff;
-    border-radius: 0.4rem;
-    padding: 2.4rem;
+  .members {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1.6rem;
 
-    img {
-      margin-bottom: 0.8rem;
-      width: 7rem;
-      height: 7rem;
-      border-radius: 100%;
-    }
-
-    button {
-      margin-top: 1.6rem;
+    .member {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;
       border-radius: 0.4rem;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      height: 4.8rem;
-      outline: none;
-      background: #0d7377;
-      color: #fff;
+      padding: 2.4rem;
+
+      img {
+        margin-bottom: 0.8rem;
+        width: 7rem;
+        height: 7rem;
+        border-radius: 100%;
+      }
+
+      button {
+        margin-top: 1.6rem;
+        border-radius: 0.4rem;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        height: 4.8rem;
+        outline: none;
+        background: #0d7377;
+        color: #fff;
+      }
     }
   }
 
   @media all and (min-width: 970px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 2.4rem;
   }
 `;
