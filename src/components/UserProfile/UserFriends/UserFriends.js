@@ -70,7 +70,6 @@ const UserFriends = ({ profile, userIsOwner }) => {
                 },
             });
             const data = await res.json();
-
             setSentRequests(data.allSentRequests);
         } catch (err) {
             console.log(err);
@@ -87,6 +86,7 @@ const UserFriends = ({ profile, userIsOwner }) => {
             return (
                 <StyledFriends>
                     <div>
+                        <span>Friends list</span>
                         {friends.map((friend, y) => {
                             return (
                                 <div className='each-friend' key={y}>
@@ -136,6 +136,25 @@ const UserFriends = ({ profile, userIsOwner }) => {
         }
     };
 
+    const deleteRequest = async (id) => {
+        try {
+            const token = localStorage.getItem('jwt');
+            const res = await fetch(`${API_URL}/friends/declineFriend`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    id: id,
+                }),
+            });
+            const data = await res.json();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     const handleRequestsList = () => {
         if (requests) {
             return (
@@ -155,6 +174,13 @@ const UserFriends = ({ profile, userIsOwner }) => {
                                         }
                                     >
                                         Accept
+                                    </button>
+                                    <button
+                                        onClick={() =>
+                                            deleteRequest(request.id)
+                                        }
+                                    >
+                                        Decline
                                     </button>
                                 </div>
                             );
@@ -181,6 +207,11 @@ const UserFriends = ({ profile, userIsOwner }) => {
                         return (
                             <div className='each-sent' key={y}>
                                 <span>{request.username}</span>
+                                <button
+                                    onClick={() => deleteRequest(request.id)}
+                                >
+                                    Delete
+                                </button>
                             </div>
                         );
                     })}
@@ -242,12 +273,14 @@ const UserFriends = ({ profile, userIsOwner }) => {
             }
             return (
                 <div>
+                    <span>Searching users</span>
                     {results.map((each, y) => {
                         if (each.id !== profile.id) {
                             return (
                                 <EachFriend
                                     each={each}
                                     HandleAddFriend={HandleAddFriend}
+                                    friends={friends}
                                     key={y}
                                 />
                             );
@@ -294,6 +327,7 @@ const UserFriends = ({ profile, userIsOwner }) => {
                             setSearch(null);
                         }}
                     >
+                        <option hidden value></option>
                         <option value='friends'>All Friends</option>
                         <option value='requests'>Friend requests</option>
                     </select>

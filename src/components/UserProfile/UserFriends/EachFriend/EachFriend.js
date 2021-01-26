@@ -1,20 +1,38 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-const EachFriend = ({ HandleAddFriend, each }) => {
+const EachFriend = ({ HandleAddFriend, each, friends }) => {
     const friendAdded = useRef(null);
+    const [added, setAdded] = useState(false);
+
+    const handleAlreadyFriends = () => {
+        friends.map((x) => {
+            if (x.friend_id === each.id) {
+                setAdded(true);
+            }
+        });
+    };
+
+    useEffect(() => {
+        handleAlreadyFriends();
+    }, []);
     return (
         <div className='each-friend-result'>
             <span>{each.username}</span>
-            <button
-                ref={friendAdded}
-                onClick={(e) => {
-                    e.preventDefault();
-                    friendAdded.current.setAttribute('disabled', 'disabled');
-                    HandleAddFriend(each.id);
-                }}
-            >
-                +
-            </button>
+            {!added ? (
+                <button
+                    ref={friendAdded}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        friendAdded.current.setAttribute(
+                            'disabled',
+                            'disabled'
+                        );
+                        HandleAddFriend(each.id);
+                    }}
+                >
+                    +
+                </button>
+            ) : null}
         </div>
     );
 };
