@@ -99,8 +99,9 @@ const StyledNav = styled.nav`
     }
 
     h2 {
-      margin-top: 1.6rem;
-      margin-bottom: 0.4rem;
+      margin-top: 2.4rem;
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
       font-weight: 500;
     }
 
@@ -108,13 +109,14 @@ const StyledNav = styled.nav`
       display: flex;
       align-items: center;
       font-weight: 300;
+
       :hover {
         color: #9453d3;
       }
     }
 
     ul li:not(:first-child) {
-      margin-top: 0.8rem;
+      margin-top: 1.6rem;
     }
 
     ul li span {
@@ -122,12 +124,12 @@ const StyledNav = styled.nav`
     }
 
     .user-links {
-      margin-top: 1.6rem;
-      font-size: 2.2rem;
+      margin-top: 2.4rem;
+      font-size: 2rem;
     }
 
     .connect-links {
-      font-size: 2.2rem;
+      font-size: 2rem;
     }
 
     .create-links {
