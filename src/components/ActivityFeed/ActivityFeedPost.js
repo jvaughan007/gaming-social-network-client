@@ -24,7 +24,6 @@ const ActivityFeedPost = ({ post, time }, showCommentsBool = false) => {
     <div>
       <StyledWrapper>
         <li key={post.entity_id}>
-          <img src={ellipseIcon} alt='More Options' className='ellipse' />
           <div className='post-user-info'>
             <img
               src='https://gaming-social-network.s3-us-west-2.amazonaws.com/avatar_placeholder.png'
@@ -39,12 +38,6 @@ const ActivityFeedPost = ({ post, time }, showCommentsBool = false) => {
           </div>
           <div className='user-interactions'>
             <div>
-              <span>{likes !== 0 ? likes : null}</span>
-              <img
-                src={likeIcon}
-                alt='Like'
-                onClick={() => setLikes((likes) => likes + 1)}
-              />
               <span onClick={() => setShowComments((c) => !c)}>
                 <img src={commentIcon} alt='Comment' />
               </span>
