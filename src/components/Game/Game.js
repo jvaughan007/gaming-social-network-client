@@ -8,131 +8,60 @@ import notFavorited from './images/notfavorited.svg';
 import isFavorited from './images/favorited.svg';
 
 const Game = () => {
-    const [game, setGame] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [favorited, setFavorited] = useState(null);
-    const [totalFavs, setTotalFavs] = useState(null);
-    const [info, setInfo] = useState(false);
-    let history = useHistory();
-    let params = useParams();
+  const [game, setGame] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [favorited, setFavorited] = useState(null);
+  const [info, setInfo] = useState(false);
+  let history = useHistory();
+  let params = useParams();
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+
+    if (!token) {
+      return history.push('/404');
+    }
 
     const isFavorited = async (gameId) => {
-        const token = localStorage.getItem('jwt');
-
-        if (!token) {
-            return history.push('/404');
-        }
-        try {
-            const res = await fetch(
-                `${API_URL}/favorites/${JSON.stringify(gameId)}`,
-                {
-                    method: 'GET',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            const data = await res.json();
-
-            if (!data.success) {
-                setFavorited(false);
-                return setLoading(false);
+      try {
+        const res = await fetch(
+          `${API_URL}/favorites/${JSON.stringify(gameId)}`,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
             }
+          }
+        );
 
-            setFavorited(true);
-            return setLoading(false);
-        } catch (err) {
-            console.log(err);
+        const data = await res.json();
+
+        if (!data.success) {
+          setFavorited(false);
+          return setLoading(false);
         }
+
+        setFavorited(true);
+        return setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
-    const getGame = async () => {
-        try {
-            setLoading(true);
-            setError(null);
+    (async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-            const res = await fetch(
-                `https://api.rawg.io/api/games/${params.id}?key=2a91788799104cdabdd2ed6da39afffb`
-            );
+        const res = await fetch(
+          `https://api.rawg.io/api/games/${params.id}?key=2a91788799104cdabdd2ed6da39afffb`
+        );
 
-            if (!res.ok) {
-                return setError('Could not find that game');
-            }
-
-            const data = await res.json();
-
-            console.log(data);
-
-            if (!data) {
-                return setError('Could not find that game');
-            }
-            setGame(data);
-
-            return await isFavorited(data.id);
-        } catch (err) {
-            return setError('Could not find that game');
-        }
-    };
-
-    const getFavoriteCount = async () => {
-        try {
-            const token = localStorage.getItem('jwt');
-
-            if (!token) {
-                return history.push('/404');
-            }
-            const res = await fetch(
-                `${API_URL}/favorites/count?gameId=${game.id}`,
-                {
-                    method: 'GET',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            const data = await res.json();
-            console.log(data);
-
-            return setTotalFavs(data.favoriteCount);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    useEffect(() => {
-        getGame();
-        isFavorited();
-        getFavoriteCount();
-    }, [params.id, history]);
-
-    const favoriteGame = async () => {
-        try {
-            const token = localStorage.getItem('jwt');
-            const res = await fetch(`${API_URL}/favorites`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    game,
-                    game_id: JSON.stringify(game.id),
-                }),
-            });
-            const data = await res.json();
-            if (!data.success) {
-                return;
-            }
-            return setFavorited(true);
-        } catch (err) {
-            console.log(err);
+        if (!res.ok) {
+          return setError('Could not find that game');
         }
 
         const data = await res.json();
@@ -189,69 +118,38 @@ const Game = () => {
         }
       );
 
-        return game && !loading ? (
-            <StyledMain className='gamePage_gameContainer'>
-                <div className='control-center'>
-                    <button onClick={() => history.goBack()}>Back</button>
-                    {!favorited ? (
-                        <div className='favorite'>
-                            <button onClick={favoriteGame}>
-                                <img src={notFavorited} alt='Favorite' />
-                            </button>
-                        </div>
-                    ) : (
-                        <div className='unfavorite'>
-                            <button onClick={unfavoriteGame}>
-                                <img src={isFavorited} alt='Unfavorite' />
-                            </button>
-                        </div>
-                    )}
-                </div>
-                <div className='gamePage_title'>
-                    <h1>
-                        <a href={`${game.website}`}>{game.name}</a>
-                    </h1>
-                </div>
+      const data = await res.json();
 
-                {/* game total favs are here */}
-                <div>
-                    <span>{totalFavs}</span>
-                </div>
+      if (data.success) {
+        return setFavorited(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-                <div className='gamePage_details'>
-                    <div className='gamePage_image'>
-                        <img src={game.background_image} alt={game.name} />
-                    </div>
+  const handleMoreInfo = () => {
+    if (info) {
+      return (
+        <div>
+          <p>{game.description_raw}</p>
+        </div>
+      );
+    }
+  };
 
-                    <div className='gamePage_desc'>
-                        <p>{game.reddit_description}</p>
-                        <div className='genres'>
-                            <span>Genres: </span>
-                            {game.genres.map((genre) => (
-                                <div className='each-genre'>
-                                    <span>{genre.name}</span>
-                                </div>
-                            ))}
-                        </div>
-                        <div className='platforms'>
-                            <span>Playable on: </span>
-                            {game.platforms.map((platform, y) => (
-                                <div className='each-platform'>
-                                    <span key={y}>
-                                        {platform.platform.name}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                        <button onClick={() => setInfo((c) => !c)}>
-                            More Info
-                        </button>
-                        {handleMoreInfo()}
-                    </div>
-                </div>
-            </StyledMain>
-        ) : null;
-    };
+  const renderGame = () => {
+    if (loading) {
+      return (
+        <Loader
+          type='TailSpin'
+          color='#14FFEC'
+          height={100}
+          width={100}
+          className='spinner'
+        />
+      );
+    }
 
     // const getFavoriteCount = async () => {
     //   try {
@@ -303,17 +201,17 @@ const Game = () => {
             <p>{game.reddit_description}</p>
             <div className='genres'>
               <span>Genres: </span>
-              {game.genres.map((genre) => (
-                <div className='each-genre'>
+              {game.genres.map((genre, idx) => (
+                <div className='each-genre' key={idx}>
                   <span>{genre.name}</span>
                 </div>
               ))}
             </div>
             <div className='platforms'>
               <span>Playable on: </span>
-              {game.platforms.map((platform, y) => (
-                <div className='each-platform'>
-                  <span key={y}>{platform.platform.name}</span>
+              {game.platforms.map((platform, idx) => (
+                <div className='each-platform' key={idx}>
+                  <span>{platform.platform.name}</span>
                 </div>
               ))}
             </div>
