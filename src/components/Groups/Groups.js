@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { API_URL } from '../../config';
 import styled from 'styled-components';
 import Loader from 'react-loader-spinner';
-import noImg from './images/no-image.png';
 import { parse } from 'query-string';
 import Sidebar from '../Sidebar/Sidebar';
 

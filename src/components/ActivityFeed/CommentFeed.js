@@ -1,148 +1,122 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import AddComment from './AddComment';
 import styled from 'styled-components';
 import { API_URL } from '../../config';
+import moment from 'moment';
 
-const CommentFeed = ({ entity_id }, reply = false) => {
-    const [replying, setReplying] = useState(reply);
-    const [comments, setComments] = useState([]);
+const CommentFeed = ({ entity_id }) => {
+  const [comments, setComments] = useState([]);
 
-    const replyToComment = () => {
-        return replying === true ? <AddComment /> : null;
-    };
-
+  useEffect(() => {
     const getComments = async () => {
-        try {
-            const token = localStorage.getItem('jwt');
-            const res = await fetch(`${API_URL}/posts/comments/${entity_id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: `Bearer ${token}`,
-                },
-            });
-            const data = await res.json();
-            return setComments(data.comments);
-        } catch (err) {
-            console.log(err);
-            setComments([]);
-        }
+      try {
+        const token = localStorage.getItem('jwt');
+        const res = await fetch(`${API_URL}/posts/comments/${entity_id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`
+          }
+        });
+        const data = await res.json();
+        return setComments(data.comments);
+      } catch (err) {
+        setComments([]);
+      }
     };
+    getComments();
+  }, [entity_id]);
 
-    useEffect(() => {
-        getComments();
-    }, []);
+  const addComment = (comment) => {
+    setComments([comment, ...comments]);
+  };
 
-    const addComment = (comment) => {
-        setComments([comment, ...comments]);
-    };
-
-    const showComment = (comment, y) => {
-        return (
-            <div className='each-comment' key={y}>
-                <div className='comments-poster'>
-                    <span></span>
-                    <h1>
-                        {comment.username} on post {entity_id}
-                    </h1>
-                </div>
-                <p className='comment-text'>{comment.comment_text}</p>
-                {/* <p
-                    className='comment-reply'
-                    onClick={() => setReplying((r) => !r)}
-                >
-                    Reply
-                </p>
-                <div className='reply-input'>{replyToComment()}</div> */}
-            </div>
-        );
-    };
-
+  const displayComment = (comment, idx) => {
     return (
-        <StyledWrapper>
-            <div className='comment-sect'>
-                <AddComment entity_id={entity_id} addComment={addComment} />
-                {/* add comment will be static, however there will be many different comments */}
-                <div className='comment-feed-sect'>
-                    {comments
-                        ? comments.map((comment, y) => showComment(comment, y))
-                        : null}
-                </div>
-            </div>
-        </StyledWrapper>
+      <div className='comment' key={idx}>
+        <div className='comment-owner-info'>
+          <img src={comment.profile_url} alt='User Avatar' />
+        </div>
+        <div className='comment-text'>
+          <Link to={`/${comment.username}`}>
+            <h3>
+              {comment.username}{' '}
+              <span>
+                {moment(new Date(comment.created_at), 'YYYYMMDD').fromNow()}
+              </span>
+            </h3>
+          </Link>
+          <p>{comment.comment_text}</p>
+        </div>
+      </div>
     );
+  };
+
+  return (
+    <StyledMain>
+      <AddComment entity_id={entity_id} addComment={addComment} />
+      <StyledComments>
+        {comments
+          ? comments.map((comment, idx) => displayComment(comment, idx))
+          : null}
+      </StyledComments>
+    </StyledMain>
+  );
 };
 
-const StyledWrapper = styled.main`
-    .comment-sect {
-        width: 95%;
-        border-radius: 0.4rem;
-        margin: auto;
-        margin-top: 0.5rem;
-        margin-bottom: 2rem;
-        background-color: white;
+const StyledMain = styled.main`
+  max-width: 68rem;
+  margin: 0 auto;
+  border-radius: 0.4rem;
+  margin: 0.8rem auto 0 auto;
+  background: #131b21;
+  padding: 0.8rem;
+`;
 
-        .comment-feed-sect {
-            .each-comment {
-                border: solid 1px white;
-                border-radius: 0.4rem;
-                background-color: white;
+const StyledComments = styled.div`
+  .comment {
+    border-radius: 0.4rem;
+    display: flex;
+    margin-bottom: 1.6rem;
 
-                .comments-poster {
-                    display: flex;
-
-                    span {
-                        width: 2rem;
-                        height: 2rem;
-                        border: solid 1px black;
-                        margin: 2rem 1rem 0rem 2rem;
-                    }
-
-                    h1 {
-                        font-size: 1.5rem;
-                        margin: 2rem 2rem 0 1rem;
-                        color: black;
-                    }
-                }
-
-                .comment-text {
-                    padding: 1rem;
-                    margin-left: 5rem;
-                }
-
-                .comment-reply {
-                    color: #9453d3;
-                    font-size: 1.3rem;
-                    margin-left: 5rem;
-                }
-
-                .reply-input {
-                    width: 90%;
-                    margin: auto;
-                }
-
-                .comment-reply-feed {
-                    width: 80%;
-                    margin: 2rem 0rem 1rem 6rem;
-                    .replies-info {
-                        display: flex;
-
-                        span {
-                            height: 2rem;
-                            width: 2rem;
-                            border: solid 1px black;
-                            margin-right: 1rem;
-                        }
-                    }
-
-                    .comment-reply-text {
-                        padding: 1rem;
-                        margin-left: 4rem;
-                    }
-                }
-            }
-        }
+    :last-child {
+      margin-bottom: 0;
     }
+  }
+
+  .comment-owner-info {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 100%;
+      border: 0.1rem solid #fff;
+    }
+  }
+
+  .comment-text {
+    padding: 0.8rem;
+    border-radius: 0.4rem;
+    margin-left: 1.6rem;
+
+    h3 {
+      font-weight: 400;
+      color: #0d7377;
+
+      span {
+        font-size: 1.2rem;
+        color: #131b21;
+      }
+
+      margin-bottom: 0.8rem;
+    }
+
+    background: #fff;
+    width: 100%;
+  }
 `;
 
 export default CommentFeed;
