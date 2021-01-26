@@ -181,7 +181,12 @@ const SearchResult = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #9453d3;
+    background: rgb(13, 115, 119);
+    background: radial-gradient(
+      circle,
+      rgba(13, 115, 119, 1) 0%,
+      rgba(148, 83, 211, 1) 100%
+    );
     border-radius: 0.4rem 0.4rem 0 0;
 
     img {

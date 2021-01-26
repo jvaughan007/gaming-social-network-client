@@ -89,9 +89,12 @@ const CreateGroupForm = () => {
       <label htmlFor='avatar'>Group Avatar</label>
       <input type='file' onChange={fileChangedHandler} required id='avatar' />
       {image ? (
-        <div className='avatar-preview'>
-          <h3>Avatar Preview</h3>
+        <div className='preview'>
+          <p class='preview-text'>Banner Preview</p>
           <img src={URL.createObjectURL(image)} alt='Avatar Preview' />
+          <h3>{name}</h3>
+          <p>{description}</p>
+          <button type='button'>Join Group</button>
         </div>
       ) : null}
       {processing ? (
@@ -141,15 +144,47 @@ const StyledForm = styled.form`
     text-overflow: ellipsis;
   }
 
-  .avatar-preview {
+  .preview {
     margin: 1.6rem auto 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: rgb(13, 115, 119);
+    background: radial-gradient(
+      circle,
+      rgba(13, 115, 119, 1) 0%,
+      rgba(148, 83, 211, 1) 100%
+    );
+    width: 100%;
+    padding: 1.6rem 0;
+    border-radius: 0.4rem;
+    position: relative;
+
+    .preview-text {
+      position: absolute;
+      right: 0.4rem;
+      bottom: 0.4rem;
+      font-size: 1.4rem;
+      color: #fff;
+    }
+
+    button {
+      border-radius: 0.4rem;
+      border: none;
+      cursor: default;
+      height: 3.2rem;
+      padding: 0.4rem 2.4rem;
+      background: #9453d3;
+      color: #fff;
+    }
+
     h3 {
-      font-size: 1.8rem;
-      font-weight: 500;
-      margin-bottom: 0.8rem;
+      color: #fff;
+      background: #000;
+      border-radius: 0.4rem;
+      opacity: 0.9;
+      margin-top: 0.8rem;
+      padding: 0.4rem 0.8rem;
     }
 
     img {
@@ -172,7 +207,7 @@ const StyledForm = styled.form`
     margin-top: 1.6rem;
     height: 4.8rem;
     cursor: pointer;
-    background: #9453d3;
+    background: #131b21;
     color: #fff;
     outline: none;
     border: none;

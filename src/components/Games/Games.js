@@ -160,10 +160,6 @@ const SearchResult = styled.div`
   position: relative;
   cursor: pointer;
 
-  :hover {
-    transform: scale(1.05);
-  }
-
   .image-wrapper {
     position: relative;
     width: 100%;
