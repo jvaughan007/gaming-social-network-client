@@ -18,6 +18,12 @@ const StyledDiv = styled.div`
   width: calc(100% - 20rem);
   float: right;
   height: 100%;
+  padding-top: 4.8rem;
+
+  h1 {
+    text-align: center;
+    color: #fff;
+  }
 
   @media all and (max-width: 970px) {
     width: 100%;

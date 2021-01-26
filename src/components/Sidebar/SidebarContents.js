@@ -91,6 +91,7 @@ const StyledNav = styled.nav`
   flex-direction: column;
   padding-left: 1.6rem;
   padding-top: 2.4rem;
+  user-select: none;
 
   .top-nav {
     h1 {
@@ -149,6 +150,7 @@ const StyledNav = styled.nav`
       font-size: 2.4rem;
       margin-bottom: 2.4rem;
       cursor: pointer;
+
       span {
         margin-left: 0.8rem;
       }
