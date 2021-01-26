@@ -139,6 +139,7 @@ const StyledNav = styled.nav`
 
   .bottom-nav {
     button {
+      font-weight: 300;
       display: flex;
       align-items: center;
       padding: 0;
