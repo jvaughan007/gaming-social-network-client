@@ -18,6 +18,7 @@ const Login = () => {
     <>
       <StyledMain>
         <div className='login-image'></div>
+        <div className='login-bg'></div>
         <div className='login-page'>
           <div>
             <h1>Logging into the best gaming community in the world!</h1>
@@ -29,7 +30,8 @@ const Login = () => {
                 <span>-</span>Find and connect with gaming groups
               </li>
               <li>
-                <span>-</span>Connect with gamers that share a passion for your favorite games
+                <span>-</span>Connect with gamers that share a passion for your
+                favorite games
               </li>
               <li>
                 <span>-</span>Share your gaming accomplishments with the world
@@ -59,8 +61,17 @@ const StyledMain = styled.main`
     top: 0;
     left: 0;
     z-index: -1000;
-    background-color: inherit;
     opacity: 0.2;
+  }
+
+  .login-bg {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1001;
+    background: #212121;
   }
 
   .login-page {

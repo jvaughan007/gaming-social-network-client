@@ -11,6 +11,7 @@ const Group = () => {
   const [group, setGroup] = useState(null);
   const [members, setMembers] = useState(null);
   const [isMember, setIsMember] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState('posts');
   let history = useHistory();
@@ -33,8 +34,7 @@ const Group = () => {
           return setLoading(false);
         }
 
-        console.log(data);
-
+        setIsAdmin(data.isAdmin);
         setIsMember(data.isMember);
         setGroup(data.group);
         setMembers(data.members);
@@ -135,12 +135,14 @@ const Group = () => {
       <StyledGroupMembers>
         <div className='members'>
           {members.map((member, idx) => (
-            <div className='member' key={idx}>
+            <div
+              className='member'
+              key={idx}
+              onClick={() => history.push(`/${member.username}`)}
+            >
               <img src={member.profile_url} alt='Member Avatar' />
               <h3>{member.username}</h3>
-              <button onClick={() => history.push(`/${member.username}`)}>
-                Visit Profile
-              </button>
+              <p>View Profile</p>
             </div>
           ))}
         </div>
@@ -207,12 +209,14 @@ const Group = () => {
                   alt='Avatar'
                   className='avatar-img'
                 />
-                <div className='edit-icon'>
-                  <img
-                    src='https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_mode_edit_48px-512.png'
-                    alt='Edit'
-                  />
-                </div>
+                {isAdmin ? (
+                  <div className='edit-icon'>
+                    <img
+                      src='https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_mode_edit_48px-512.png'
+                      alt='Edit'
+                    />
+                  </div>
+                ) : null}
               </div>
               <h1 className='group-name'>{group.group_name}</h1>
             </div>
@@ -375,6 +379,7 @@ const StyledGroupMembers = styled.div`
       background: #fff;
       border-radius: 0.4rem;
       padding: 2.4rem;
+      cursor: pointer;
 
       img {
         margin-bottom: 0.8rem;
@@ -383,23 +388,20 @@ const StyledGroupMembers = styled.div`
         border-radius: 100%;
       }
 
-      button {
+      p {
         margin-top: 1.6rem;
-        border-radius: 0.4rem;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-        height: 4.8rem;
-        outline: none;
-        background: #0d7377;
-        color: #fff;
+        text-align: center;
+        font-weight: 700;
+        color: #9453d3;
       }
     }
   }
 
   @media all and (min-width: 970px) {
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 2.4rem;
+    .members {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 2.4rem;
+    }
   }
 `;
 

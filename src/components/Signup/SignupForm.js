@@ -8,8 +8,6 @@ const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState(null);
-  // going to use the code below when I implement accepting terms/privacy for fun
-  // const [agreed, setAgreed] = useState(false);
   const firstInput = useRef(null);
   let history = useHistory();
 

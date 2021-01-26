@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import youtubeIcon from './images/youtube.svg';
-import imageIcon from './images/image.svg';
 import { API_URL } from '../../config';
 import styled from 'styled-components';
 
-const CreatePost = ({ addPost, type, group_id, entity_id, colorMode }) => {
+const CreatePost = ({ addPost, type, group_id, entity_id }) => {
   const [text, setText] = useState('');
 
   const handleSubmit = async (e) => {
@@ -47,7 +45,7 @@ const CreatePost = ({ addPost, type, group_id, entity_id, colorMode }) => {
   };
 
   return (
-    <StyledWrapper colorMode={colorMode}>
+    <StyledWrapper>
       <form onSubmit={handleSubmit}>
         <textarea
           type='text'
@@ -85,8 +83,7 @@ const StyledWrapper = styled.main`
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      background-color: ${({ colorMode }) =>
-        colorMode === 'light' ? '#fff' : '#212121'};
+      background-color: #212121;
       padding: 0.8rem;
       color: #fff;
       border-radius: 0 0 0.4rem 0.4rem;
