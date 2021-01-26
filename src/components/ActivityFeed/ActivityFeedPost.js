@@ -1,17 +1,11 @@
-import ellipseIcon from './images/more-horizontal.svg';
 import commentIcon from './images/message-square.svg';
-import likeIcon from './images/thumbs-up.svg';
 import React, { useState } from 'react';
 import CommentFeed from './CommentFeed';
 import styled from 'styled-components';
+import moment from 'moment';
 
 const ActivityFeedPost = ({ post, time }, showCommentsBool = false) => {
   const [showComments, setShowComments] = useState(showCommentsBool);
-  const [likes, setLikes] = useState(0);
-
-  const timestamp = new Date(time);
-
-  console.log(timestamp);
 
   const handleDisplayUsername = () => {
     if (post.username === localStorage.getItem('username')) {
@@ -31,7 +25,9 @@ const ActivityFeedPost = ({ post, time }, showCommentsBool = false) => {
               className='avatar'
             ></img>
             {handleDisplayUsername()}
-            <span className='created-at'>Posted ago</span>
+            <span className='created-at'>
+              {moment(new Date(time), 'YYYYMMDD').fromNow()}
+            </span>
           </div>
           <div className='post-content'>
             <p>{post.post_text}</p>
