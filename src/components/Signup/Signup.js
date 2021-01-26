@@ -18,6 +18,7 @@ const Signup = () => {
     <>
       <StyledMain>
         <div className='signup-image'></div>
+        <div className='signup-bg'></div>
         <div className='signup-page'>
           <div>
             <h1>Join the best gaming community in the world!</h1>
@@ -61,8 +62,17 @@ const StyledMain = styled.main`
     top: 0;
     left: 0;
     z-index: -1000;
-    background-color: inherit;
     opacity: 0.2;
+  }
+
+  .signup-bg {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1001;
+    background: #212121;
   }
 
   .signup-page {
