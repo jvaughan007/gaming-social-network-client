@@ -45,6 +45,7 @@ const StyledDiv = styled.div`
   height: 100vh;
   position: absolute;
   left: 0;
+  right: 0;
   z-index: -1000;
   @media all and (min-width: 700px) {
     background: url(${backImgDesktop}) no-repeat;
