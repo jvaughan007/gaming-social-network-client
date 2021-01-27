@@ -35,7 +35,11 @@ const DemoPage = () => {
                         <div className="demoDescription">
                             <div className="descElements">                         
                             <h2>Landing Page</h2>
-                            <p>Describe Landing Page here!</p>
+                            <p>Welcome to Gaming Social Network!
+                            Click the "Demo" Button to see how it works!
+                            Click "Sign Up" to create an account,
+                            or if you already have an account,
+                            click "Login" to sign in!</p>
                             </div>                           
                         </div>
                     </div>
@@ -79,7 +83,7 @@ const DemoPage = () => {
 
                     <br />
 
-                    <div className="demoSection">
+                    {/* <div className="demoSection">
                         <div className="demoImage">
                             <img src={profile} />
                         </div>
@@ -89,7 +93,7 @@ const DemoPage = () => {
                         </div>
                     </div>
 
-                    <br />
+                    <br /> */}
 
                     <div className="demoSection">
                         <div className="demoImage">
@@ -97,9 +101,10 @@ const DemoPage = () => {
                         </div>
                         <div className="demoDescription">
                         <div className="descElements">
-                            <h3>Once you have reached your dashboard, you can...</h3>
-
-                            <p>Edit your profile! (i.e. - avatar, about, banner, etc.)</p>
+                            <h2>Dashboard</h2>
+                            <p>Once you have reached your dashboard, you can...
+                               Edit your profile! (i.e. - avatar, about, banner, 
+                               friends list, preferred hardware, etc.)</p>
                         </div>
                         </div>
                     </div>
@@ -113,7 +118,8 @@ const DemoPage = () => {
                         <div className="demoDescription">
                         <div className="descElements">
                             <h2>Games</h2>
-                            <p>Create and add to a list of your favorite games!</p>
+                            <p>Search for any games, favorite them, 
+                                Create and add to a list of your favorite games!</p>
                         </div>
                         </div>
                     </div>
