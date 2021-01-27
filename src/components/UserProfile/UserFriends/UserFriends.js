@@ -315,10 +315,25 @@ const UserFriends = ({ profile, userIsOwner }) => {
 export default UserFriends;
 
 const StyledWrapper = styled.div`
+  padding: 2.4rem 2.4rem 0 2.4rem;
   header {
     width: 100%;
     display: flex;
     justify-content: space-between;
+
+    input {
+      height: 4.8rem;
+      padding-left: 0.8rem;
+      border-radius: 0.4rem;
+      border: none;
+      width: 16rem;
+    }
+
+    @media all and (min-width: 970px) {
+      input {
+        width: 28rem;
+      }
+    }
   }
   .friend-body {
     color: white;
@@ -350,15 +365,6 @@ const StyledWrapper = styled.div`
   }
 
   @media all and (min-width: 970px) {
-    header {
-      input {
-        margin-top: 3rem;
-      }
-      select {
-        margin-right: 15rem;
-        margin-top: 3rem;
-      }
-    }
   }
 `;
 

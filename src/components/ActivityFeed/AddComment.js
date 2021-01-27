@@ -45,7 +45,7 @@ const StyledForm = styled.form`
   width: 100%;
   display: flex;
   height: 4.8rem;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
   justify-content: space-between;
 
   input {
@@ -53,6 +53,7 @@ const StyledForm = styled.form`
     border-radius: 0.4rem;
     outline: none;
     border: none;
+    padding-left: 0.8rem;
   }
 
   button {

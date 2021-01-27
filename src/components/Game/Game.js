@@ -23,7 +23,7 @@ const Game = () => {
         const token = localStorage.getItem('jwt');
 
         if (!token) {
-          return history.push('/404');
+          return history.push('/error/404');
         }
         const res = await fetch(`${API_URL}/favorites/count?gameId=${gameId}`, {
           method: 'GET',
@@ -72,7 +72,7 @@ const Game = () => {
       const token = localStorage.getItem('jwt');
 
       if (!token) {
-        return history.push('/404');
+        return history.push('/error/404');
       }
       try {
         const res = await fetch(

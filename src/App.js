@@ -39,93 +39,71 @@ const App = () => {
       <Router>
         <GlobalStyle></GlobalStyle>
         <ThemeProvider theme={theme}>
-          <StyledWrapper>
-            <Switch>
-              {/* don't enter these routes if already signed in */}
-              {/* redirect to /dashboard */}
-              <Route path='/' exact>
-                <Wrapper>
-                  <Home></Home>
-                </Wrapper>
-              </Route>
-              <Route path='/demo' exact>
-                <Wrapper>
-                  <DemoPage></DemoPage>
-                </Wrapper>
-              </Route>
-              <Route exact path='/signup'>
-                <Wrapper>
-                  <Signup></Signup>
-                </Wrapper>
-              </Route>
-              <Route exact path='/login'>
-                <Wrapper>
-                  <Login></Login>
-                </Wrapper>
-              </Route>
-              {/* end */}
-              <PrivateRoute
-                path='/dashboard'
-                component={UserDashboard}
-                exact
-              ></PrivateRoute>
-              <PrivateRoute
-                exact
-                path='/games'
-                component={Games}
-              ></PrivateRoute>
-              <PrivateRoute
-                exact
-                path='/groups'
-                component={Groups}
-              ></PrivateRoute>
-              <PrivateRoute
-                exact
-                path='/:username'
-                component={UserProfile}
-              ></PrivateRoute>
-              <PrivateRoute
-                exact
-                path='/group/:slug'
-                component={Group}
-              ></PrivateRoute>
-              <PrivateRoute
-                exact
-                path='/groups/new'
-                component={CreateGroup}
-              ></PrivateRoute>
-              <PrivateRoute
-                exact
-                path='/game/:id'
-                component={Game}
-              ></PrivateRoute>
-              <Route path='/404'>
-                <NotFound></NotFound>
-              </Route>
-              <Redirect to='/404' />
-            </Switch>
-          </StyledWrapper>
+          <Switch>
+            {/* don't enter these routes if already signed in */}
+            {/* redirect to /dashboard */}
+            <Route path='/' exact>
+              <Wrapper>
+                <Home></Home>
+              </Wrapper>
+            </Route>
+
+            <Route exact path='/signup'>
+              <Wrapper>
+                <Signup></Signup>
+              </Wrapper>
+            </Route>
+            <Route exact path='/login'>
+              <Wrapper>
+                <Login></Login>
+              </Wrapper>
+            </Route>
+            {/* end */}
+            <Route path='/demo' exact>
+              <Wrapper>
+                <DemoPage></DemoPage>
+              </Wrapper>
+            </Route>
+            <PrivateRoute
+              path='/dashboard'
+              component={UserDashboard}
+              exact
+            ></PrivateRoute>
+            <PrivateRoute exact path='/games' component={Games}></PrivateRoute>
+            <PrivateRoute
+              exact
+              path='/groups'
+              component={Groups}
+            ></PrivateRoute>
+            <PrivateRoute
+              exact
+              path='/:username'
+              component={UserProfile}
+            ></PrivateRoute>
+            <PrivateRoute
+              exact
+              path='/group/:slug'
+              component={Group}
+            ></PrivateRoute>
+            <PrivateRoute
+              exact
+              path='/groups/new'
+              component={CreateGroup}
+            ></PrivateRoute>
+            <PrivateRoute
+              exact
+              path='/game/:id'
+              component={Game}
+            ></PrivateRoute>
+            <Route path='/error/404'>
+              <NotFound></NotFound>
+            </Route>
+            <Redirect to='/error/404' />
+          </Switch>
         </ThemeProvider>
       </Router>
     </>
   );
 };
-
-const StyledWrapper = styled.div`
-  /* width: 28.8rem;
-  margin: 0 auto;
-  @media (min-width: 576px) {
-    width: 50rem;
-  }
-  @media (min-width: 768px) {
-    width: 70rem;
-  }
-  @media (min-width: 992px) {
-    width: 90rem;
-  }
-  @media (min-width: 1200px) {
-    width: 112rem;
-  } */
-`;
 
 export default App;

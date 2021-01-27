@@ -18,7 +18,6 @@ const StyledMain = styled.main`
   float: right;
   width: 100%;
   height: 100vh;
-  /* background: ${({ theme }) => theme.colors.teal}; */
 
   h1 {
     color: white;
@@ -28,6 +27,12 @@ const StyledMain = styled.main`
 
   @media all and (min-width: 970px) {
     width: calc(100% - 20rem);
+
+    h1 {
+      color: white;
+      text-align: center;
+      padding-top: 5.6rem;
+    }
   }
 `;
 

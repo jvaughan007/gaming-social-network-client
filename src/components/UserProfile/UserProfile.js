@@ -25,11 +25,11 @@ const UserProfile = () => {
         const data = await res.json();
         setStaticUsername(data.profile.username);
         if (!data.success) {
-          return history.push('/404');
+          return history.push('/error/404');
         }
         return setProfile(data.profile);
       } catch (err) {
-        return history.push('/404');
+        return history.push('/error/404');
       }
     };
 
@@ -61,6 +61,10 @@ const UserProfile = () => {
     return setProfile((prevState) => ({ ...prevState, banner_url: url }));
   };
 
+  const updateAvatarURL = (url) => {
+    return setProfile((prevState) => ({ ...prevState, profile_url: url }));
+  };
+
   const renderUserBody = () => {
     switch (selected) {
       case 'about':
@@ -90,7 +94,11 @@ const UserProfile = () => {
           </div>
           {userIsOwner ? (
             <div className='edit-profile-btn'>
-              <PopupModel profile={profile} updateBannerURL={updateBannerURL} />
+              <PopupModel
+                profile={profile}
+                updateBannerURL={updateBannerURL}
+                updateAvatarURL={updateAvatarURL}
+              />
             </div>
           ) : null}
           <div className='control-center'>
@@ -123,8 +131,8 @@ const UserProfile = () => {
 const StyledHeader = styled.header`
   height: 28rem;
   width: 100%;
-  background: ${({ backgroundImg }) => `url(${backgroundImg})`};
-  background-size: 100% 100%;
+  background: ${({ backgroundImg }) => `url(${backgroundImg})`} no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   justify-content: center;

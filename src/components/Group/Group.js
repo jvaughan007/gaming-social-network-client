@@ -40,7 +40,7 @@ const Group = () => {
         setMembers(data.members);
         return setLoading(false);
       } catch (err) {
-        return history.push('/404');
+        return history.push('/error/404');
       }
     };
     getGroup();
@@ -71,7 +71,7 @@ const Group = () => {
       e.target.disabled = false;
       return setIsMember(true);
     } catch (err) {
-      return history.push('/404');
+      return history.push('/error/404');
     }
   };
 
@@ -103,7 +103,7 @@ const Group = () => {
       e.target.disabled = false;
       return setIsMember(false);
     } catch (err) {
-      return history.push('/404');
+      return history.push('/error/404');
     }
   };
 
@@ -188,12 +188,14 @@ const Group = () => {
 
     if (!group && !loading) {
       return (
-        <StyledDiv>
+        <>
           <Sidebar></Sidebar>
-          <StyledNoGroupMain>
-            <h2>This group does not exist 😞</h2>
-          </StyledNoGroupMain>
-        </StyledDiv>
+          <StyledDiv>
+            <StyledNoGroupMain>
+              <h2>This group does not exist 😞</h2>
+            </StyledNoGroupMain>
+          </StyledDiv>
+        </>
       );
     }
 
@@ -209,14 +211,15 @@ const Group = () => {
                   alt='Avatar'
                   className='avatar-img'
                 />
-                {isAdmin ? (
+                {/* extended feature */}
+                {/* {isAdmin ? (
                   <div className='edit-icon'>
                     <img
                       src='https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_mode_edit_48px-512.png'
                       alt='Edit'
                     />
                   </div>
-                ) : null}
+                ) : null} */}
               </div>
               <h1 className='group-name'>{group.group_name}</h1>
             </div>
@@ -262,6 +265,7 @@ const StyledNoGroupMain = styled.main`
 
   h2 {
     color: #14ffec;
+    text-align: center;
   }
 
   @media all and (max-width: 970px) {
