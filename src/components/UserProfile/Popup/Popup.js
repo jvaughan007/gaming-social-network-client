@@ -21,7 +21,6 @@ const PopupModal = ({ profile, updateAvatarURL, updateBannerURL }) => {
 
   const handleSubmit = async (e, type) => {
     e.preventDefault();
-    console.log(type);
 
     try {
       setProcessing(true);
@@ -47,7 +46,6 @@ const PopupModal = ({ profile, updateAvatarURL, updateBannerURL }) => {
       });
 
       const data = await res.json();
-      console.log(data);
       if (!data.success) {
         setErrors(['something']);
       }
@@ -87,7 +85,6 @@ const PopupModal = ({ profile, updateAvatarURL, updateBannerURL }) => {
     }
   };
   const postProfileImageToDatabase = async (profile_url) => {
-    console.log(profile_url);
     try {
       const res = await fetch(
         `${API_URL}/profiles/${profile.username}/profileImage`,
