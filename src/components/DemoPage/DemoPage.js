@@ -167,8 +167,8 @@ const DemoPage = () => {
                         </div>
                     </div>
 
-                    <div>
-                        <Link to="/"><button>Let's Go!</button></Link>
+                    <div className="letsGo">
+                        <p>Ready to get your game on?</p><Link to="/"><button>Let's Go!</button></Link>
                     </div>
                 </div>
 
@@ -180,6 +180,8 @@ const DemoPage = () => {
 
 
 const StyledMain = styled.main`
+    
+
     .main {
         display: flex;
         flex-direction: column;
@@ -212,6 +214,7 @@ const StyledMain = styled.main`
     .demoImage {
         display: flex;
         flex-direction: row;
+        margin-left: 3rem;
 
     }
 
@@ -230,17 +233,84 @@ const StyledMain = styled.main`
         display: flex;
         flex-direction: column;
         align-items: center;
-        max-width: 30%;
+        max-width: 45%;
 
         h2, p {
             width: -webkit-fill-available;
         }
 
-        /* p {
-            max-width: 50%;
-        } */
+        p {
+            font-size: medium;
+        }
     }
    
+   .letsGo {
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+
+       p {
+           margin-top: 2rem;
+           font-size: 32px;
+           font-weight: bold;
+       }
+
+       button {
+           margin-top: 1.5rem;
+           color: white;
+           background-color: #9d4ada;
+           font-size: x-large;
+           font-weight: bold;
+       }
+   }
+
+    @media all and (max-width:767px) {
+
+    .main {
+        width: 100%;
+    }
+
+    .demoHeading {
+        width: 100%;
+        margin: 2rem .5rem;
+        display: flex;
+    }
+
+    .demoSectionContainer {
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        margin: 0 -1rem;
+    }
+    
+    .demoSection {
+        flex-direction: column;
+        margin-top: 1rem;
+        margin-bottom: 5rem;
+    }
+
+    .demoDescription {
+        margin-top: 2rem;
+        align-items: center;
+    }
+
+    .demoImage {
+        display: contents;
+        margin-bottom: 2rem;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+
+    .letsGo p {
+        text-align: center;
+    }
+
+   }
+   } 
    
 `;
 
