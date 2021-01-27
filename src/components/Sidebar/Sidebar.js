@@ -23,9 +23,11 @@ const StyledMain = styled.main`
   .desktop-view {
     display: none;
   }
+
   .mobile-view {
     display: block;
   }
+
   .bm-burger-button {
     position: fixed;
     width: 2.5rem;
@@ -33,9 +35,11 @@ const StyledMain = styled.main`
     left: 1rem;
     top: 1rem;
   }
+
   .bm-burger-bars {
     background: #fff;
   }
+
   .bm-cross-button {
     height: 24px;
     width: 24px;

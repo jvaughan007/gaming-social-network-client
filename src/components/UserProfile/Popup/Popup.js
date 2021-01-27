@@ -117,6 +117,7 @@ const PopupModal = ({ profile, updateAvatarURL, updateBannerURL }) => {
       {(close) => (
         <StyledWrapper>
           <div className='modal'>
+            {errors ? <p>{errors}</p> : null}
             <button className='close' onClick={close}>
               &times;
             </button>

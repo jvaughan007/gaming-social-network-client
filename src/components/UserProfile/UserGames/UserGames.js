@@ -1,138 +1,150 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { API_URL } from '../../../config';
 
-const UserGames = (profile) => {
-    const [games, setGames] = useState(null);
+const UserGames = ({ profile }) => {
+  const [games, setGames] = useState(null);
+  let history = useHistory();
+
+  useEffect(() => {
     const getAllFavorites = async () => {
-        const token = localStorage.getItem('jwt');
-        try {
-            const res = await fetch(`${API_URL}/favorites/`, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json',
-                    authorization: `Bearer ${token}`,
-                },
-            });
-
-            const data = await res.json();
-            if (!data.favorites.length) {
-                setGames(null);
+      const token = localStorage.getItem('jwt');
+      try {
+        const res = await fetch(
+          `${API_URL}/favorites/userFavorites?userId=${profile.user_id}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-type': 'application/json',
+              authorization: `Bearer ${token}`
             }
-            setGames(data.favorites);
-        } catch (err) {
-            console.log(err);
+          }
+        );
+
+        const data = await res.json();
+        console.log(data);
+        if (!data.favorites.length) {
+          setGames(null);
         }
+        setGames(data.favorites);
+      } catch (err) {
+        console.log(err);
+      }
     };
+    getAllFavorites();
+  }, [profile.user_id]);
 
-    const handleFavoriteDisplay = () => {
-        if (games < 1) {
+  const handleFavoriteDisplay = () => {
+    if (games < 1) {
+      return (
+        <StyleFavorites>
+          <div className='no-favs'>
+            <span>You have no favorite games yet.</span>
+            <br />
+            <span>
+              Go <Link to='/games'>favorite</Link> some to see them here
+            </span>
+          </div>
+        </StyleFavorites>
+      );
+    } else {
+      return (
+        <StyledGames>
+          {games.map((game, idx) => {
             return (
-                <StyleFavorites>
-                    <div className='no-favs'>
-                        <span>You have no favorite games yet.</span>
-                        <br />
-                        <span>
-                            Go <Link to='/games'>favorite</Link> some to see
-                            them here
-                        </span>
-                    </div>
-                </StyleFavorites>
+              <StyledGameCard
+                className='each-game'
+                key={idx}
+                onClick={() => history.push(`/game/${game.id}`)}
+              >
+                <div className='image-wrapper'>
+                  <img
+                    src={game.background_image ? game.background_image : null}
+                    alt={game.name}
+                  />
+                </div>
+                <div className='game-info'>
+                  <h3>{game.name}</h3>
+                </div>
+              </StyledGameCard>
             );
-        } else {
-            return (
-                <StyleGames>
-                    <div className='outer-wrapper'>
-                        {games.map((game, y) => {
-                            return (
-                                <div className='each-game' key={y}>
-                                    <h1>{game.name}</h1>
-                                    <div className='game-info'>
-                                        <img src={game.background_image}></img>
-                                        <p>{game.description_raw}</p>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </StyleGames>
-            );
-        }
-    };
+          })}
+        </StyledGames>
+      );
+    }
+  };
 
-    useEffect(() => {
-        getAllFavorites();
-    }, []);
-
-    return (
-        <StyleWrapper>
-            <div className='games-body'>{handleFavoriteDisplay()}</div>
-        </StyleWrapper>
-    );
+  return <StyledMain>{handleFavoriteDisplay()}</StyledMain>;
 };
 
-const StyleWrapper = styled.main`
-    padding-top: 4rem;
+const StyledMain = styled.main`
+  padding: 3.2rem 1.6rem;
 `;
 
 const StyleFavorites = styled.div`
-    .no-favs {
-        text-align: center;
-        color: white;
-        padding-top: 2rem;
-        line-height: 2.5rem;
+  .no-favs {
+    text-align: center;
+    color: white;
+    padding-top: 2rem;
+    line-height: 2.5rem;
 
-        a {
-            text-decoration: underline;
-        }
+    a {
+      text-decoration: underline;
     }
+  }
 `;
 
-const StyleGames = styled.div`
-    .each-game {
-        color: black;
-        padding: 2rem;
-        border: solid 1px white;
-        background-color: white;
-        margin: 2rem;
-        margin-top: 0;
-        border-radius: 5rem;
+const StyledGames = styled.div`
+  width: 100%;
+  display: grid;
+  grid-gap: 1.6rem;
+  grid-template-columns: repeat(1, 1fr);
 
-        h1 {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
+  @media all and (min-width: 730px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-        .game-info {
-            img {
-                width: 100%;
-            }
-            p {
-                line-height: 2.5rem;
-            }
-        }
+  @media all and (min-width: 970px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+`;
+
+const StyledGameCard = styled.div`
+  background: #131b21;
+  height: 26rem;
+  border-radius: 0.4rem;
+  position: relative;
+  cursor: pointer;
+
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+
+    img {
+      border-radius: 0.4rem 0.4rem 0 0;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
+  }
 
-    @media all and (min-width: 700px) {
-        .each-game {
-            width: 80%;
-            margin-left: 5rem;
-            .game-info {
-                height: 100%;
-                display: flex;
+  .game-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30%;
 
-                img {
-                    height: 20rem;
-                    width: 30rem;
-                    vertical-align: center;
-                    margin-right: 3rem;
-                    border-radius: 2rem;
-                    box-shadow: 5px 5px 5px black;
-                }
-            }
-        }
+    h3 {
+      text-align: center;
+      color: #fff;
     }
+  }
 `;
 
 export default UserGames;
