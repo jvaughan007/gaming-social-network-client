@@ -67,7 +67,7 @@ const DemoPage = () => {
 
                     <div className="demoSection">
                         <div className="demoImage">
-                            <img src={login} />
+                            <img src={login} alt='Login' />
                         </div>
                         <div className="demoDescription">
                             <div className="descElements">
@@ -83,21 +83,9 @@ const DemoPage = () => {
 
                     <br />
 
-                    {/* <div className="demoSection">
-                        <div className="demoImage">
-                            <img src={profile} />
-                        </div>
-                        <div className="demoDescription">
-
-                            <h2>Dashboard</h2>
-                        </div>
-                    </div>
-
-                    <br /> */}
-
                     <div className="demoSection">
                         <div className="demoImage">
-                            <img src={profile} />
+                            <img src={profile} alt='Profile' />
                         </div>
                         <div className="demoDescription">
                         <div className="descElements">
@@ -113,12 +101,12 @@ const DemoPage = () => {
 
                     <div className="demoSection">
                         <div className="demoImage">
-                            <img src={games} />
+                            <img src={games} alt='Games' />
                         </div>
                         <div className="demoDescription">
                         <div className="descElements">
                             <h2>Games</h2>
-                            <p>Search for any games, favorite them, 
+                            <p>Search for any games and heart your favorite games. 
                                 Create and add to a list of your favorite games!</p>
                         </div>
                         </div>
@@ -128,7 +116,7 @@ const DemoPage = () => {
 
                     <div className="demoSection">
                         <div className="demoImage">
-                            <img src={groups} alt="groups" />
+                            <img src={groups} alt='Groups' />
                         </div>
                         <div className="demoDescription">
                         <div className="descElements">
@@ -142,7 +130,7 @@ const DemoPage = () => {
 
                     <div className="demoSection">
                         <div className="demoImage">
-                            <img src={find_friends} />
+                            <img src={find_friends} alt='Find Friends' />
                         </div>
                         <div className="demoDescription">
                         <div className="descElements">
@@ -156,7 +144,7 @@ const DemoPage = () => {
 
                     <div className="demoSection">
                         <div className="demoImage">
-                            <img src={dashboard} />
+                            <img src={dashboard} alt='Dashboard' />
                         </div>
                         <div className="demoDescription">
                         <div className="descElements">
