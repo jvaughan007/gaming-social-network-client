@@ -123,8 +123,8 @@ const UserProfile = () => {
 const StyledHeader = styled.header`
   height: 28rem;
   width: 100%;
-  background: ${({ backgroundImg }) => `url(${backgroundImg})`};
-  background-size: 100% 100%;
+  background: ${({ backgroundImg }) => `url(${backgroundImg})`} no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   justify-content: center;
