@@ -45,9 +45,15 @@ const UserAbout = ({ profile, userIsOwner }) => {
       );
     } else {
       return (
-        <div className='bio-text'>
-          <p>{about ? about : 'no bio yet'}</p>
-        </div>
+        <StyledAbout>
+          <p>
+            {about && about.trim().length ? (
+              about
+            ) : (
+              <p>Tell us about yourself!</p>
+            )}
+          </p>
+        </StyledAbout>
       );
     }
   };
@@ -90,13 +96,12 @@ const UserAbout = ({ profile, userIsOwner }) => {
   return (
     <StyledWrapper>
       <div className='about-body'>
+        {handleEdit()}
         <header>
-          <span>About me:</span>
           {userIsOwner === true ? (
             <button onClick={() => setEdit((c) => !c)}>Edit</button>
           ) : null}
         </header>
-        {handleEdit()}
 
         <div className='preferred-hardware'>
           <span>Preferred Hardware:</span>
@@ -111,71 +116,51 @@ const UserAbout = ({ profile, userIsOwner }) => {
   );
 };
 
+const StyledAbout = styled.div`
+  max-width: 68rem;
+  background: #fff;
+  color: black;
+  height: 8rem;
+  border-radius: 0.4rem;
+  padding: 0.8rem;
+`;
+
 const StyledWrapper = styled.main`
+  padding: 3.2rem 3.2rem 0 3.2rem;
   .about-body {
     color: white;
     width: 100%;
 
     header {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
+      max-width: 68rem;
 
       span {
         padding: 1rem 3rem 1.5rem 3.5rem;
-        margin-left: 2rem;
+        /* margin-left: 2rem; */
+
         border-bottom: solid 2px white;
       }
 
       button {
-        border: solid 2px white;
-        background-color: transparent;
         color: white;
-        font-size: 1.3rem;
-        padding: 0.5rem 1rem 0.5rem 1rem;
-        margin-top: 1rem;
-        margin-right: 2rem;
-      }
-      button:focus {
+        font-size: 1.4rem;
+        background: #9453d3;
         outline: none;
-      }
-    }
-
-    .bio-text {
-      margin: auto;
-      height: 30rem;
-      width: 95%;
-      margin-top: 1rem;
-      padding: 1rem;
-
-      p {
-        line-height: 3rem;
+        border: none;
+        border-radius: 0.4rem;
+        height: 4.8rem;
+        padding: 0.8rem 2.4rem;
+        margin-top: 0.4rem;
+        cursor: pointer;
       }
     }
 
     .preferred-hardware {
       span {
         padding: 1rem 3rem 0.5rem 0.5rem;
-        margin-left: 2rem;
-      }
-    }
-  }
-
-  @media all and (min-width: 970px) {
-    .about-body {
-      header {
-        span {
-          margin-top: 3rem;
-        }
-        button {
-          width: 8rem;
-          margin-right: 15rem;
-          margin-top: 3rem;
-        }
-      }
-
-      .bio-text {
-        width: 70%;
-        word-wrap: normal;
+        /* margin-left: 2rem; */
       }
     }
   }
@@ -188,7 +173,7 @@ const StyledText = styled.div`
 
     textarea {
       width: 95%;
-      margin-top: 1rem;
+      /* margin-top: 1rem; */
       height: 40rem;
       padding: 1rem;
       background-color: rgb(84, 84, 84, 0.7);

@@ -1,4 +1,5 @@
 import commentIcon from './images/message-square.svg';
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import CommentFeed from './CommentFeed';
 import styled from 'styled-components';
@@ -9,9 +10,17 @@ const ActivityFeedPost = ({ post, time }, showCommentsBool = false) => {
 
   const handleDisplayUsername = () => {
     if (post.username === localStorage.getItem('username')) {
-      return <h3>You</h3>;
+      return (
+        <Link to={`/${post.username}`}>
+          <h3>You</h3>
+        </Link>
+      );
     } else {
-      return <h3>{post.username}</h3>;
+      return (
+        <Link to={`/${post.username}`}>
+          <h3>{post.username}</h3>
+        </Link>
+      );
     }
   };
   return (
@@ -20,13 +29,17 @@ const ActivityFeedPost = ({ post, time }, showCommentsBool = false) => {
         <li key={post.entity_id}>
           <div className='post-user-info'>
             <img
-              src='https://gaming-social-network.s3-us-west-2.amazonaws.com/avatar_placeholder.png'
+              src={
+                post.profile_url
+                  ? post.profile_url
+                  : 'https://gaming-social-network.s3-us-west-2.amazonaws.com/avatar_placeholder.png'
+              }
               alt='Avatar'
               className='avatar'
             ></img>
             {handleDisplayUsername()}
             <span className='created-at'>
-              {moment(new Date(time), 'YYYYMMDD').fromNow()}
+              Posted {moment(new Date(time), 'YYYYMMDD').fromNow()}
             </span>
           </div>
           <div className='post-content'>
@@ -83,7 +96,8 @@ const StyledWrapper = styled.main`
         width: 3.8rem;
       }
       .created-at {
-        margin-left: 2rem;
+        font-size: 1.4rem;
+        margin-left: 0.8rem;
       }
     }
     .post-content {

@@ -61,6 +61,10 @@ const UserProfile = () => {
     return setProfile((prevState) => ({ ...prevState, banner_url: url }));
   };
 
+  const updateAvatarURL = (url) => {
+    return setProfile((prevState) => ({ ...prevState, profile_url: url }));
+  };
+
   const renderUserBody = () => {
     switch (selected) {
       case 'about':
@@ -90,7 +94,11 @@ const UserProfile = () => {
           </div>
           {userIsOwner ? (
             <div className='edit-profile-btn'>
-              <PopupModel profile={profile} updateBannerURL={updateBannerURL} />
+              <PopupModel
+                profile={profile}
+                updateBannerURL={updateBannerURL}
+                updateAvatarURL={updateAvatarURL}
+              />
             </div>
           ) : null}
           <div className='control-center'>

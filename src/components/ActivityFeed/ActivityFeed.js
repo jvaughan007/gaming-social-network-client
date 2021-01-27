@@ -17,9 +17,9 @@ const ActivityFeed = ({ type, canPost, group_id, entity_id, colorMode }) => {
         }
       });
       const data = await res.json();
+      console.log(data);
       return setPosts(data.posts);
     } catch (err) {
-      console.log(err);
       setPosts([]);
     }
   }, [group_id]);
@@ -36,7 +36,6 @@ const ActivityFeed = ({ type, canPost, group_id, entity_id, colorMode }) => {
       const data = await res.json();
       return setPosts(data);
     } catch (err) {
-      console.log(err);
       setPosts([]);
     }
   }, []);
