@@ -27,6 +27,12 @@ const StyledMain = styled.main`
 
   @media all and (min-width: 970px) {
     width: calc(100% - 20rem);
+
+    h1 {
+      color: white;
+      text-align: center;
+      padding-top: 5.6rem;
+    }
   }
 `;
 

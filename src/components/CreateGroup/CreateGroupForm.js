@@ -78,7 +78,7 @@ const CreateGroupForm = () => {
       <input type='file' onChange={fileChangedHandler} required id='avatar' />
       {image ? (
         <div className='preview'>
-          <p class='preview-text'>Banner Preview</p>
+          <p className='preview-text'>Banner Preview</p>
           <img src={URL.createObjectURL(image)} alt='Avatar Preview' />
           {name.trim().length ? <h3>{name}</h3> : <h3>Group Name</h3>}
           <button type='button'>Join Group</button>

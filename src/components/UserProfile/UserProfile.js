@@ -25,11 +25,11 @@ const UserProfile = () => {
         const data = await res.json();
         setStaticUsername(data.profile.username);
         if (!data.success) {
-          return history.push('/404');
+          return history.push('/error/404');
         }
         return setProfile(data.profile);
       } catch (err) {
-        return history.push('/404');
+        return history.push('/error/404');
       }
     };
 
