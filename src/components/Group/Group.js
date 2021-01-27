@@ -11,7 +11,8 @@ const Group = () => {
   const [group, setGroup] = useState(null);
   const [members, setMembers] = useState(null);
   const [isMember, setIsMember] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(null);
+  // extended feature
+  // const [isAdmin, setIsAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState('posts');
   let history = useHistory();
@@ -33,8 +34,8 @@ const Group = () => {
         if (!data.success) {
           return setLoading(false);
         }
-
-        setIsAdmin(data.isAdmin);
+        // extended feature
+        // setIsAdmin(data.isAdmin);
         setIsMember(data.isMember);
         setGroup(data.group);
         setMembers(data.members);
@@ -110,7 +111,6 @@ const Group = () => {
   const getUpdatedGroupMembers = async () => {
     try {
       const token = localStorage.getItem('jwt');
-      console.log(group.id);
       const res = await fetch(`${API_URL}/groups/${group.id}/members`, {
         method: 'GET',
         headers: {
@@ -119,7 +119,6 @@ const Group = () => {
         }
       });
       const data = await res.json();
-      console.log(data);
       return setMembers(data.members);
     } catch (err) {
       console.log(err);

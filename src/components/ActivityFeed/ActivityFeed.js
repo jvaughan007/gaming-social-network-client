@@ -17,7 +17,6 @@ const ActivityFeed = ({ type, canPost, group_id, entity_id, colorMode }) => {
         }
       });
       const data = await res.json();
-      console.log(data);
       return setPosts(data.posts);
     } catch (err) {
       setPosts([]);
@@ -76,12 +75,12 @@ const ActivityFeed = ({ type, canPost, group_id, entity_id, colorMode }) => {
     } else {
       if (!canPost && type === 'group') {
         return (
-          <div class='can-post'>
+          <div className='can-post'>
             <h3>You must be a member of this group to be able to post.</h3>
           </div>
         );
       } else if (!canPost && type === 'user') {
-        <div class='can-post'>
+        <div className='can-post'>
           <h3>You're not allowed to post here.</h3>
         </div>;
       }

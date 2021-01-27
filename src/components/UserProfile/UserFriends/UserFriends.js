@@ -108,7 +108,6 @@ const UserFriends = ({ profile, userIsOwner }) => {
 
   const deleteFriend = async (friend_id) => {
     try {
-      console.log('user_b', profile.id);
       const token = localStorage.getItem('jwt');
       const res = await fetch(`${API_URL}/friends/deleteFriend`, {
         method: 'DELETE',

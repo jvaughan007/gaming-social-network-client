@@ -7,7 +7,7 @@ const CreatePost = ({ addPost, type, group_id, entity_id }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('asdfasdf', type);
+
     try {
       if (!text.trim().length) {
         return;
