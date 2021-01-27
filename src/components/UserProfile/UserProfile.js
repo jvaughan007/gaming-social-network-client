@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import VertNavBar from '../Sidebar/Sidebar';
 import { useParams, useHistory } from 'react-router-dom';
@@ -14,7 +13,6 @@ import styled from 'styled-components';
 const UserProfile = () => {
   const [profile, setProfile] = useState(null);
   const [staticUsername, setStaticUsername] = useState('');
-  const [edit, setEdit] = useState(false);
   const [selected, setSelected] = useState(null);
   const [userIsOwner, setUserIsOwner] = useState(false);
 
@@ -30,7 +28,6 @@ const UserProfile = () => {
         if (!data.success) {
           return history.push('/404');
         }
-        console.log(data.profile);
         return setProfile(data.profile);
       } catch (err) {
         return history.push('/404');
