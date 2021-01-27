@@ -27,14 +27,16 @@ const DemoPage = () => {
 
 
                 <div className="demoSectionContainer">
-                    
+
                     <div className="demoSection">
                         <div className="demoImage">
                             <img src={homepage} alt='Homepage' />
                         </div>
                         <div className="demoDescription">
+                            <div className="descElements">                         
                             <h2>Landing Page</h2>
-                            <p>Describe Landing Page here!</p> 
+                            <p>Describe Landing Page here!</p>
+                            </div>                           
                         </div>
                     </div>
 
@@ -43,14 +45,15 @@ const DemoPage = () => {
                                 <img src={register} alt='SignupForm' />
                             </div>
                         <div className="demoDescription">
+                            <div className="descElements">
                             <h2>Signup</h2>
                             <p>
                                 Upon reaching the home page, you will be prompted
                                 to log in or to create an account. Here, you will input
                                 all the required fields and, on submission, be
                                 redirected to your dashboard!
-
                             </p>
+                            </div>
                         </div>
                     </div>
 
@@ -63,12 +66,14 @@ const DemoPage = () => {
                             <img src={login} />
                         </div>
                         <div className="demoDescription">
+                            <div className="descElements">
                             <h2>Login</h2>
                             <p>
                                 If you already have an account, simply enter your email
                                 and password to be redirected to your dashboard upon
                                 submission!
                             </p>
+                            </div>
                         </div>
                     </div>
 
@@ -91,9 +96,11 @@ const DemoPage = () => {
                             <img src={profile} />
                         </div>
                         <div className="demoDescription">
+                        <div className="descElements">
                             <h3>Once you have reached your dashboard, you can...</h3>
 
                             <p>Edit your profile! (i.e. - avatar, about, banner, etc.)</p>
+                        </div>
                         </div>
                     </div>
 
@@ -104,7 +111,10 @@ const DemoPage = () => {
                             <img src={games} />
                         </div>
                         <div className="demoDescription">
+                        <div className="descElements">
+                            <h2>Games</h2>
                             <p>Create and add to a list of your favorite games!</p>
+                        </div>
                         </div>
                     </div>
 
@@ -112,10 +122,13 @@ const DemoPage = () => {
 
                     <div className="demoSection">
                         <div className="demoImage">
-                            <img src={groups} />
+                            <img src={groups} alt="groups" />
                         </div>
                         <div className="demoDescription">
+                        <div className="descElements">
+                            <h2>Groups</h2>
                             <p>Find and connect with game groups!</p>
+                        </div>
                         </div>
                     </div>
 
@@ -126,7 +139,10 @@ const DemoPage = () => {
                             <img src={find_friends} />
                         </div>
                         <div className="demoDescription">
+                        <div className="descElements">
+                            <h2>Friends</h2>
                             <p>Add other gamers as friends!</p>
+                        </div>
                         </div>
                     </div>
 
@@ -137,8 +153,11 @@ const DemoPage = () => {
                             <img src={dashboard} />
                         </div>
                         <div className="demoDescription">
+                        <div className="descElements">
+                            <h2>Dashboard</h2>
                             <p>Share your accomplishments with others!</p>
                             <p>Create, share and read posts to the community!</p>
+                        </div>
                         </div>
                     </div>
 
@@ -163,7 +182,7 @@ const StyledMain = styled.main`
     }
 
     .demoHeading {
-        background - color: aliceblue;
+        background-color: aliceblue;
         font-size: small;
         text-align: center;
     }
@@ -177,7 +196,10 @@ const StyledMain = styled.main`
     }
 
     .demoSection {
-        background - color: aliceblue;
+        background-color: aliceblue;
+        display: flex;
+        margin-bottom: 2rem;
+        justify-content: space-evenly;
 
     }
 
@@ -188,10 +210,29 @@ const StyledMain = styled.main`
     }
 
     .demoDescription {
-        margin: 1rem 10rem 0 .5rem;
+        margin: 0;
         font-size: small;
-        text-align: right;
+        width: 100%;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        -webkit-box-align: center;
+    }
 
+    .descElements {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 30%;
+
+        h2, p {
+            width: -webkit-fill-available;
+        }
+
+        /* p {
+            max-width: 50%;
+        } */
     }
    
    
