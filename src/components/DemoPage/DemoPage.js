@@ -298,7 +298,7 @@ const StyledMain = styled.main`
     }
 
    }
-   } 
+    
    
 `;
 
