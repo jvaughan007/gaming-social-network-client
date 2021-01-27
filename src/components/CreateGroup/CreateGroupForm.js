@@ -5,7 +5,6 @@ import { API_URL } from '../../config';
 
 const CreateGroupForm = () => {
   const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
   const [errors, setErrors] = useState(null);
   const [image, setImage] = useState(null);
   const [processing, setProcessing] = useState(false);
@@ -25,7 +24,6 @@ const CreateGroupForm = () => {
 
       const formData = new FormData();
       formData.append('group_name', name);
-      formData.append('group_description', description);
       formData.append('image', image);
 
       const token = localStorage.getItem('jwt');
@@ -76,24 +74,13 @@ const CreateGroupForm = () => {
         maxLength='50'
         required
       />
-      <label htmlFor='description'>
-        Description <span>(Max Length: 140 characters)</span>
-      </label>
-      <textarea
-        type='text'
-        onChange={(e) => setDescription(e.target.value)}
-        id='description'
-        maxLength='140'
-        required
-      />
       <label htmlFor='avatar'>Group Avatar</label>
       <input type='file' onChange={fileChangedHandler} required id='avatar' />
       {image ? (
         <div className='preview'>
           <p class='preview-text'>Banner Preview</p>
           <img src={URL.createObjectURL(image)} alt='Avatar Preview' />
-          <h3>{name}</h3>
-          <p>{description}</p>
+          {name.trim().length ? <h3>{name}</h3> : <h3>Group Name</h3>}
           <button type='button'>Join Group</button>
         </div>
       ) : null}
@@ -122,10 +109,6 @@ const StyledForm = styled.form`
       font-size: 1.4rem;
       font-weight: 400;
     }
-  }
-
-  label[for='avatar'] {
-    margin-top: 1.6rem;
   }
 
   input[type='text'] {
@@ -193,14 +176,6 @@ const StyledForm = styled.form`
       border-radius: 100%;
       border: 0.2rem solid #fff;
     }
-  }
-
-  textarea {
-    border-radius: 0.4rem;
-    padding: 0.8rem;
-    border: none;
-    outline: none;
-    height: 9.6rem;
   }
 
   button {
