@@ -1,6 +1,6 @@
 <h1>Gaming Social Network</h1>
 
-<a href="https://gaming-social-network.vercel.app">Link to live App</a>
+<a href="https://gaming-social-network-client.vercel.app/">Link to live App</a>
 <a href="https://github.com/domcodesjs/gaming-social-network-server">Link to server code</a>
 
 <p>Users are able to create a profile where they can create a bio about themselves, upload images, find new games, find new friends, and find groups to play with.</p>
